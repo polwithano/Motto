@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6485f6c34f5e42599b37972baa8d62e, type: 3}
+  m_Name: ShortStack
+  m_EditorClassIdentifier: Assembly-CSharp::Models.Charms.ShortStackCharm
+  <ID>k__BackingField: c1ae757a-d03a-46a2-83f4-1e516c8d1213
+  <CharmName>k__BackingField: Moldy Bread
+  <CharmDescription>k__BackingField: Add +3 <color=blue>score</color> if the word
+    length is less or equal to 3 characters.
+  <CharmIcon>k__BackingField: {fileID: -1287752153625068613, guid: 486127e5240a54ac0a050c3f04ffa81a, type: 3}
+  <PriorityOverride>k__BackingField: 0
+  <EffectTrigger>k__BackingField: 1
+  <ScoreEffects>k__BackingField:
+  - <Target>k__BackingField: 0
+    <Value>k__BackingField: 40

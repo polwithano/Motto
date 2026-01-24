@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d07152bb08fa4cb4a5d0fad31834c0d, type: 3}
+  m_Name: TileDistribution_EN
+  m_EditorClassIdentifier: Assembly-CSharp::Models.TileDistributionSO
+  <CharacterRules>k__BackingField:
+  - character: A
+    isBlank: 0
+    pointValue: 1
+    countPerCharacter: 9
+  - character: B
+    isBlank: 0
+    pointValue: 1
+    countPerCharacter: 2
+  - character: C
+    isBlank: 0
+    pointValue: 3
+    countPerCharacter: 2
+  - character: D
+    isBlank: 0
+    pointValue: 2
+    countPerCharacter: 4
+  - character: E
+    isBlank: 0
+    pointValue: 1
+    countPerCharacter: 12
+  - character: F
+    isBlank: 0
+    pointValue: 4
+    countPerCharacter: 2
+  - character: G
+    isBlank: 0
+    pointValue: 2
+    countPerCharacter: 3
+  - character: H
+    isBlank: 0
+    pointValue: 4
+    countPerCharacter: 2
+  - character: I
+    isBlank: 0
+    pointValue: 1
+    countPerCharacter: 9
+  - character: J
+    isBlank: 0
+    pointValue: 8
+    countPerCharacter: 1
+  - character: K
+    isBlank: 0
+    pointValue: 5
+    countPerCharacter: 2
+  - character: L
+    isBlank: 0
+    pointValue: 1
+    countPerCharacter: 4
+  - character: M
+    isBlank: 0
+    pointValue: 3
+    countPerCharacter: 2
+  - character: N
+    isBlank: 0
+    pointValue: 1
+    countPerCharacter: 6
+  - character: O
+    isBlank: 0
+    pointValue: 1
+    countPerCharacter: 8
+  - character: P
+    isBlank: 0
+    pointValue: 3
+    countPerCharacter: 2
+  - character: Q
+    isBlank: 0
+    pointValue: 10
+    countPerCharacter: 1
+  - character: R
+    isBlank: 0
+    pointValue: 1
+    countPerCharacter: 6
+  - character: S
+    isBlank: 0
+    pointValue: 1
+    countPerCharacter: 4
+  - character: T
+    isBlank: 0
+    pointValue: 1
+    countPerCharacter: 6
+  - character: U
+    isBlank: 0
+    pointValue: 1
+    countPerCharacter: 4
+  - character: V
+    isBlank: 0
+    pointValue: 4
+    countPerCharacter: 2
+  - character: W
+    isBlank: 0
+    pointValue: 4
+    countPerCharacter: 2
+  - character: X
+    isBlank: 0
+    pointValue: 8
+    countPerCharacter: 1
+  - character: Y
+    isBlank: 0
+    pointValue: 1
+    countPerCharacter: 1
+  - character: Z
+    isBlank: 0
+    pointValue: 10
+    countPerCharacter: 1
+  - character: _
+    isBlank: 1
+    pointValue: 0
+    countPerCharacter: 2
+  <DefaultTileModifier>k__BackingField: {fileID: 11400000, guid: b44cd9c6fa6614cbd904929f150c7ddb, type: 2}
+  totalTileCount: 100

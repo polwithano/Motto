@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0199bd117054295b785f27637f0d8cc, type: 3}
+  m_Name: BlankPower
+  m_EditorClassIdentifier: Assembly-CSharp::Models.Charms.BlankPowerCharm
+  <ID>k__BackingField: 732fe8d5-b49e-4dce-b00a-740753d2ebc3
+  <CharmName>k__BackingField: Crab
+  <CharmDescription>k__BackingField: Add 8 <color=blue>score</color> per blank tile.
+  <CharmIcon>k__BackingField: {fileID: 1713448953119597589, guid: 02b9c170fe8084eca9463eee553dbde0, type: 3}
+  <PriorityOverride>k__BackingField: 0
+  <EffectTrigger>k__BackingField: 2
+  <ScoreEffects>k__BackingField:
+  - <Target>k__BackingField: 0
+    <Value>k__BackingField: 90

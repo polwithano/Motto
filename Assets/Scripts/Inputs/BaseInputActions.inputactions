@@ -1,0 +1,55 @@
+{
+    "version": 1,
+    "name": "BaseInputActions",
+    "maps": [
+        {
+            "name": "UI",
+            "id": "5c7c7707-11c9-4bf4-ac26-e3240cdc5056",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "96867206-3a72-42fa-b5a7-9e2127217d39",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightClick",
+                    "type": "Button",
+                    "id": "f0ca0ea3-af33-46cd-8ae8-cffe8b7e59be",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "80c4d79f-10f9-40fb-86bd-938f20c116e9",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6063ff62-7d89-4efc-94c8-11f72f2a512c",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
