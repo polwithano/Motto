@@ -56,11 +56,11 @@ namespace Views
 
         private void AnimateCharm()
         {
-            _punchTween?.Kill(); // avoid stacking tweens
+            _punchTween?.Kill(); 
 
-            // Combine scale + small rotation for a bit more life
             var target = charmIcon.transform;
-            Sequence seq = DOTween.Sequence();
+            var seq = DOTween.Sequence();
+            
             seq.Append(target.DOPunchScale(Vector3.one * punchScaleAmount, punchDuration, vibrato, elasticity));
             seq.Join(target.DOLocalRotate(new Vector3(0, 0, Random.Range(-10f, 10f)), punchDuration * 0.5f).SetEase(ease));
             seq.Append(target.DOLocalRotate(Vector3.zero, punchDuration * 0.5f).SetEase(ease));

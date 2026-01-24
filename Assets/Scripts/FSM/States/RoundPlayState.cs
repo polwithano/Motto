@@ -116,9 +116,9 @@ namespace FSM
                 GameEvents.RaiseOnRoundSuccessful();
                 StateMachine.ChangeState(new RoundOverState(StateMachine, true));
             }
-            if (Game.Run.Round.WordsRemaining == 0)
+            else if (!Game.Run.Round.IsCompleted)
             {
-                if (!Game.Run.Round.IsCompleted)
+                if (Game.Run.Round.WordsRemaining <= 0)
                 {
                     GameEvents.RaiseOnRoundFailed();
                     StateMachine.ChangeState(new RoundOverState(StateMachine, false));

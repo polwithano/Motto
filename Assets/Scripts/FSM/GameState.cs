@@ -5,7 +5,7 @@ namespace FSM
 {
     public class GameState : IGameState
     {
-        protected GameManager Game => GameManager.Instance;
+        protected static GameManager Game => GameManager.Instance;
         protected readonly GameStateMachine StateMachine;
 
         protected GameState(GameStateMachine machine)

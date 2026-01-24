@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89390e67e8eb4a68bf9fc320c2cc8a6f, type: 3}
   m_Name: BubbleTileModifier
   m_EditorClassIdentifier: Assembly-CSharp::Models.TileModifierSO
-  <ID>k__BackingField: bab757ea-6afd-4d75-9699-21da1b062c86
+  <ID>k__BackingField: afa2a106-d6b2-4061-83dc-fcdbf902859e
   <FontAsset>k__BackingField: {fileID: 11400000, guid: 168c5d66d36d24ca795dd963a9740cf1, type: 2}
   <Name>k__BackingField: Bubbled
+  <PriceModifier>k__BackingField: 1

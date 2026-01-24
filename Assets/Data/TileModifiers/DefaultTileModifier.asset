@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89390e67e8eb4a68bf9fc320c2cc8a6f, type: 3}
   m_Name: DefaultTileModifier
   m_EditorClassIdentifier: Assembly-CSharp::Models.TileModifierSO
-  <ID>k__BackingField: bab757ea-6afd-4d75-9699-21da1b062c86
+  <ID>k__BackingField: bad72e00-204f-436c-bf5f-118ab6295fe0
   <FontAsset>k__BackingField: {fileID: 11400000, guid: 92ad6b4b5e11f40e1b62b2ef00f53785, type: 2}
   <Name>k__BackingField: Default
+  <PriceModifier>k__BackingField: 1

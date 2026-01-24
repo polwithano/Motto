@@ -91,7 +91,7 @@ namespace Managers
             return null; 
         }
         
-        public List<Tile> GetTilesInSlots()
+        private List<Tile> GetTilesInSlots()
         {
             var tiles = new List<Tile>();
 

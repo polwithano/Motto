@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b11ffc4f289744ec6939388edc0a66f2, type: 3}
   m_Name: RunDataSO
   m_EditorClassIdentifier: Assembly-CSharp::Models.RunDataSO
-  <RoundSequence>k__BackingField:
+  <RoundsSequence>k__BackingField:
   - <RoundType>k__BackingField: 0
-    <BaseTargetScore>k__BackingField: 1000
+    <BaseTargetScore>k__BackingField: 150
   - <RoundType>k__BackingField: 0
-    <BaseTargetScore>k__BackingField: 250
+    <BaseTargetScore>k__BackingField: 350
   - <RoundType>k__BackingField: 1
-    <BaseTargetScore>k__BackingField: 500
+    <BaseTargetScore>k__BackingField: 1000

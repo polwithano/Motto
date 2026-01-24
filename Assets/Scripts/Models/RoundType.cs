@@ -1,4 +1,8 @@
 namespace Models
 {
-    public enum RoundType {Normal, Boss}
+    public enum RoundType
+    {
+        Normal, 
+        Boss
+    }
 }

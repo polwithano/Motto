@@ -24,7 +24,7 @@ namespace Models
 
         public bool TryIncrementRound()
         {
-            if (RoundIndex >= _data.RoundSequence.Length - 1)
+            if (RoundIndex >= _data.RoundsSequence.Length - 1)
                 return false;
 
             RoundIndex += 1;
@@ -39,7 +39,7 @@ namespace Models
         
         private RoundContext CreateContext()
         {
-            var def = _data.RoundSequence[RoundIndex];
+            var def = _data.RoundsSequence[RoundIndex];
             return new RoundContext(def);
         }
     }

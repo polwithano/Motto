@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89390e67e8eb4a68bf9fc320c2cc8a6f, type: 3}
   m_Name: GlitchedTileModifier
   m_EditorClassIdentifier: Assembly-CSharp::Models.TileModifierSO
-  <ID>k__BackingField: bab757ea-6afd-4d75-9699-21da1b062c86
+  <ID>k__BackingField: 82a7b841-64aa-4b7d-bbc3-99e1d560e6f5
   <FontAsset>k__BackingField: {fileID: 11400000, guid: 8cc6c40a8cd0d4851a38bad3ceac4132, type: 2}
   <Name>k__BackingField: Glitched
+  <PriceModifier>k__BackingField: 1

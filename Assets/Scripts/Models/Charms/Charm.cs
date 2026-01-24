@@ -8,7 +8,7 @@ namespace Models.Charms
     public enum EffectTarget { Score, Multiplier, GameState }
     public enum EffectTrigger {OnWordStart, OnWordEnd, OnLetter}
     
-    public abstract class Charm : ScriptableObject, IEffectEmitter
+    public abstract class Charm : ScriptableObject, IEffectEmitter, IBuyable
     {
         [field: SerializeField] public string ID                             { get; set; }
         [field: SerializeField] public string CharmName                      { get; private set; } 
@@ -40,6 +40,11 @@ namespace Models.Charms
                     log.AddEntry(entry);
                 }
             }
+        }
+
+        public void ProcessPurchase()
+        {
+            throw new NotImplementedException();
         }
     }
 }
