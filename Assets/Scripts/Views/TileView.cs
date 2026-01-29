@@ -1,3 +1,4 @@
+using Coffee.UIEffects;
 using DG.Tweening;
 using Events;
 using Models;
@@ -10,6 +11,8 @@ namespace Views
     {
         [SerializeField] private TextMeshProUGUI characterText;
         [SerializeField] private TextMeshProUGUI valueText;
+        [SerializeField] private UIEffect uiEffect;
+        [SerializeField] private UIEffectTweener uiEffectTweener;
 
         [Header("Animation")] 
         [SerializeField] private float yOffset;
@@ -94,7 +97,7 @@ namespace Views
             rect.localScale = Vector3.one;
             rect.DOPunchScale(Vector3.one * punchScale, punchDuration, punchVibrato, punchElasticity)
                 .SetEase(punchEase)
-                .SetLink(gameObject); // <— ensures safe cleanup
+                .SetLink(gameObject); 
         }
     }
 }
