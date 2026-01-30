@@ -81,8 +81,8 @@ namespace Managers
         private TooltipBase GetTooltipInstance<T>() where T : class
         {
             var type = typeof(T);
-            if (_activeTooltips.ContainsKey(type))
-                return _activeTooltips[type];
+            if (_activeTooltips.TryGetValue(type, out var tooltipInstance))
+                return tooltipInstance;
 
             TooltipBase prefab = null;
             if (type == typeof(Charm))

@@ -105,10 +105,10 @@ namespace Views
 
         private void AnimateOnTileScored()
         {
-            Sequence seq = DOTween.Sequence();
+            var seq = DOTween.Sequence();
             
-            float startY = transform.position.y;
-            float endY = startY + yOffset;
+            var startY = transform.position.y;
+            var endY = startY + yOffset;
             
             seq.Append(transform.DOMoveY(endY, duration).SetEase(ease));
             seq.Append(transform.DOMoveY(startY, duration).SetEase(ease));

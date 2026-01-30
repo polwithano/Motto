@@ -69,7 +69,8 @@ namespace UI.Tooltips
             var size = root.rect.size;
             var offset = CalculateOffset(size);
 
-            root.anchoredPosition = localPos + offset;
+            var targetPos = localPos + offset;
+            root.anchoredPosition = ClampToCanvas(targetPos);
         }
 
         private Vector2 CalculateOffset(Vector2 size)
@@ -87,6 +88,26 @@ namespace UI.Tooltips
                 default:
                     return Vector2.zero;
             }
+        }
+        
+        private Vector2 ClampToCanvas(Vector2 position)
+        {
+            var parentRect = root.parent as RectTransform;
+            var canvasSize = parentRect.rect.size;
+            var tooltipSize = root.rect.size;
+
+            var pivot = root.pivot;
+
+            float minX = -canvasSize.x * 0.5f + tooltipSize.x * pivot.x;
+            float maxX =  canvasSize.x * 0.5f - tooltipSize.x * (1f - pivot.x);
+
+            float minY = -canvasSize.y * 0.5f + tooltipSize.y * pivot.y;
+            float maxY =  canvasSize.y * 0.5f - tooltipSize.y * (1f - pivot.y);
+
+            position.x = Mathf.Clamp(position.x, minX, maxX);
+            position.y = Mathf.Clamp(position.y, minY, maxY);
+
+            return position;
         }
 
         public virtual void Show()
