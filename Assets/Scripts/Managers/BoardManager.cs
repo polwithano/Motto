@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Events;
 using UnityEngine;
 using Models;
+using NUnit.Framework;
 using Views;
 
 namespace Managers
@@ -70,13 +72,23 @@ namespace Managers
             }));
         }
 
-        public void ClearSlots()
+        public async Task ClearSlotsAsync()
         {
+            var tasks = new List<Task>();
+            var index = 0;
+            
             foreach (var slot in Slots)
             {
-                foreach (Transform child in slot)
-                    Destroy(child.gameObject);
+                if (slot.childCount == 0)
+                    continue;
+
+                if (slot.GetChild(0).TryGetComponent<TileView>(out var tileView))
+                {
+                    tasks.Add(tileView.AnimateOnTileSlotClearedAsync(index++));
+                }
             }
+
+            await Task.WhenAll(tasks);
         }
 
         public TileView GetTileViewFromTile(Tile tile)

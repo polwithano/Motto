@@ -1,9 +1,11 @@
+using System.Threading.Tasks;
 using Coffee.UIEffects;
 using DG.Tweening;
 using Events;
 using Models;
 using UnityEngine;
-using TMPro; 
+using TMPro;
+using UnityEngine.Events;
 
 namespace Views
 {
@@ -68,6 +70,29 @@ namespace Views
         public void OnTileRedraw()
         {
             AnimatePunch(GetComponent<RectTransform>());
+        }
+
+        public Task AnimateOnTileSlotClearedAsync(int index)
+        {
+            var tcs = new TaskCompletionSource<bool>();
+
+            UnityAction onComplete = null;
+
+            onComplete = () =>
+            {
+                uiEffectTweener.onComplete.RemoveListener(onComplete);
+                tcs.TrySetResult(true);
+            };
+
+            uiEffectTweener.onComplete.AddListener(onComplete);
+
+            var randomRotation = Random.Range(0f, 360f);
+            uiEffect.transitionRotation = randomRotation;
+
+            uiEffectTweener.delay = index * .25f; 
+            uiEffectTweener.Play(true);
+
+            return tcs.Task;
         }
 
         private void PopulateTileModifier()

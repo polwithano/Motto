@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Events;
 using Managers;
@@ -87,18 +88,25 @@ namespace FSM
 
         private async void HandleOnScoreSequenceCompleted(ScoreLog log)
         {
-            await UIGame.Instance.RoundContext.PlayScoreSequenceAsync(log); 
+            try
+            {
+                await UIGame.Instance.RoundContext.PlayScoreSequenceAsync(log); 
 
-            CheckForExitConditions();
+                CheckForExitConditions();
             
-            Game.Hand.RemoveTiles(log.Tiles);
-            Game.Deck.DiscardRange(log.Tiles);
+                Game.Hand.RemoveTiles(log.Tiles);
+                Game.Deck.DiscardRange(log.Tiles);
             
-            BoardManager.Instance.ClearSlots();
+                await BoardManager.Instance.ClearSlotsAsync();
             
-            Game.Hand.FillFromDeck(Game.Deck);
+                Game.Hand.FillFromDeck(Game.Deck);
             
-            HandView.Instance.InstantiateHand(Game.Hand);
+                HandView.Instance.InstantiateHand(Game.Hand);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
         }
         #endregion
         

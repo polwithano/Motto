@@ -11,7 +11,13 @@ ShaderVariantCollection:
   - first: {fileID: 4800000, guid: 96246b1ead49a4c5a996fd477bc5a117, type: 3}
     second:
       variants:
+      - keywords: SAMPLING_BLUR_MEDIUM
+        passType: 0
+      - keywords: TRANSITION_BLAZE
+        passType: 0
       - keywords: TRANSITION_BURN
+        passType: 0
+      - keywords: TRANSITION_CUTOFF
         passType: 0
       - keywords: TRANSITION_DISSOLVE
         passType: 0
@@ -20,9 +26,21 @@ ShaderVariantCollection:
   - first: {fileID: 4800000, guid: 935b7be1c88464d2eb87204fdfab5a38, type: 3}
     second:
       variants:
+      - keywords: SAMPLING_BLUR_MEDIUM
+        passType: 0
+      - keywords: SAMPLING_BLUR_MEDIUM UNDERLAY_ON
+        passType: 0
+      - keywords: TRANSITION_BLAZE
+        passType: 0
+      - keywords: TRANSITION_BLAZE UNDERLAY_ON
+        passType: 0
       - keywords: TRANSITION_BURN
         passType: 0
       - keywords: TRANSITION_BURN UNDERLAY_ON
+        passType: 0
+      - keywords: TRANSITION_CUTOFF
+        passType: 0
+      - keywords: TRANSITION_CUTOFF UNDERLAY_ON
         passType: 0
       - keywords: TRANSITION_DISSOLVE
         passType: 0
