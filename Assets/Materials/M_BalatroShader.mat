@@ -41,12 +41,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Contrast: 2
+    - _Contrast: 2.8
     - _EnableExternalAlpha: 0
     - _IsRotate: 0
     - _Lighting: 0.34
-    - _PixelFilter: 768
-    - _SpinAmount: 0.25
+    - _PixelFilter: 384
+    - _SpinAmount: 0.2
     - _SpinEase: 1
     - _SpinRotation: -2
     - _SpinSpeed: 2
