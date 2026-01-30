@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace FSM
 {
-    public class GameState : IGameState
+    [System.Serializable]
+    public abstract class GameState : IGameState
     {
         protected static GameManager Game => GameManager.Instance;
         protected readonly GameStateMachine StateMachine;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Events;
+using Models;
 using UnityEngine;
 using Views;
 
@@ -86,7 +87,7 @@ namespace Animation
 
         private void OnDisable()
         {
-            GameEvents.OnTileAddedToBoard -= OnTileDrop;;
+            GameEvents.OnTileAddedToBoard -= OnTileDrop;
         }
     
         private void OnTileDrop(TileView tileView)
@@ -98,7 +99,6 @@ namespace Animation
                 AddRipple(uv);
             }
         }
-    
 /*
         public void OnPointerDown(PointerEventData eventData)
         {

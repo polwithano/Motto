@@ -1,9 +1,9 @@
 using Events;
-using UnityEngine;
 using Views;
 
-namespace FSM
+namespace FSM.States
 {
+    [System.Serializable]
     public class RoundStartState : GameState
     {
         public RoundStartState(GameStateMachine machine) : base(machine) { }

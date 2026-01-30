@@ -1,8 +1,9 @@
-using Models;
 using Managers;
+using Models;
 
-namespace FSM
+namespace FSM.States
 {
+    [System.Serializable]
     public class BootState : GameState
     {
         public BootState(GameStateMachine machine) : base(machine) { }

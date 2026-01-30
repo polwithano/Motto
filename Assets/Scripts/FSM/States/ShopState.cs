@@ -1,8 +1,9 @@
 using Events;
 using Managers;
 
-namespace FSM
+namespace FSM.States
 {
+    [System.Serializable]
     public class ShopState : GameState
     {
         public ShopState(GameStateMachine machine) : base(machine) { }

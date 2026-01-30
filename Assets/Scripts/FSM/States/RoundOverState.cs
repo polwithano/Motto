@@ -1,8 +1,8 @@
-using Events;
 using UnityEngine;
 
-namespace FSM
+namespace FSM.States
 {
+    [System.Serializable]
     public class RoundOverState : GameState
     {
         public readonly bool WonRound; 

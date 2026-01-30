@@ -5,9 +5,9 @@ namespace FSM
     [System.Serializable]
     public class GameStateMachine : MonoBehaviour
     {
-        [field: SerializeField] public IGameState CurrentState { get; private set; }
+        [field: SerializeField] public GameState CurrentState { get; private set; }
 
-        public void ChangeState(IGameState newState)
+        public void ChangeState(GameState newState)
         {
             if (CurrentState == newState) return;
 

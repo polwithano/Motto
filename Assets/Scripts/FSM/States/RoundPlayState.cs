@@ -8,8 +8,9 @@ using UI;
 using UnityEngine;
 using Views;
 
-namespace FSM
+namespace FSM.States
 {
+    [System.Serializable]
     public class RoundPlayState : GameState
     {
         public RoundPlayState(GameStateMachine machine) : base(machine) { }

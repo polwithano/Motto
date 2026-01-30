@@ -103,7 +103,6 @@ namespace UI
             await seq.AsyncWaitForCompletion();
         }
 
-
         private void HandleOnTileRedrawPerformed(Tile tile, Tile newTile)
         {
             UpdateDeckAndRedrawCounts();
@@ -319,7 +318,7 @@ namespace UI
             rect.localScale = Vector3.one;
             rect.DOPunchScale(Vector3.one * punchScale, punchDuration, punchVibrato, punchElasticity)
                 .SetEase(punchEase)
-                .SetLink(gameObject); // <— ensures safe cleanup
+                .SetLink(gameObject); 
         }
         #endregion
     }
