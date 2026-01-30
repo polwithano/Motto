@@ -39,6 +39,17 @@
                 },
                 {
                     "name": "",
+                    "id": "9f3d17b8-7849-4db0-9613-2fb366b5e7d5",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "6063ff62-7d89-4efc-94c8-11f72f2a512c",
                     "path": "<Mouse>/rightButton",
                     "interactions": "Press",
@@ -51,5 +62,17 @@
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "Tactile",
+            "bindingGroup": "Tactile",
+            "devices": [
+                {
+                    "devicePath": "<Touchscreen>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
 }

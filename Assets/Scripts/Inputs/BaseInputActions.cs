@@ -127,6 +127,17 @@ namespace Inputs
                 },
                 {
                     ""name"": """",
+                    ""id"": ""9f3d17b8-7849-4db0-9613-2fb366b5e7d5"",
+                    ""path"": ""<Touchscreen>/Press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""6063ff62-7d89-4efc-94c8-11f72f2a512c"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": ""Press"",
@@ -139,7 +150,19 @@ namespace Inputs
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""Tactile"",
+            ""bindingGroup"": ""Tactile"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Touchscreen>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -328,6 +351,19 @@ namespace Inputs
         /// Provides a new <see cref="UIActions" /> instance referencing this action map.
         /// </summary>
         public UIActions @UI => new UIActions(this);
+        private int m_TactileSchemeIndex = -1;
+        /// <summary>
+        /// Provides access to the input control scheme.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputControlScheme" />
+        public InputControlScheme TactileScheme
+        {
+            get
+            {
+                if (m_TactileSchemeIndex == -1) m_TactileSchemeIndex = asset.FindControlSchemeIndex("Tactile");
+                return asset.controlSchemes[m_TactileSchemeIndex];
+            }
+        }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
         /// </summary>
