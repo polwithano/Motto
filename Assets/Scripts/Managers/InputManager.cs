@@ -12,6 +12,10 @@ namespace Managers
         public event Action<Vector2> OnLeftClick; 
         public event Action<Vector2> OnRightClick;
 
+        private Vector2 _pointerPosition; 
+        
+        public Vector2 PointerPosition => _pointerPosition;
+
         #region Mono
         private void Awake()
         {
@@ -24,12 +28,14 @@ namespace Managers
             
             _actions.UI.Click.performed += HandleLeftClick;
             _actions.UI.RightClick.performed += HandleRightClick;
+            _actions.UI.Point.performed += OnPointerMoved;
         }
 
         private void OnDisable()
         {
             _actions.UI.Click.performed -= HandleLeftClick;
             _actions.UI.RightClick.performed -= HandleRightClick;
+            _actions.UI.Point.performed -= OnPointerMoved;
 
             _actions.Disable();
         }
@@ -53,6 +59,11 @@ namespace Managers
                 : Vector2.zero;
 
             OnRightClick?.Invoke(pos);
+        }
+        
+        private void OnPointerMoved(InputAction.CallbackContext ctx)
+        {
+            _pointerPosition = ctx.ReadValue<Vector2>();
         }
     }
 }

@@ -23,6 +23,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Point",
+                    "type": "PassThrough",
+                    "id": "e3b3a39d-18a6-4e14-9b73-fca1aa6051cb",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -32,7 +41,7 @@
                     "path": "<Mouse>/leftButton",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";PC",
                     "action": "Click",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -43,7 +52,7 @@
                     "path": "<Touchscreen>/Press",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Tactile",
                     "action": "Click",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -54,8 +63,19 @@
                     "path": "<Mouse>/rightButton",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";PC",
                     "action": "RightClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0052efa6-8785-4e51-96cc-381e2e23541b",
+                    "path": "<Pointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Tactile;PC",
+                    "action": "Point",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -69,6 +89,17 @@
             "devices": [
                 {
                     "devicePath": "<Touchscreen>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "PC",
+            "bindingGroup": "PC",
+            "devices": [
+                {
+                    "devicePath": "<Mouse>",
                     "isOptional": false,
                     "isOR": false
                 }

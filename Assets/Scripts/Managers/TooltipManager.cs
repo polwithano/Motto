@@ -58,7 +58,6 @@ namespace Managers
         {
             var type = typeof(T);
 
-            // ✅ Delay the hide slightly to prevent flicker when quickly moving between charms
             if (_hideRoutine != null)
                 StopCoroutine(_hideRoutine);
 
@@ -69,12 +68,11 @@ namespace Managers
         {
             yield return new WaitForSeconds(delay);
 
-            // Only hide if no tooltip was re-shown during the delay
             if (_currentActiveType == type)
             {
                 var tooltip = GetTooltipInstanceByType(type);
                 tooltip?.Hide();
-                _currentActiveType = null; // ✅ Reset active type
+                _currentActiveType = null; 
             }
 
             _hideRoutine = null;
@@ -87,7 +85,7 @@ namespace Managers
                 return _activeTooltips[type];
 
             TooltipBase prefab = null;
-            if (type == typeof(Models.Charms.Charm))
+            if (type == typeof(Charm))
                 prefab = charmTooltipPrefab;
 
             if (prefab == null)

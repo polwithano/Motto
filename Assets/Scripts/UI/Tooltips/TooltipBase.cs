@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
+using Managers;
 using UnityEngine.InputSystem;
 
 namespace UI.Tooltips
@@ -21,7 +22,7 @@ namespace UI.Tooltips
 
         [Header("Positioning")]
         [SerializeField] private TooltipAnchor anchorPosition = TooltipAnchor.TopRight;
-        [SerializeField] private Vector2 padding = new Vector2(16f, 16f); // small margin from cursor
+        [SerializeField] private Vector2 padding = new (16f, 16f); 
 
         [Header("Animation Settings")]
         [SerializeField] private float fadeDuration = 0.2f;
@@ -29,11 +30,13 @@ namespace UI.Tooltips
 
         private Canvas _canvas;
         private Camera _uiCamera;
-        private bool _isActive = false;
+        private bool _isActive;
+        private InputManager _inputManager;
 
         protected virtual void Awake()
         {
             _canvas = GetComponentInParent<Canvas>();
+            _inputManager = InputManager.Instance;
 
             // Detect correct camera
             if (_canvas.renderMode == RenderMode.ScreenSpaceOverlay)
@@ -46,24 +49,25 @@ namespace UI.Tooltips
 
         protected virtual void Update()
         {
+            if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+                Debug.Log(Touchscreen.current.primaryTouch.position.ReadValue());
+            
             if (!_isActive || canvasGroup.alpha <= 0f) return;
 
-            // Read mouse position
-            Vector2 mousePos = Mouse.current != null
-                ? Mouse.current.position.ReadValue()
-                : Vector2.zero;
+            var pointerPos = _inputManager.PointerPosition; 
 
-            // Convert screen to local
             if (_canvas == null || root == null) return;
 
+            var parentRect = root.parent as RectTransform;
+
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                _canvas.transform as RectTransform, mousePos, _uiCamera, out var localPos);
+                parentRect,
+                pointerPos,
+                _uiCamera,
+                out var localPos);
 
-            // Get frame size
-            Vector2 size = root.rect.size;
-
-            // Calculate offset dynamically based on anchor
-            Vector2 offset = CalculateOffset(size);
+            var size = root.rect.size;
+            var offset = CalculateOffset(size);
 
             root.anchoredPosition = localPos + offset;
         }
@@ -87,15 +91,16 @@ namespace UI.Tooltips
 
         public virtual void Show()
         {
-            gameObject.SetActive(true);
             canvasGroup.alpha = 0f;
             root.localScale = Vector3.one * 0.95f;
             _isActive = true;
 
-            Sequence seq = DOTween.Sequence();
+            var seq = DOTween.Sequence();
             seq.Append(canvasGroup.DOFade(1f, fadeDuration));
             seq.Join(root.DOScale(scalePop, fadeDuration * 1.2f).SetEase(Ease.OutBack));
             seq.Append(root.DOScale(1f, fadeDuration * 0.5f).SetEase(Ease.OutSine));
+            
+            gameObject.SetActive(true);
         }
 
         public virtual void Hide()
