@@ -73,6 +73,36 @@ namespace UI.Tooltips
             root.anchoredPosition = ClampToCanvas(targetPos);
         }
 
+        public virtual void Show()
+        {
+            canvasGroup.alpha = 0f;
+            root.localScale = Vector3.one * 0.95f;
+            _isActive = true;
+
+            var seq = DOTween.Sequence();
+            seq.Append(canvasGroup.DOFade(1f, fadeDuration));
+            seq.Join(root.DOScale(scalePop, fadeDuration * 1.2f).SetEase(Ease.OutBack));
+            seq.Append(root.DOScale(1f, fadeDuration * 0.5f).SetEase(Ease.OutSine));
+            
+            gameObject.SetActive(true);
+        }
+
+        public virtual void Hide()
+        {
+            _isActive = false;
+            canvasGroup.DOFade(0f, 0.15f)
+                .OnComplete(() => gameObject.SetActive(false));
+        }
+
+        public void HideInstant()
+        {
+            _isActive = false;
+            canvasGroup.alpha = 0f;
+            gameObject.SetActive(false);
+        }
+
+        public abstract void Populate(object data);
+        
         private Vector2 CalculateOffset(Vector2 size)
         {
             switch (anchorPosition)
@@ -109,35 +139,5 @@ namespace UI.Tooltips
 
             return position;
         }
-
-        public virtual void Show()
-        {
-            canvasGroup.alpha = 0f;
-            root.localScale = Vector3.one * 0.95f;
-            _isActive = true;
-
-            var seq = DOTween.Sequence();
-            seq.Append(canvasGroup.DOFade(1f, fadeDuration));
-            seq.Join(root.DOScale(scalePop, fadeDuration * 1.2f).SetEase(Ease.OutBack));
-            seq.Append(root.DOScale(1f, fadeDuration * 0.5f).SetEase(Ease.OutSine));
-            
-            gameObject.SetActive(true);
-        }
-
-        public virtual void Hide()
-        {
-            _isActive = false;
-            canvasGroup.DOFade(0f, 0.15f)
-                .OnComplete(() => gameObject.SetActive(false));
-        }
-
-        public void HideInstant()
-        {
-            _isActive = false;
-            canvasGroup.alpha = 0f;
-            gameObject.SetActive(false);
-        }
-
-        public abstract void Populate(object data);
     }
 }

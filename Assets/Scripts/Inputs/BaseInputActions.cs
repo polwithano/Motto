@@ -95,7 +95,7 @@ namespace Inputs
             ""id"": ""5c7c7707-11c9-4bf4-ac26-e3240cdc5056"",
             ""actions"": [
                 {
-                    ""name"": ""Click"",
+                    ""name"": ""Press"",
                     ""type"": ""Button"",
                     ""id"": ""96867206-3a72-42fa-b5a7-9e2127217d39"",
                     ""expectedControlType"": """",
@@ -130,7 +130,7 @@ namespace Inputs
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": "";PC"",
-                    ""action"": ""Click"",
+                    ""action"": ""Press"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -141,7 +141,7 @@ namespace Inputs
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Tactile"",
-                    ""action"": ""Click"",
+                    ""action"": ""Press"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -197,7 +197,7 @@ namespace Inputs
 }");
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-            m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
+            m_UI_Press = m_UI.FindAction("Press", throwIfNotFound: true);
             m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
             m_UI_Point = m_UI.FindAction("Point", throwIfNotFound: true);
         }
@@ -280,7 +280,7 @@ namespace Inputs
         // UI
         private readonly InputActionMap m_UI;
         private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
-        private readonly InputAction m_UI_Click;
+        private readonly InputAction m_UI_Press;
         private readonly InputAction m_UI_RightClick;
         private readonly InputAction m_UI_Point;
         /// <summary>
@@ -295,9 +295,9 @@ namespace Inputs
             /// </summary>
             public UIActions(@BaseInputActions wrapper) { m_Wrapper = wrapper; }
             /// <summary>
-            /// Provides access to the underlying input action "UI/Click".
+            /// Provides access to the underlying input action "UI/Press".
             /// </summary>
-            public InputAction @Click => m_Wrapper.m_UI_Click;
+            public InputAction @Press => m_Wrapper.m_UI_Press;
             /// <summary>
             /// Provides access to the underlying input action "UI/RightClick".
             /// </summary>
@@ -332,9 +332,9 @@ namespace Inputs
             {
                 if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
                 m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
-                @Click.started += instance.OnClick;
-                @Click.performed += instance.OnClick;
-                @Click.canceled += instance.OnClick;
+                @Press.started += instance.OnPress;
+                @Press.performed += instance.OnPress;
+                @Press.canceled += instance.OnPress;
                 @RightClick.started += instance.OnRightClick;
                 @RightClick.performed += instance.OnRightClick;
                 @RightClick.canceled += instance.OnRightClick;
@@ -352,9 +352,9 @@ namespace Inputs
             /// <seealso cref="UIActions" />
             private void UnregisterCallbacks(IUIActions instance)
             {
-                @Click.started -= instance.OnClick;
-                @Click.performed -= instance.OnClick;
-                @Click.canceled -= instance.OnClick;
+                @Press.started -= instance.OnPress;
+                @Press.performed -= instance.OnPress;
+                @Press.canceled -= instance.OnPress;
                 @RightClick.started -= instance.OnRightClick;
                 @RightClick.performed -= instance.OnRightClick;
                 @RightClick.canceled -= instance.OnRightClick;
@@ -428,12 +428,12 @@ namespace Inputs
         public interface IUIActions
         {
             /// <summary>
-            /// Method invoked when associated input action "Click" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// Method invoked when associated input action "Press" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
             /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnClick(InputAction.CallbackContext context);
+            void OnPress(InputAction.CallbackContext context);
             /// <summary>
             /// Method invoked when associated input action "RightClick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>

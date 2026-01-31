@@ -7,7 +7,7 @@
             "id": "5c7c7707-11c9-4bf4-ac26-e3240cdc5056",
             "actions": [
                 {
-                    "name": "Click",
+                    "name": "Press",
                     "type": "Button",
                     "id": "96867206-3a72-42fa-b5a7-9e2127217d39",
                     "expectedControlType": "",
@@ -42,7 +42,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": ";PC",
-                    "action": "Click",
+                    "action": "Press",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -53,7 +53,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Tactile",
-                    "action": "Click",
+                    "action": "Press",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
