@@ -1,6 +1,5 @@
 using System;
 using Inputs;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,7 +20,7 @@ namespace Managers
         [field: SerializeField] public bool IsDragging { get; private set; }
         
         private Vector2 _pressStartPosition;
-        private const byte DragThreshold = 64;
+        private const byte DragThreshold = 16;
         
         #region Mono
         private void Awake()
@@ -40,6 +39,7 @@ namespace Managers
             if (!PointerDown)
                 IsDragging = false;
         }
+        
         private void OnEnable()
         {
             _actions.Enable();
@@ -62,15 +62,6 @@ namespace Managers
         
         private void OnDestroy() => OnDisable();
         #endregion
-        
-        private void HandleLeftClick(InputAction.CallbackContext ctx)
-        {
-            var pos = Pointer.current != null 
-                ? Pointer.current.position.ReadValue() 
-                : Vector2.zero;
-
-            OnLeftClick?.Invoke(pos);
-        }
 
         private void HandleRightClick(InputAction.CallbackContext ctx)
         {

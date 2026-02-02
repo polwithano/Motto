@@ -11,6 +11,8 @@ namespace Views
 {
     public class TileView : MonoBehaviour
     {
+        public RectTransform RectTransform { get; private set; }
+        
         [SerializeField] private TextMeshProUGUI characterText;
         [SerializeField] private TextMeshProUGUI valueText;
         [SerializeField] private UIEffect uiEffect;
@@ -33,7 +35,15 @@ namespace Views
         
         public void SetInHand(bool inHand) => IsInHand = inHand;
         
+        private Transform _originalParent; 
+        
         #region Mono
+
+        private void Awake()
+        {
+            RectTransform = GetComponent<RectTransform>();
+        }
+        
         private void OnEnable()
         {
             GameEvents.OnScoreStepStarted += HandleOnTileScored; 
@@ -64,7 +74,32 @@ namespace Views
             characterText.text = tile.Character;
             valueText.text = tile.Points.ToString();
             
+            gameObject.name = $"Tile_{tile.Character}";
+            
             PopulateTileModifier();
+        }
+        
+        private void PopulateTileModifier()
+        {
+            if (Tile.Modifier != null)
+            {
+                characterText.font = Tile.Modifier.FontAsset; 
+            }
+        }
+
+        public void BeginDrag(Transform dragLayer)
+        {
+            _originalParent = transform.parent;
+            transform.SetParent(dragLayer, true);
+
+            RectTransform.SetAsLastSibling();
+            RectTransform.localScale = Vector3.one * 1.05f;
+        }
+
+        public void EndDrag()
+        {
+            transform.SetParent(_originalParent, true);
+            RectTransform.localScale = Vector3.one;
         }
         
         public void OnTileRedraw()
@@ -93,14 +128,6 @@ namespace Views
             uiEffectTweener.Play(true);
 
             return tcs.Task;
-        }
-
-        private void PopulateTileModifier()
-        {
-            if (Tile.Modifier != null)
-            {
-                characterText.font = Tile.Modifier.FontAsset; 
-            }
         }
 
         private void AnimateOnTileScored()

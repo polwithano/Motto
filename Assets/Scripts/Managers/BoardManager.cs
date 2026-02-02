@@ -12,8 +12,35 @@ namespace Managers
     public class BoardManager : MonoBehaviourSingleton<BoardManager>
     {
         [field: SerializeField] public List<RectTransform> Slots { get; private set; } = new(); 
+        [field: SerializeField] public List<SlotView>  SlotViews { get; private set; } = new();
+
+        private SlotView _previewedSlot;
+        private Vector3 _selectedTilePosition; 
         
         #region Mono Methods
+
+        private void Start()
+        {
+            foreach (var slot in Slots)
+            {
+                SlotViews.Add(slot.GetComponent<SlotView>());
+            }
+        }
+
+        private void Update()
+        {
+            if (TileController.Instance.SelectedTile != null)
+            {
+                _selectedTilePosition = TileController.Instance.SelectedTile.transform.position;
+                DisplayPreviewedSlot();
+            }
+            else if (TileController.Instance.SelectedTile == null && _previewedSlot != null)
+            {
+                _previewedSlot.DisablePreviewFeedback();
+                _previewedSlot = null;
+            }
+        }
+        
         private void OnEnable()
         {
             GameEvents.OnTileAddedToBoard += HandleOnTileAddedToBoard;
@@ -115,6 +142,51 @@ namespace Managers
             }
 
             return tiles;
+        }
+
+        private void DisplayPreviewedSlot()
+        {
+            SlotView closest = null;
+            var minDistance = float.MaxValue;
+
+            for (int i = 0; i < Slots.Count; i++)
+            {
+                if (!IsPlayableEmptySlot(i))
+                    continue;
+
+                var slot = Slots[i];
+                var distance = Vector3.Distance(_selectedTilePosition, slot.position);
+
+                // Priority => Left -> Distance
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    closest = slot.GetComponent<SlotView>();
+                }
+            }
+
+            if (closest == null || _previewedSlot == closest)
+                return;
+
+            _previewedSlot?.DisablePreviewFeedback();
+            _previewedSlot = closest;
+            _previewedSlot.EnablePreviewFeedback();
+        }
+        
+        private bool IsPlayableEmptySlot(int index)
+        {
+            if (Slots[index].childCount > 0)
+                return false;
+
+            var hasLeft = index > 0 && Slots[index - 1].childCount > 0;
+            var hasRight = index < Slots.Count - 1 && Slots[index + 1].childCount > 0;
+
+            // First Slot
+            if (!hasLeft && !hasRight)
+                return index == 0;
+
+            // Hole between two tiles
+            return hasLeft || hasRight;
         }
     }
 }
