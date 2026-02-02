@@ -60,7 +60,8 @@ namespace Events
         public static event Action<TileView> OnTileRemovedFromBoard;
         public static event Action<string, List<Tile>> OnBoardUpdated; 
         public static event Action<Tile> OnTileRedraw;
-        public static event Action<Tile, Tile> OnTileRedrawPerformed; 
+        public static event Action<Tile, Tile> OnTileRedrawPerformed;
+        public static event Action<TileView, SlotView> OnTileDropConfirmed; 
 
         public static void RaiseOnTileAddedToBoard(TileView tile) 
             => OnTileAddedToBoard?.Invoke(tile);
@@ -72,6 +73,9 @@ namespace Events
             => OnTileRedraw?.Invoke(tile);
         public static void RaiseOnTileRedrawPerformed(Tile tile, Tile newTile) 
             => OnTileRedrawPerformed?.Invoke(tile, newTile);
+
+        public static void RaiseOnTileDropConfirmed(TileView tile, SlotView slot)
+            => OnTileDropConfirmed?.Invoke(tile, slot); 
         #endregion
         
         #region UI Events

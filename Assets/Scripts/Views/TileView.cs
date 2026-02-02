@@ -35,7 +35,8 @@ namespace Views
         
         public void SetInHand(bool inHand) => IsInHand = inHand;
         
-        private Transform _originalParent; 
+        private Transform _originalParent;
+        private Tween _scaleTween; 
         
         #region Mono
 
@@ -91,14 +92,19 @@ namespace Views
         {
             _originalParent = transform.parent;
             transform.SetParent(dragLayer, true);
-
+            
             RectTransform.SetAsLastSibling();
-            RectTransform.localScale = Vector3.one * 1.05f;
+            _scaleTween?.Kill();
+            _scaleTween = RectTransform
+                .DOScale(Vector3.one * 1.15f, 0.15f)
+                .SetEase(Ease.OutBack);
         }
 
         public void EndDrag()
         {
             transform.SetParent(_originalParent, true);
+
+            _scaleTween?.Kill();
             RectTransform.localScale = Vector3.one;
         }
         

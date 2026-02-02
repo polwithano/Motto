@@ -17,6 +17,8 @@ namespace Managers
         private SlotView _previewedSlot;
         private Vector3 _selectedTilePosition; 
         
+        public SlotView GetPreviewedSlot() =>  _previewedSlot;
+        
         #region Mono Methods
 
         private void Start()
@@ -44,12 +46,14 @@ namespace Managers
         private void OnEnable()
         {
             GameEvents.OnTileAddedToBoard += HandleOnTileAddedToBoard;
+            GameEvents.OnTileDropConfirmed += HandleOnTileDropConfirmed; 
             GameEvents.OnTileRemovedFromBoard += HandleOnTileRemovedFromBoard;
         }
 
         private void OnDisable()
         {
             GameEvents.OnTileAddedToBoard -= HandleOnTileAddedToBoard;
+            GameEvents.OnTileDropConfirmed -= HandleOnTileDropConfirmed;
             GameEvents.OnTileRemovedFromBoard -= HandleOnTileRemovedFromBoard;
         }
         
@@ -62,6 +66,12 @@ namespace Managers
             AddTileToBoard(tileView);
             GameEvents.RaiseOnBoardUpdated(GetCurrentSlotString(), GetTilesInSlots());
         }
+        
+        private void HandleOnTileDropConfirmed(TileView tileView, SlotView slotView)
+        {
+            AddTileToBoard(tileView, slotView);
+            GameEvents.RaiseOnBoardUpdated(GetCurrentSlotString(), GetTilesInSlots());
+        }
 
         private void HandleOnTileRemovedFromBoard(TileView tileView)
         {
@@ -70,11 +80,18 @@ namespace Managers
         }
         #endregion
 
-        private void AddTileToBoard(TileView tileView)
+        private void AddTileToBoard(TileView tileView, SlotView slotView = null)
         {
-            var slot = GetFirstEmptySlot(); 
+            RectTransform slot; 
+            if (slotView == null)
+                slot = GetFirstEmptySlot();
+            else
+                slot = slotView.GetComponent<RectTransform>();
+            
             tileView.transform.SetParent(slot.transform);
             tileView.transform.localPosition = Vector3.zero;
+            tileView.transform.localScale = Vector3.one;
+            
             tileView.SetInHand(false);
         }
 

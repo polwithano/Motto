@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using Events;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,6 +10,7 @@ namespace Managers
     public class TileController : MonoBehaviourSingleton<TileController>
     {
         [SerializeField] private Transform dragLayer;
+        [SerializeField] private float snapToSlotDistance; 
         
         [field: SerializeField] public TileView SelectedTile { get;  private set; }
         
@@ -109,10 +111,21 @@ namespace Managers
             if (!_input.PointerJustReleased)
                 return;
 
-            _draggedTile.EndDrag();
-            _draggedTile = null;
+            var tile = _draggedTile;
             
-            SelectedTile = _draggedTile;
+            _draggedTile = null;
+            SelectedTile = null;
+
+            var slot = BoardManager.Instance.GetPreviewedSlot();
+
+            if (slot != null && IsCloseEnoughFromSlot(tile.RectTransform, slot.GetComponent<RectTransform>()))
+            {
+                AnimateTileToSlot(tile, slot);
+            }
+            else
+            {
+                tile.EndDrag();
+            }
         }
 
         private void SelectTile(Vector2 screenPos)
@@ -146,6 +159,22 @@ namespace Managers
             }
 
             return null;
+        }
+
+        private bool IsCloseEnoughFromSlot(RectTransform tile, RectTransform slot)
+        {
+            return Vector2.Distance(tile.position, slot.position) <= snapToSlotDistance;
+        } 
+        
+        private void AnimateTileToSlot(TileView tile, SlotView slot)
+        {
+            tile.RectTransform
+                .DOMove(slot.GetComponent<RectTransform>().position, 0.225f)
+                .SetEase(Ease.InExpo)
+                .OnComplete(() =>
+                {
+                    GameEvents.RaiseOnTileDropConfirmed(tile, slot);
+                });
         }
     }
 }

@@ -83,11 +83,13 @@ namespace Animation
         private void OnEnable()
         {
             GameEvents.OnTileAddedToBoard += OnTileDrop;
+            GameEvents.OnTileDropConfirmed += HandleOnTileDropConfirmed; 
         }
-
+        
         private void OnDisable()
         {
             GameEvents.OnTileAddedToBoard -= OnTileDrop;
+            GameEvents.OnTileDropConfirmed -= HandleOnTileDropConfirmed;
         }
     
         private void OnTileDrop(TileView tileView)
@@ -99,6 +101,17 @@ namespace Animation
                 AddRipple(uv);
             }
         }
+        
+        private void HandleOnTileDropConfirmed(TileView tileView, SlotView slotView)
+        {
+            if (!targetMaterial) return;
+
+            if (WorldToUV(tileView.transform.position, out var uv))
+            {
+                AddRipple(uv);
+            }
+        }
+
 /*
         public void OnPointerDown(PointerEventData eventData)
         {
