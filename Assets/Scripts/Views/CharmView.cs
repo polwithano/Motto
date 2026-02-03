@@ -24,26 +24,23 @@ namespace Views
         [SerializeField] private Ease ease = Ease.OutBack;
 
         [Header("Preview Settings")] 
-        [SerializeField] private Color disabledColor;
-        [SerializeField] private Color disabledColorOutline;
-        [SerializeField] private Color enabledColor;
-        [SerializeField] private Color enabledColorOutline;
+        [SerializeField] [ColorUsage(true, true)] private Color disabledColor;
+        [SerializeField] [ColorUsage(true, true)] private Color disabledColorOutline;
+        [SerializeField] [ColorUsage(true, true)] private Color enabledColor;
+        [SerializeField] [ColorUsage(true, true)] private Color enabledColorOutline;
     
         private Tween _punchTween;
         
         #region Mono
-        private void Start()
-        {
-            SetActiveFeedback(false);
-        }
-        
         private void OnEnable()
         {
-            GameEvents.OnScoreStepStarted += HandleOnScoreStepStarted; 
+            GameEvents.OnRoundStarted += HandleOnRoundStarted; 
+            GameEvents.OnScoreStepStarted += HandleOnScoreStepStarted;
         }
 
         private void OnDisable()
         {
+            GameEvents.OnRoundStarted -= HandleOnRoundStarted;
             GameEvents.OnScoreStepStarted -= HandleOnScoreStepStarted;
         }
         
@@ -51,6 +48,11 @@ namespace Views
         #endregion
         
         #region Subscribed
+        private void HandleOnRoundStarted(RoundContext round)
+        {
+            SetActiveFeedback(false);
+        }
+        
         private void HandleOnScoreStepStarted(ScoreLogEntry entry)
         {
             if (entry.Emitter is not Charm charm) return;
@@ -58,6 +60,7 @@ namespace Views
 
             AnimateCharm();
         }
+        
         #endregion
         
         public void Populate(Charm charm)
@@ -69,16 +72,22 @@ namespace Views
 
         public void SetActiveFeedback(bool active)
         {
-            if (!active)
-            {
-                charmIcon.color = disabledColor;
-                charmEffect.shadowColor = disabledColorOutline;
-            }
-            else
-            {
-                charmIcon.color = enabledColor;
-                charmEffect.shadowColor = enabledColorOutline;
-            }
+            charmIcon.DOKill();
+            DOTween.Kill(charmEffect);
+
+            var targetColor = active ? enabledColor : disabledColor;
+            var targetOutline = active ? enabledColorOutline : disabledColorOutline;
+
+            charmIcon
+                .DOColor(targetColor, 0.25f)
+                .SetEase(Ease.OutCubic);
+
+            DOTween.To(
+                () => charmEffect.shadowColor,
+                c => charmEffect.shadowColor = c,
+                targetOutline,
+                0.25f
+            ).SetEase(Ease.OutCubic);
         }
 
         private void AnimateCharm()

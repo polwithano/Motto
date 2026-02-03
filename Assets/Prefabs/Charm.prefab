@@ -515,10 +515,10 @@ MonoBehaviour:
   vibrato: 6
   elasticity: 0.8
   ease: 27
-  disabledColor: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
+  disabledColor: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
   disabledColorOutline: {r: 0, g: 0, b: 0, a: 1}
   enabledColor: {r: 1, g: 1, b: 1, a: 1}
-  enabledColorOutline: {r: 1, g: 1, b: 1, a: 1}
+  enabledColorOutline: {r: 4, g: 4, b: 4, a: 1}
 --- !u!114 &2299967704695569272
 MonoBehaviour:
   m_ObjectHideFlags: 0
