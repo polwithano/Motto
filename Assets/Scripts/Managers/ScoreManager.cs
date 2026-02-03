@@ -46,7 +46,9 @@ namespace Managers
             Debug.Log($"HandleOnScoringStarted: {word}");
             
             Log = GenerateScoreLog(word, tiles);
+            
             GameManager.Instance.Run.Round.AddScore((int)Log.Result);
+            
             StartCoroutine(AnimateScore(Log));
         }
 

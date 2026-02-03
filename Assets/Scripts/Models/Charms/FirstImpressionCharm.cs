@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Models.Charms
@@ -16,6 +17,11 @@ namespace Models.Charms
             return index == 0;
         }
 
+        public override bool WillPreviewEffect(string word, List<Tile> tiles = null, int? index = null)
+        {
+            return word.Length > 0; 
+        }
+        
         public override void ApplyEffect(ScoreLog log)
         {
             var tileValue = log.Tiles[0].Points;

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Models.Charms
@@ -14,6 +15,11 @@ namespace Models.Charms
         public override bool TryApplyEffect(RoundContext context, int? index = null)
         {
             return context.LastlyAddedWord().Length <= 3;
+        }
+
+        public override bool WillPreviewEffect(string word, List<Tile> tiles = null, int? index = null)
+        {
+            return word.Length <= 3; 
         }
     }
 }

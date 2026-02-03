@@ -330,7 +330,7 @@ MonoBehaviour:
   m_EdgeMode: 2
   m_EdgeWidth: 1
   m_EdgeColorFilter: 6
-  m_EdgeColor: {r: 7.9999995, g: 7.9999995, b: 7.9999995, a: 1}
+  m_EdgeColor: {r: 15.999999, g: 15.999999, b: 15.999999, a: 1}
   m_EdgeColorGlow: 1
   m_EdgeShinyRate: 0.285
   m_EdgeShinyWidth: 0.33
@@ -2556,7 +2556,7 @@ MonoBehaviour:
   m_EdgeMode: 2
   m_EdgeWidth: 1
   m_EdgeColorFilter: 6
-  m_EdgeColor: {r: 7.9999995, g: 7.9999995, b: 7.9999995, a: 1}
+  m_EdgeColor: {r: 15.999999, g: 15.999999, b: 15.999999, a: 1}
   m_EdgeColorGlow: 1
   m_EdgeShinyRate: 0.285
   m_EdgeShinyWidth: 0.33
@@ -3294,7 +3294,7 @@ MonoBehaviour:
   m_EdgeMode: 2
   m_EdgeWidth: 1
   m_EdgeColorFilter: 6
-  m_EdgeColor: {r: 7.9999995, g: 7.9999995, b: 7.9999995, a: 1}
+  m_EdgeColor: {r: 15.999999, g: 15.999999, b: 15.999999, a: 1}
   m_EdgeColorGlow: 1
   m_EdgeShinyRate: 0.285
   m_EdgeShinyWidth: 0.33
@@ -3962,7 +3962,7 @@ MonoBehaviour:
   m_EdgeMode: 2
   m_EdgeWidth: 1
   m_EdgeColorFilter: 6
-  m_EdgeColor: {r: 7.9999995, g: 7.9999995, b: 7.9999995, a: 1}
+  m_EdgeColor: {r: 15.999999, g: 15.999999, b: 15.999999, a: 1}
   m_EdgeColorGlow: 1
   m_EdgeShinyRate: 0.285
   m_EdgeShinyWidth: 0.33
@@ -4587,7 +4587,7 @@ MonoBehaviour:
   m_EdgeMode: 2
   m_EdgeWidth: 1
   m_EdgeColorFilter: 6
-  m_EdgeColor: {r: 7.9999995, g: 7.9999995, b: 7.9999995, a: 1}
+  m_EdgeColor: {r: 15.999999, g: 15.999999, b: 15.999999, a: 1}
   m_EdgeColorGlow: 1
   m_EdgeShinyRate: 0.285
   m_EdgeShinyWidth: 0.33
@@ -6608,7 +6608,7 @@ MonoBehaviour:
   m_EdgeMode: 2
   m_EdgeWidth: 1
   m_EdgeColorFilter: 6
-  m_EdgeColor: {r: 7.9999995, g: 7.9999995, b: 7.9999995, a: 1}
+  m_EdgeColor: {r: 15.999999, g: 15.999999, b: 15.999999, a: 1}
   m_EdgeColorGlow: 1
   m_EdgeShinyRate: 0.285
   m_EdgeShinyWidth: 0.33
@@ -8028,7 +8028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Managers.GameManagerNew
   PrintTrace: 0
-  <DisableWordCheck>k__BackingField: 1
+  <DisableWordCheck>k__BackingField: 0
   <LanguageCode>k__BackingField: en
   <GameState>k__BackingField: {fileID: 0}
   <TileDistributionRule>k__BackingField: {fileID: 11400000, guid: c0489f970ab7d4d83966eb913ccf5209, type: 2}
@@ -10360,7 +10360,7 @@ MonoBehaviour:
   m_EdgeMode: 2
   m_EdgeWidth: 1
   m_EdgeColorFilter: 6
-  m_EdgeColor: {r: 7.9999995, g: 7.9999995, b: 7.9999995, a: 1}
+  m_EdgeColor: {r: 15.999999, g: 15.999999, b: 15.999999, a: 1}
   m_EdgeColorGlow: 1
   m_EdgeShinyRate: 0.285
   m_EdgeShinyWidth: 0.33
@@ -10731,7 +10731,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.015625, y: 0.005004883}
+  m_AnchoredPosition: {x: 0.015625, y: 0.0020751953}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1891756476

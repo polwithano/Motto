@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Interfaces;
@@ -29,6 +30,7 @@ namespace Models.Charms
         }
         
         public abstract bool TryApplyEffect(RoundContext context, int? index = null);
+        public abstract bool WillPreviewEffect(string word, List<Tile> tiles = null, int? index = null);
         
         public virtual void ApplyEffect(ScoreLog log)
         {

@@ -1,4 +1,5 @@
 using Coffee.UIEffects;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Views
@@ -17,11 +18,21 @@ namespace Views
         public void EnablePreviewFeedback()
         {
             uiEffect.enabled = true;
+            uiEffect.edgeWidth = 0;
+
+            var width = 0;
+            DOTween.To(() => width, x => width = x, 1, 0.33f)
+                .OnUpdate(() => uiEffect.edgeWidth = width);
         }
 
         public void DisablePreviewFeedback()
         {
-            uiEffect.enabled = false;
+            uiEffect.edgeWidth = 1;
+            
+            var width = 1;
+            DOTween.To(() => width, x => width = x, 0, 0.33f)
+                .OnUpdate(() => uiEffect.edgeWidth = width)
+                .OnComplete(() => uiEffect.enabled = false);
         }
     }
 }

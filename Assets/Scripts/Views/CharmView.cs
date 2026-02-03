@@ -1,3 +1,4 @@
+using Coffee.UIEffects;
 using DG.Tweening;
 using Events;
 using Models;
@@ -13,6 +14,7 @@ namespace Views
     
         [SerializeField] private Image charmIcon;
         [SerializeField] private Image charmIconShadow;
+        [SerializeField] private UIEffect charmEffect;
         
         [Header("Animation Settings")]
         [SerializeField] private float punchScaleAmount = 0.2f;
@@ -20,10 +22,21 @@ namespace Views
         [SerializeField] private int vibrato = 6;
         [SerializeField] private float elasticity = 0.8f;
         [SerializeField] private Ease ease = Ease.OutBack;
+
+        [Header("Preview Settings")] 
+        [SerializeField] private Color disabledColor;
+        [SerializeField] private Color disabledColorOutline;
+        [SerializeField] private Color enabledColor;
+        [SerializeField] private Color enabledColorOutline;
     
         private Tween _punchTween;
         
         #region Mono
+        private void Start()
+        {
+            SetActiveFeedback(false);
+        }
+        
         private void OnEnable()
         {
             GameEvents.OnScoreStepStarted += HandleOnScoreStepStarted; 
@@ -52,6 +65,20 @@ namespace Views
             Charm =  charm;
             charmIcon.sprite = Charm.CharmIcon;
             charmIconShadow.sprite = Charm.CharmIcon; 
+        }
+
+        public void SetActiveFeedback(bool active)
+        {
+            if (!active)
+            {
+                charmIcon.color = disabledColor;
+                charmEffect.shadowColor = disabledColorOutline;
+            }
+            else
+            {
+                charmIcon.color = enabledColor;
+                charmEffect.shadowColor = enabledColorOutline;
+            }
         }
 
         private void AnimateCharm()

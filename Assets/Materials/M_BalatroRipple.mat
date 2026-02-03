@@ -41,13 +41,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Contrast: 2.8
+    - _Contrast: 3.4
     - _EnableExternalAlpha: 0
     - _GlobalStrength: 0.02
     - _IsRotate: 0
     - _Lighting: 0.34
     - _MaxSources: 4
-    - _PixelFilter: 384
+    - _PixelFilter: 758
     - _RectAspect: 0.42857143
     - _RippleVisibility: 1
     - _SpinAmount: 0.2
@@ -57,8 +57,8 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Colour1: {r: 0.23137252, g: 0.37639448, b: 0.87058824, a: 1}
-    - _Colour2: {r: 0, g: 0.41960785, b: 0.7058824, a: 1}
+    - _Colour1: {r: 0.23137252, g: 0.72702324, b: 0.87058824, a: 1}
+    - _Colour2: {r: 0.011764695, g: 0.40310493, b: 0.47058824, a: 1}
     - _Colour3: {r: 0.08627451, g: 0.13725491, b: 0.14509805, a: 1}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}

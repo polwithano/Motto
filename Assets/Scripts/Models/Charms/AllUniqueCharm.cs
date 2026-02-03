@@ -14,19 +14,27 @@ namespace Models.Charms
         /// <returns></returns>
         public override bool TryApplyEffect(RoundContext context, int? index = null)
         {
-            HashSet<char> seenCharacters = new HashSet<char>();
-            bool isApplied = true;
-            
-            foreach (char c in context.Words[^1])
+            return AreAllLettersUnique(context.Words[^1]); 
+        }
+
+        public override bool WillPreviewEffect(string word, List<Tile> tiles = null, int? index = null)
+        {
+            return AreAllLettersUnique(word); 
+        }
+
+        private bool AreAllLettersUnique(string word)
+        {
+            var seen = new HashSet<char>();
+            var allUnique = true;
+
+            foreach (var c in word)
             {
-                if (seenCharacters.Contains(c))
-                {
-                    isApplied = false;
-                }
-                seenCharacters.Add(c);
+                if (seen.Contains(c))
+                    allUnique = false;
+                seen.Add(c);
             }
-            
-            return isApplied; 
+
+            return allUnique;
         }
     }
 }

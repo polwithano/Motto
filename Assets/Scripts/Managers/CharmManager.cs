@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Events;
+using Models;
 using Models.Charms;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -28,6 +30,30 @@ namespace Managers
             .Where(c => c.EffectTrigger == EffectTrigger.OnLetter).ToList() 
             .OrderBy(c => c.PriorityOverride).ToList();  
 
+        #region Mono
+        private void OnEnable()
+        {
+            GameEvents.OnBoardUpdated += HandleOnBoardUpdated;
+        }
+
+        private void OnDisable()
+        {
+            GameEvents.OnBoardUpdated -= HandleOnBoardUpdated;
+        }
+        #endregion
+        
+        private void HandleOnBoardUpdated(string word, List<Tile> tiles)
+        {
+            var context = GameManager.Instance.Run.Round;
+
+            foreach (var charm in ActiveCharms)
+            {
+                var willTrigger = WillCharmTrigger(charm, word, tiles);
+                var view = CharmViews[charm];
+                view.SetActiveFeedback(willTrigger);
+            }      
+        }
+        
         public void InitializeCharms()
         {
             foreach (var charm in ActiveCharms)
@@ -42,6 +68,29 @@ namespace Managers
         public CharmView GetCharmViewFromCharm(Charm charm)
         {
             return CharmViews[charm];
+        }
+        
+        private bool WillCharmTrigger(Charm charm, string word, List<Tile> tiles)
+        {
+            switch (charm.EffectTrigger)
+            {
+                case EffectTrigger.OnWordStart:
+                    return charm.WillPreviewEffect(word);
+
+                case EffectTrigger.OnWordEnd:
+                    return tiles.Count > 0 && charm.WillPreviewEffect(word);
+
+                case EffectTrigger.OnLetter:
+                    for (var i = 0; i < tiles.Count; i++)
+                    {
+                        if (charm.WillPreviewEffect(word, tiles, i))
+                            return true;
+                    }
+                    return false;
+
+                default:
+                    return false;
+            }
         }
     }
 }

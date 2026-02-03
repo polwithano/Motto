@@ -49,9 +49,6 @@ namespace UI.Tooltips
 
         protected virtual void Update()
         {
-            if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
-                Debug.Log(Touchscreen.current.primaryTouch.position.ReadValue());
-            
             if (!_isActive || canvasGroup.alpha <= 0f) return;
 
             var pointerPos = _inputManager.PointerPosition; 
