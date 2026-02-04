@@ -29,6 +29,8 @@ ShaderVariantCollection:
         passType: 0
       - keywords: SAMPLING_PIXELATION
         passType: 0
+      - keywords: TONE_RETRO
+        passType: 0
       - keywords: TRANSITION_BLAZE
         passType: 0
       - keywords: TRANSITION_BURN
