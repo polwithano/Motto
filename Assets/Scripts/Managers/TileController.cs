@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using Events;
+using Events.Core;
+using Events.Inputs;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Views;
@@ -9,10 +11,14 @@ namespace Managers
 {
     public class TileController : MonoBehaviourSingleton<TileController>
     {
+        [SerializeField] private RedrawView redrawView;
+        [SerializeField] private LayerMask drawLayer; 
+        [SerializeField] private LayerMask handLayer; 
         [SerializeField] private Transform dragLayer;
         [SerializeField] private float snapToSlotDistance; 
         
         [field: SerializeField] public TileView SelectedTile { get;  private set; }
+        [field: SerializeField] public bool IsOverRedraw { get; private set; }
         
         private InputManager _input;
         private RectTransform _dragLayerRect;
@@ -23,7 +29,6 @@ namespace Managers
         private Camera _uiCamera;
         
         #region Mono
-
         private void Start()
         {
             _input = InputManager.Instance;
@@ -34,20 +39,25 @@ namespace Managers
             _uiCamera = _canvas.renderMode == RenderMode.ScreenSpaceOverlay
                 ? null
                 : (_canvas.worldCamera != null ? _canvas.worldCamera : Camera.main);
-            
-            Debug.Log($"Canvas={_canvas.name} mode={_canvas.renderMode} cam={_uiCamera}");
         }
 
         private void Update()
         {
             if (_draggedTile == null)
             {
-                TryStartDrag();
+                if (TryStartDrag())
+                {
+                    Bus<TileDraggedEvent>.Raise(new TileDraggedEvent(_draggedTile, DragEventType.DragStart));
+                }
             }
             else
             {
                 UpdateDrag();
-                TryEndDrag();
+                if (TryEndDrag())
+                {
+                    Bus<TileDraggedEvent>.Raise(new TileDraggedEvent(_draggedTile, DragEventType.DragEnd));
+                    _draggedTile = null;
+                }
             }
         }
         
@@ -77,14 +87,14 @@ namespace Managers
         }
         #endregion
 
-        private void TryStartDrag()
+        private bool TryStartDrag()
         {
             if (_input.PointerJustPressed || !_input.IsDragging)
-                return;
+                return false;
 
             var tile = RaycastTile(_input.PointerPosition);
             if (tile == null || !tile.IsInHand)
-                return;
+                return false;
 
             _draggedTile = tile;
             _draggedTile.BeginDrag(dragLayer);
@@ -92,6 +102,8 @@ namespace Managers
             SelectedTile = _draggedTile;
 
             UpdateDrag();
+            
+            return true;
         }
 
         private void UpdateDrag()
@@ -104,28 +116,57 @@ namespace Managers
             );
 
             _draggedTile.RectTransform.position = worldPos;
+            
+            var isOverRedrawNow = IsPointerOverLayer(_input.PointerPosition, drawLayer);
+
+            if (isOverRedrawNow != IsOverRedraw)
+            {
+                IsOverRedraw = isOverRedrawNow;
+                redrawView.SetHovered(IsOverRedraw);
+            }
         }
 
-        private void TryEndDrag()
+        private bool TryEndDrag()
         {
             if (!_input.PointerJustReleased)
-                return;
+                return false;
 
             var tile = _draggedTile;
-            
-            _draggedTile = null;
+
+            IsOverRedraw = false;
             SelectedTile = null;
+            
+            redrawView.SetHovered(IsOverRedraw);
 
-            var slot = BoardManager.Instance.GetPreviewedSlot();
+            var pointerPos = _input.PointerPosition;
 
-            if (slot != null && IsCloseEnoughFromSlot(tile.RectTransform, slot.GetComponent<RectTransform>()))
-            {
-                AnimateTileToSlot(tile, slot);
-            }
-            else
+            if (IsPointerOverLayer(pointerPos, handLayer))
             {
                 tile.EndDrag();
+                return true;
             }
+            
+            if (IsPointerOverLayer(pointerPos, drawLayer))
+            {
+                AnimateTileToPosition(
+                    tile, 
+                    redrawView.GetComponent<RectTransform>().position,
+                    () => GameEvents.RaiseOnTileRedraw(tile.Tile));
+                return true;
+            }
+            
+            var slot = BoardManager.Instance.GetPreviewedSlot();
+            if (slot != null && IsCloseEnoughFromSlot(tile.RectTransform, slot.GetComponent<RectTransform>()))
+            {
+                AnimateTileToPosition(
+                    tile, 
+                    slot.GetComponent<RectTransform>().position, 
+                    () => GameEvents.RaiseOnTileDropConfirmed(tile, slot));
+                return true; 
+            }
+            
+            tile.EndDrag();
+            return true; 
         }
 
         private void SelectTile(Vector2 screenPos)
@@ -164,7 +205,30 @@ namespace Managers
         private bool IsCloseEnoughFromSlot(RectTransform tile, RectTransform slot)
         {
             return Vector2.Distance(tile.position, slot.position) <= snapToSlotDistance;
-        } 
+        }
+
+        private bool IsPointerOverLayer(Vector2 screenPos, LayerMask mask)
+        {
+            var ped = new PointerEventData(EventSystem.current)
+            {
+                position = screenPos
+            };
+
+            var results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(ped, results);
+
+            foreach (var hit in results)
+            {
+                Debug.Log($"Hit: {hit.gameObject.name} | layer={LayerMask.LayerToName(hit.gameObject.layer)}");
+                if ((mask.value & (1 << hit.gameObject.layer)) != 0)
+                {
+                   // Debug.Log("Pointer over layer: " + LayerMask.LayerToName(hit.gameObject.layer));
+                    return true;
+                }
+            }
+
+            return false;
+        }
         
         private void AnimateTileToSlot(TileView tile, SlotView slot)
         {
@@ -175,6 +239,14 @@ namespace Managers
                 {
                     GameEvents.RaiseOnTileDropConfirmed(tile, slot);
                 });
+        }
+
+        private void AnimateTileToPosition(TileView tile, Vector3 position, System.Action onComplete = null)
+        {
+            tile.RectTransform
+                .DOMove(position, 0.225f)
+                .SetEase(Ease.InExpo)
+                .OnComplete(() => onComplete?.Invoke());
         }
     }
 }

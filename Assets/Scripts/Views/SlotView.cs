@@ -30,7 +30,7 @@ namespace Views
             uiEffect.edgeWidth = 1;
             
             var width = 1;
-            DOTween.To(() => width, x => width = x, 0, 0.33f)
+            DOTween.To(() => width, x => width = x, 0, 0.05f)
                 .OnUpdate(() => uiEffect.edgeWidth = width)
                 .OnComplete(() => uiEffect.enabled = false);
         }

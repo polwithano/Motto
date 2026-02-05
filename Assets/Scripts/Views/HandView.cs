@@ -1,4 +1,7 @@
+using System.Linq;
 using Events;
+using Events.Core;
+using Events.Inputs;
 using Models;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -16,11 +19,13 @@ namespace Views
         private void OnEnable()
         {
             GameEvents.OnTileRedrawPerformed += HandleOnTileRedrawPerformed;
+            Bus<TileDraggedEvent>.OnEvent += HandleOnTileDragged;
         }
 
         private void OnDisable()
         {
             GameEvents.OnTileRedrawPerformed -= HandleOnTileRedrawPerformed;
+            Bus<TileDraggedEvent>.OnEvent -= HandleOnTileDragged;
         }
 
         private void OnDestroy() => OnDisable();
@@ -55,6 +60,12 @@ namespace Views
             // Register in dictionary
             ViewsById[newTile.ID] = newView;
         }
+
+        private void HandleOnTileDragged(TileDraggedEvent evt)
+        {
+            // Set the tiles views blocking raycast to false whenever a tile is dragged. 
+            SetTileViewsRaycast(evt.EventType);
+        }
         #endregion
 
         public void InstantiateHand(TileHand hand)
@@ -65,6 +76,22 @@ namespace Views
             {
                 InstantiateTile(tile);
             }
+        }
+        
+        public bool TryGetView(Tile tile, out TileView view)
+        {
+            if (tile == null)
+            {
+                view = null;
+                return false;
+            }
+
+            return ViewsById.TryGetValue(tile.ID, out view);
+        }
+
+        public TileView GetView(Tile tile)
+        {
+            return tile != null && ViewsById.TryGetValue(tile.ID, out var view) ? view : null;
         }
 
         private void InstantiateTile(Tile tile)
@@ -89,29 +116,26 @@ namespace Views
 
         private void DestroyViews()
         {
-            foreach (var kvp in ViewsById)
+            foreach (var kvp in ViewsById.Where(kvp => kvp.Value != null))
             {
-                if (kvp.Value != null)
-                    Destroy(kvp.Value.gameObject);
+                Destroy(kvp.Value.gameObject);
             }
 
             ViewsById.Clear();
         }
 
-        public bool TryGetView(Tile tile, out TileView view)
+        private void SetTileViewsRaycast(DragEventType dragEventType)
         {
-            if (tile == null)
+            var enabled = dragEventType != DragEventType.DragStart;
+
+            foreach (var kvp in ViewsById.Where(kvp => kvp.Value != null))
             {
-                view = null;
-                return false;
+                kvp.Value.gameObject.TryGetComponent(out CanvasGroup canvasGroup);
+                {
+                    canvasGroup.interactable = enabled;
+                    canvasGroup.blocksRaycasts = enabled;
+                }
             }
-
-            return ViewsById.TryGetValue(tile.ID, out view);
-        }
-
-        public TileView GetView(Tile tile)
-        {
-            return tile != null && ViewsById.TryGetValue(tile.ID, out var view) ? view : null;
         }
     }
 }

@@ -35,6 +35,7 @@ namespace Views
         
         public void SetInHand(bool inHand) => IsInHand = inHand;
         
+        private CanvasGroup _canvasGroup;
         private Transform _originalParent;
         private Tween _scaleTween; 
         
@@ -43,6 +44,7 @@ namespace Views
         private void Awake()
         {
             RectTransform = GetComponent<RectTransform>();
+            _canvasGroup = GetComponent<CanvasGroup>();
         }
         
         private void OnEnable()

@@ -42,27 +42,27 @@ Material:
     m_Ints: []
     m_Floats:
     - _ALineFrequency: 3
-    - _ALineWobble: 0.05
+    - _ALineWobble: 0.1
     - _AMoireFrequency: 4
     - _AMoireSpeed: 2
     - _AMoireStrength: 1
-    - _AOutlineSoft: 0
+    - _AOutlineSoft: 0.02
     - _AOutlineStrength: 1
     - _AOutlineWidth: 0
     - _ARotation: 0
-    - _AScale: 12
-    - _ASpeed: 0.0125
+    - _AScale: 10
+    - _ASpeed: 0
     - _BLineFrequency: 3
-    - _BLineWobble: 0
+    - _BLineWobble: 0.1
     - _BMoireFrequency: 4
     - _BMoireSpeed: 2.2
     - _BMoireStrength: 1
-    - _BOutlineSoft: 0
+    - _BOutlineSoft: 0.02
     - _BOutlineStrength: 1
     - _BOutlineWidth: 0
     - _BRotation: 0
     - _BScale: 8
-    - _BSpeed: 0.0125
+    - _BSpeed: 0
     - _CheckerMorph: 1
     - _CheckerRotation: 0.25
     - _CheckerScale: 8
@@ -98,20 +98,20 @@ Material:
     - _SpinRotation: -2
     - _SpinSpeed: 2
     - _SplitFeather: 0
-    - _SplitLeft: 0.5
+    - _SplitLeft: 0.4
     - _SplitLineSoft: 0
     - _SplitLineStrength: 0.93
     - _SplitLineWidth: 0.005
-    - _SplitRight: 0.5
-    - _SplitValue: 0
+    - _SplitRight: 0.6
+    - _SplitValue: -0.045
     - _ZWrite: 0
     m_Colors:
-    - _AColorA: {r: 0.95, g: 0.92, b: 0.85, a: 1}
+    - _AColorA: {r: 0.8160377, g: 0.8945834, b: 1, a: 1}
     - _AColorB: {r: 0.65, g: 0.8, b: 1, a: 1}
-    - _AOutlineColor: {r: 0.049999982, g: 0.049999982, b: 0.07999996, a: 1}
-    - _BColorA: {r: 0.95, g: 0.92, b: 0.85, a: 1}
+    - _AOutlineColor: {r: 0.15850836, g: 0.1955582, b: 0.24528301, a: 1}
+    - _BColorA: {r: 1, g: 0.80898875, b: 0.75, a: 1}
     - _BColorB: {r: 1, g: 0.7322228, b: 0.6509804, a: 1}
-    - _BOutlineColor: {r: 0.049999982, g: 0.049999982, b: 0.07999996, a: 1}
+    - _BOutlineColor: {r: 0.4245283, g: 0.26387894, b: 0.21426664, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorA: {r: 1, g: 0.6421819, b: 0.60784316, a: 1}
     - _ColorB: {r: 1, g: 1, b: 1, a: 1}

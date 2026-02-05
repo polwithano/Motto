@@ -45,21 +45,21 @@ Material:
     - _EnableExternalAlpha: 0
     - _GlobalStrength: 0.02
     - _IsRotate: 0
-    - _Lighting: 0.34
+    - _Lighting: 0.24
     - _MaxSources: 4
     - _PixelFilter: 1024
     - _RectAspect: 0.42857143
     - _RippleVisibility: 1
-    - _SpinAmount: 0.2
-    - _SpinEase: 1
+    - _SpinAmount: 0.08
+    - _SpinEase: 0.31
     - _SpinRotation: -2
     - _SpinSpeed: 2
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Colour1: {r: 0.23137252, g: 0.72702324, b: 0.87058824, a: 1}
-    - _Colour2: {r: 0.11725702, g: 0.70241064, b: 0.8018868, a: 1}
-    - _Colour3: {r: 0.17799929, g: 0.28536847, b: 0.3018868, a: 1}
+    - _Colour1: {r: 0, g: 0.5960264, b: 1, a: 1}
+    - _Colour2: {r: 0.03244037, g: 0.171778, b: 0.254717, a: 1}
+    - _Colour3: {r: 0, g: 0.4612304, b: 0.7830189, a: 1}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

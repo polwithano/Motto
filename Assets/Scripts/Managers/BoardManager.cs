@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Events;
 using UnityEngine;
 using Models;
-using NUnit.Framework;
 using Views;
 
 namespace Managers
@@ -31,12 +30,17 @@ namespace Managers
 
         private void Update()
         {
-            if (TileController.Instance.SelectedTile != null)
+            if (TileController.Instance.SelectedTile != null && !TileController.Instance.IsOverRedraw)
             {
                 _selectedTilePosition = TileController.Instance.SelectedTile.transform.position;
                 DisplayPreviewedSlot();
             }
             else if (TileController.Instance.SelectedTile == null && _previewedSlot != null)
+            {
+                _previewedSlot.DisablePreviewFeedback();
+                _previewedSlot = null;
+            }
+            else if (TileController.Instance.IsOverRedraw && _previewedSlot != null)
             {
                 _previewedSlot.DisablePreviewFeedback();
                 _previewedSlot = null;
@@ -83,6 +87,7 @@ namespace Managers
         private void AddTileToBoard(TileView tileView, SlotView slotView = null)
         {
             RectTransform slot; 
+            
             if (slotView == null)
                 slot = GetFirstEmptySlot();
             else
