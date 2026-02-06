@@ -17,7 +17,7 @@ namespace UI
         [SerializeField] private TextMeshProUGUI nextRoundLabel;
         [SerializeField] private TextMeshProUGUI rerollLabel; 
         
-        [SerializeField] private List<GameObject>  ShopTiles;
+        [SerializeField] private List<GameObject>  shopTiles;
         
         #region Mono
         private void OnEnable()
@@ -80,7 +80,7 @@ namespace UI
                 var tileView = Instantiate(tileViewPrefab, tileShopContainer.transform);
                 var view = tileView.GetComponent<TileView>();
 
-                ShopTiles.Add(tileShopContainer);
+                shopTiles.Add(tileShopContainer);
                 tileView.transform.SetAsFirstSibling();
                 view.Populate(tile);
                 
@@ -100,8 +100,8 @@ namespace UI
 
         private void ClearShopItemViews()
         {
-            foreach (var obj in ShopTiles) Destroy(obj);
-            ShopTiles.Clear();
+            foreach (var obj in shopTiles) Destroy(obj);
+            shopTiles.Clear();
         }
     }
 }

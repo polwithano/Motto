@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Events;
 using Events.Core;
 using Events.Game;
+using Events.Rounds;
 using UnityEngine;
 using Models;
 using Views;
@@ -28,7 +29,6 @@ namespace Managers
             {
                 SlotViews.Add(slot.GetComponent<SlotView>());
             }
-            DisplayDefaultPreviewedSlot();
         }
 
         private void Update()
@@ -48,7 +48,8 @@ namespace Managers
         private void OnEnable()
         {
             Bus<TilePositionUpdatedEvent>.OnEvent += HandleTilePositionUpdated;
-            Bus<BoardUpdatedEvent>.OnEvent += HandleBoardUpdated; 
+            Bus<BoardUpdatedEvent>.OnEvent += HandleBoardUpdated;
+            Bus<RoundStartedEvent>.OnEvent += HandleRoundStarted; 
             GameEvents.OnTileDropConfirmed += HandleOnTileDropConfirmed; 
         }
 
@@ -56,6 +57,7 @@ namespace Managers
         {
             Bus<TilePositionUpdatedEvent>.OnEvent -= HandleTilePositionUpdated; 
             Bus<BoardUpdatedEvent>.OnEvent -= HandleBoardUpdated; 
+            Bus<RoundStartedEvent>.OnEvent -= HandleRoundStarted; 
             GameEvents.OnTileDropConfirmed -= HandleOnTileDropConfirmed;
         }
         
@@ -83,7 +85,12 @@ namespace Managers
             Bus<BoardUpdatedEvent>.Raise(new BoardUpdatedEvent(GetCurrentSlotString(), GetTilesInSlots()));
         }
         
-        private void HandleBoardUpdated(BoardUpdatedEvent args)
+        private void HandleBoardUpdated(BoardUpdatedEvent evt)
+        {
+            DisplayDefaultPreviewedSlot();
+        }
+        
+        private void HandleRoundStarted(RoundStartedEvent evt)
         {
             DisplayDefaultPreviewedSlot();
         }

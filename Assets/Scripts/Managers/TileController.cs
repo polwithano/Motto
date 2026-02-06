@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Animation;
-using DG.Tweening;
 using Events;
 using Events.Core;
 using Events.Game;
@@ -23,24 +22,23 @@ namespace Managers
         [field: SerializeField] public bool IsOverRedraw { get; private set; }
         
         private InputManager _input;
+        private Canvas _canvas;
+        private Camera _uiCamera;
+        
         private RectTransform _dragLayerRect;
         private TileView _draggedTile;
         private Vector2 _dragOffset;
-        
-        private Canvas _canvas;
-        private Camera _uiCamera;
         
         #region Mono
         private void Start()
         {
             _input = InputManager.Instance;
             _dragLayerRect = dragLayer as RectTransform;
-            
-            _canvas = _dragLayerRect.GetComponentInParent<Canvas>(true);
+
+            if (_dragLayerRect != null) _canvas = _dragLayerRect.GetComponentInParent<Canvas>(true);
 
             _uiCamera = _canvas.renderMode == RenderMode.ScreenSpaceOverlay
-                ? null
-                : (_canvas.worldCamera != null ? _canvas.worldCamera : Camera.main);
+                ? null : (_canvas.worldCamera != null ? _canvas.worldCamera : Camera.main);
         }
 
         private void Update()
@@ -133,15 +131,14 @@ namespace Managers
             if (!_input.PointerJustReleased)
                 return false;
 
+            var pointerPos = _input.PointerPosition;
             var tile = _draggedTile;
 
             IsOverRedraw = false;
             SelectedTile = null;
             
             redrawView.SetHovered(IsOverRedraw);
-
-            var pointerPos = _input.PointerPosition;
-
+            
             if (IsPointerOverLayer(pointerPos, handLayer))
             {
                 tile.EndDrag();
@@ -172,6 +169,7 @@ namespace Managers
             }
              
             tile.EndDrag();
+            
             return true; 
         }
 
@@ -180,7 +178,32 @@ namespace Managers
             var tileView = RaycastTile(screenPos);
             if (tileView == null) return;
             
-            Bus<TileSelectedEvent>.Raise(new TileSelectedEvent(tileView, tileView.Tile));
+            var newPosition = tileView.IsInHand ? GamePosition.Board : GamePosition.Hand;
+            
+            // Moving the tile from the hand to the board
+            if (newPosition == GamePosition.Board)
+            {
+                var emptySlot = BoardManager.Instance.GetFirstEmptySlot();
+                if (!emptySlot)
+                {
+                    Debug.LogError("No Empty Slot found on the board" +
+                                   $"{tileView.gameObject.name} cannot be moved.");
+                    return;
+                }
+                AnimationHelper.AnimateRectTransformToPosition(
+                    tileView.RectTransform,
+                    emptySlot.transform.position,
+                    () => Bus<TilePositionUpdatedEvent>.Raise(
+                        new TilePositionUpdatedEvent(newPosition, tileView))
+                    );
+            }
+            // Moving the tile from the board to the hand
+            if (newPosition == GamePosition.Hand)
+            {
+                Bus<TilePositionUpdatedEvent>.Raise(new TilePositionUpdatedEvent(newPosition, tileView));
+            }
+            
+            // Bus<TileSelectedEvent>.Raise(new TileSelectedEvent(tileView, tileView.Tile));
         }
 
         private void RedrawTile(Vector2 screenPos)

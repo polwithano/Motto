@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Animation;
 using Events;
 using Events.Core;
@@ -21,8 +22,8 @@ namespace FSM.States
     {
         public RoundPlayState(GameStateMachine machine) : base(machine) { }
 
-        public string CurrentWord;
-        public List<Tile> CurrentTiles = new(); 
+        public string CurrentWord { get; private set; }
+        public List<Tile> CurrentTiles { get; private set; } = new(); 
 
         public override void Enter()
         {
@@ -50,7 +51,7 @@ namespace FSM.States
             Game.Hand.RemoveTile(evt.Model);
             Game.Deck.Discard(evt.Model);
             
-            var newTile = Game.Deck.Draw(1)[0];
+            var newTile = Game.Deck.Draw(1).First();
             Game.Hand.TryAddTile(newTile);
             Game.Run.Round.RemoveDraw();
             
@@ -74,12 +75,19 @@ namespace FSM.States
         
         private async void HandleOnBoardUpdated(BoardUpdatedEvent evt)
         {
-            CurrentWord = evt.Word;
-            CurrentTiles = evt.Tiles;
+            try
+            {
+                CurrentWord = evt.Word;
+                CurrentTiles = evt.Tiles;
             
-            var isLegit = GameManager.Instance.DisableWordCheck || await evt.Word.CheckWordWithBlanksAsync();
+                var isLegit = GameManager.Instance.DisableWordCheck || await evt.Word.CheckWordWithBlanksAsync();
             
-            OnWordChecked(evt.Word, isLegit);
+                OnWordChecked(evt.Word, isLegit);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
         }
 
         private void HandleOnWordScored()
