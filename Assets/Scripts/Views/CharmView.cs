@@ -1,6 +1,8 @@
 using Coffee.UIEffects;
 using DG.Tweening;
 using Events;
+using Events.Core;
+using Events.Rounds;
 using Models;
 using Models.Charms;
 using UnityEngine;
@@ -34,21 +36,21 @@ namespace Views
         #region Mono
         private void OnEnable()
         {
-            GameEvents.OnRoundStarted += HandleOnRoundStarted; 
+            Bus<RoundStartedEvent>.OnEvent += HandleOnRoundStarted; 
             GameEvents.OnScoreStepStarted += HandleOnScoreStepStarted;
         }
 
         private void OnDisable()
         {
-            GameEvents.OnRoundStarted -= HandleOnRoundStarted;
+            Bus<RoundStartedEvent>.OnEvent -= HandleOnRoundStarted; 
             GameEvents.OnScoreStepStarted -= HandleOnScoreStepStarted;
         }
-        
+
         private void OnDestroy() => OnDisable();
         #endregion
         
         #region Subscribed
-        private void HandleOnRoundStarted(RoundContext round)
+        private void HandleOnRoundStarted(RoundStartedEvent evt)
         {
             SetActiveFeedback(false);
         }

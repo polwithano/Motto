@@ -19,17 +19,6 @@ namespace Events
         public static void RaiseOnPurchaseProcessed() => OnPurchaseProcessed?.Invoke();
         #endregion
         
-        #region Round Events
-        public static event Action<RoundContext> OnRoundStarted;
-        public static event Action OnRoundSuccessful; 
-        public static event Action OnRoundFailed;
-        
-        public static void RaiseOnRoundStarted(RoundContext context)
-            => OnRoundStarted?.Invoke(context);
-        public static void RaiseOnRoundSuccessful() => OnRoundSuccessful?.Invoke();
-        public static void RaiseOnRoundFailed() => OnRoundFailed?.Invoke();
-        #endregion
-        
         #region Score Events
         public static event Action OnWordInvalidated;
         public static event Action<string> OnWordValidated;

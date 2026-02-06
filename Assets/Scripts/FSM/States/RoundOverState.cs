@@ -1,3 +1,4 @@
+using Events.Rounds;
 using UnityEngine;
 
 namespace FSM.States
@@ -5,16 +6,16 @@ namespace FSM.States
     [System.Serializable]
     public class RoundOverState : GameState
     {
-        public readonly bool WonRound; 
+        public readonly RoundEndedStatus Status; 
         
-        public RoundOverState(GameStateMachine machine, bool wonRound) : base(machine)
+        public RoundOverState(GameStateMachine machine, RoundEndedStatus status) : base(machine)
         {
-            WonRound = wonRound;
+            Status = status;
         }
 
         public override void Enter()
         {
-            Debug.Log(WonRound ? "Round is won" : "Round is lost");
+            Debug.Log(Status == RoundEndedStatus.Success ? "Round is won" : "Round is lost");
             
             if (CanTransitionToShop())
                 StateMachine.ChangeState(new ShopState(StateMachine));
@@ -22,6 +23,6 @@ namespace FSM.States
         public override void Exit() { }
         public override void Tick() { }
 
-        private bool CanTransitionToShop() => WonRound && Game.Run.TryIncrementRound(); 
+        private bool CanTransitionToShop() => Status == RoundEndedStatus.Success && Game.Run.TryIncrementRound(); 
     }
 }

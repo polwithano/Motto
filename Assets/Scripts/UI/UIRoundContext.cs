@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DG.Tweening;
 using Events;
+using Events.Core;
+using Events.Rounds;
 using Managers;
 using Models;
 using TMPro;
@@ -49,7 +51,7 @@ namespace UI
 
         private void OnEnable()
         {
-            GameEvents.OnRoundStarted += HandleOnRoundStarted;
+            Bus<RoundStartedEvent>.OnEvent += HandleOnRoundStarted; 
             GameEvents.OnScoringStarted += HandleOnScoringStarted; 
             GameEvents.OnScoreStepStarted += HandleOnScoreStepStarted;
             GameEvents.OnTileRedrawPerformed += HandleOnTileRedrawPerformed;
@@ -58,7 +60,7 @@ namespace UI
 
         private void OnDisable()
         {
-            GameEvents.OnRoundStarted -= HandleOnRoundStarted;
+            Bus<RoundStartedEvent>.OnEvent -= HandleOnRoundStarted; 
             GameEvents.OnScoringStarted -= HandleOnScoringStarted; 
             GameEvents.OnScoreStepStarted -= HandleOnScoreStepStarted;
             GameEvents.OnTileRedrawPerformed -= HandleOnTileRedrawPerformed; 
@@ -69,10 +71,10 @@ namespace UI
         #endregion
 
         #region Event Handlers
-        private void HandleOnRoundStarted(RoundContext context)
+        private void HandleOnRoundStarted(RoundStartedEvent evt)
         {
             UpdateStaticRoundData();
-            AnimateRoundReset(context);
+            AnimateRoundReset(evt.Context);
         }
 
         private void HandleOnScoringStarted(string word, List<Tile> tiles)

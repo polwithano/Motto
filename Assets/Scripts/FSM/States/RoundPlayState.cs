@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Events;
+using Events.Core;
+using Events.Rounds;
 using Managers;
 using Misc;
 using Models;
@@ -122,15 +124,17 @@ namespace FSM.States
         {
             if (Game.Run.Round.IsCompleted)
             {
-                GameEvents.RaiseOnRoundSuccessful();
-                StateMachine.ChangeState(new RoundOverState(StateMachine, true));
+                var status = RoundEndedStatus.Success;
+                Bus<RoundEndedEvent>.Raise(new RoundEndedEvent(status, Game.Run.Round));
+                StateMachine.ChangeState(new RoundOverState(StateMachine, status));
             }
             else if (!Game.Run.Round.IsCompleted)
             {
                 if (Game.Run.Round.WordsRemaining <= 0)
                 {
-                    GameEvents.RaiseOnRoundFailed();
-                    StateMachine.ChangeState(new RoundOverState(StateMachine, false));
+                    var status = RoundEndedStatus.Failure;
+                    Bus<RoundEndedEvent>.Raise(new RoundEndedEvent(status, Game.Run.Round));
+                    StateMachine.ChangeState(new RoundOverState(StateMachine, status));
                 }
             }
         }

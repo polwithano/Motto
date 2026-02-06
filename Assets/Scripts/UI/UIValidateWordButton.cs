@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using Events;
+using Events.Core;
+using Events.Rounds;
 using Managers;
 using Models;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 namespace UI
@@ -23,7 +26,7 @@ namespace UI
 
         private void OnEnable()
         {
-            GameEvents.OnRoundStarted += HandleOnRoundStarted;
+            Bus<RoundStartedEvent>.OnEvent += HandleOnRoundStarted; 
             GameEvents.OnBoardUpdated += HandleOnBoardUpdated; 
             GameEvents.OnWordInvalidated += HandleWordInvalidated;
             GameEvents.OnWordValidated += HandleWordValidated; 
@@ -31,7 +34,7 @@ namespace UI
 
         private void OnDisable()
         {
-            GameEvents.OnRoundStarted -= HandleOnRoundStarted;
+            Bus<RoundStartedEvent>.OnEvent -= HandleOnRoundStarted; 
             GameEvents.OnBoardUpdated -= HandleOnBoardUpdated;
             GameEvents.OnWordInvalidated -= HandleWordInvalidated;
             GameEvents.OnWordValidated -= HandleWordValidated;
@@ -41,7 +44,7 @@ namespace UI
         #endregion
         
         #region Subscribed
-        private void HandleOnRoundStarted(RoundContext context)
+        private void HandleOnRoundStarted(RoundStartedEvent evt)
         {
             DisableButton();
         }

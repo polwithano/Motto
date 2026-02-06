@@ -1,4 +1,6 @@
 using Events;
+using Events.Core;
+using Events.Rounds;
 using Views;
 
 namespace FSM.States
@@ -15,7 +17,7 @@ namespace FSM.States
             
             HandView.Instance.InstantiateHand(Game.Hand);
 
-            GameEvents.RaiseOnRoundStarted(Game.Run.Round);
+            Bus<RoundStartedEvent>.Raise(new RoundStartedEvent(Game.Run.Round));
             
             StateMachine.ChangeState(new RoundPlayState(StateMachine));
         }
