@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Events;
+using Animation;
 using Events.Core;
 using Events.Game;
 using Events.Rounds;
@@ -13,22 +13,21 @@ namespace Managers
 {
     public class BoardManager : MonoBehaviourSingleton<BoardManager>
     {
-        [field: SerializeField] public List<RectTransform> Slots { get; private set; } = new(); 
-        [field: SerializeField] public List<SlotView>  SlotViews { get; private set; } = new();
+        [field: SerializeField] public List<RectTransform> Slots { get; private set; } = new();
+        [field: SerializeField] public List<SlotView> SlotViews { get; private set; } = new();
 
+        [SerializeField] private Transform tileAnimationLayer; 
+        
         private SlotView _previewedSlot;
-        private Vector3 _selectedTilePosition; 
-        
-        public SlotView GetPreviewedSlot() =>  _previewedSlot;
-        
-        #region Mono Methods
+        private Vector3 _selectedTilePosition;
 
+        public SlotView GetPreviewedSlot() => _previewedSlot;
+
+        #region Mono
         private void Start()
         {
             foreach (var slot in Slots)
-            {
                 SlotViews.Add(slot.GetComponent<SlotView>());
-            }
         }
 
         private void Update()
@@ -44,71 +43,97 @@ namespace Managers
                 _previewedSlot = null;
             }
         }
-        
+
         private void OnEnable()
         {
-            Bus<TilePositionUpdatedEvent>.OnEvent += HandleTilePositionUpdated;
+            Bus<TileMoveRequestEvent>.OnEvent += HandleTileMoveRequest;
             Bus<BoardUpdatedEvent>.OnEvent += HandleBoardUpdated;
-            Bus<RoundStartedEvent>.OnEvent += HandleRoundStarted; 
-            GameEvents.OnTileDropConfirmed += HandleOnTileDropConfirmed; 
+            Bus<RoundStartedEvent>.OnEvent += HandleRoundStarted;
         }
 
         private void OnDisable()
         {
-            Bus<TilePositionUpdatedEvent>.OnEvent -= HandleTilePositionUpdated; 
-            Bus<BoardUpdatedEvent>.OnEvent -= HandleBoardUpdated; 
-            Bus<RoundStartedEvent>.OnEvent -= HandleRoundStarted; 
-            GameEvents.OnTileDropConfirmed -= HandleOnTileDropConfirmed;
+            Bus<TileMoveRequestEvent>.OnEvent -= HandleTileMoveRequest;
+            Bus<BoardUpdatedEvent>.OnEvent -= HandleBoardUpdated;
+            Bus<RoundStartedEvent>.OnEvent -= HandleRoundStarted;
         }
-        
+
         private void OnDestroy() => OnDisable();
         #endregion
-        
-        #region Subscribed Methods
-        private void HandleTilePositionUpdated(TilePositionUpdatedEvent evt)
+
+        #region Events
+        private void HandleTileMoveRequest(TileMoveRequestEvent evt)
         {
-            if (evt.Position == GamePosition.Board)
+            if (evt.Tile == null) return;
+
+            if (evt.TargetPosition == GamePosition.Board)
             {
-                AddTileToBoard(evt.View);
+                var slotView = evt.TargetSlot != null ? evt.TargetSlot : GetFirstEmptySlot()?.GetComponent<SlotView>();
+                if (slotView == null)
+                {
+                    Debug.LogError($"No Empty Slot found on the board, tile {evt.Tile.gameObject.name} cannot be moved.");
+                    return;
+                }
+
+                AnimateTileToBoard(evt.Tile, slotView);
+                return;
             }
-            else if (evt.Position == GamePosition.Hand)
-            {
-                AddTileToHand(evt.View);
-            }
-  
-            Bus<BoardUpdatedEvent>.Raise(new BoardUpdatedEvent(GetCurrentSlotString(), GetTilesInSlots()));
+
+            AnimateTileToHand(evt.Tile);
         }
-        
-        private void HandleOnTileDropConfirmed(TileView tileView, SlotView slotView)
-        {
-            AddTileToBoard(tileView, slotView);
-            Bus<BoardUpdatedEvent>.Raise(new BoardUpdatedEvent(GetCurrentSlotString(), GetTilesInSlots()));
-        }
-        
+
         private void HandleBoardUpdated(BoardUpdatedEvent evt)
         {
             DisplayDefaultPreviewedSlot();
         }
-        
+
         private void HandleRoundStarted(RoundStartedEvent evt)
         {
             DisplayDefaultPreviewedSlot();
         }
         #endregion
-
-        private void AddTileToBoard(TileView tileView, SlotView slotView = null)
+        
+        private void AnimateTileToBoard(TileView tileView, SlotView slotView)
         {
-            RectTransform slot; 
-            
-            if (slotView == null)
-                slot = GetFirstEmptySlot();
-            else
-                slot = slotView.GetComponent<RectTransform>();
-            
+            var target = slotView.GetComponent<RectTransform>();
+            tileView.BeginFreeMove(tileAnimationLayer); 
+
+            AnimationHelper.AnimateRectTransformToPosition(
+                tileView.RectTransform,
+                target.position,
+                () =>
+                {
+                    AddTileToBoard(tileView, slotView);
+                    Bus<BoardUpdatedEvent>.Raise(new BoardUpdatedEvent(GetCurrentSlotString(), GetTilesInSlots()));
+                }
+            );
+        }
+
+        private void AnimateTileToHand(TileView tileView)
+        {
+            var targetPos = HandView.Instance.Container.position;
+
+            AnimationHelper.AnimateRectTransformToPosition(
+                tileView.RectTransform,
+                targetPos,
+                () =>
+                {
+                    AddTileToHand(tileView); 
+                    Bus<BoardUpdatedEvent>.Raise(
+                        new BoardUpdatedEvent(GetCurrentSlotString(), GetTilesInSlots())
+                    );
+                }
+            );
+        }
+
+        private void AddTileToBoard(TileView tileView, SlotView slotView)
+        {
+            var slot = slotView.GetComponent<RectTransform>();
+
             tileView.transform.SetParent(slot.transform);
             tileView.transform.localPosition = Vector3.zero;
             tileView.transform.localScale = Vector3.one;
-            
+
             tileView.SetInHand(false);
         }
 
@@ -116,6 +141,8 @@ namespace Managers
         {
             tileView.transform.SetParent(HandView.Instance.Container);
             tileView.transform.localPosition = Vector3.zero;
+            tileView.transform.localScale = Vector3.one;
+
             tileView.SetInHand(true);
         }
         
@@ -123,12 +150,12 @@ namespace Managers
         {
             return Slots.FirstOrDefault(slot => slot.childCount == 0);
         }
-        
+
         private string GetCurrentSlotString()
         {
             return string.Concat(Slots.Select(slot =>
             {
-                var tile = slot.GetComponentInChildren<Views.TileView>();
+                var tile = slot.GetComponentInChildren<TileView>();
                 return tile != null ? tile.Tile.Character : string.Empty;
             }));
         }
@@ -137,16 +164,14 @@ namespace Managers
         {
             var tasks = new List<Task>();
             var index = 0;
-            
+
             foreach (var slot in Slots)
             {
                 if (slot.childCount == 0)
                     continue;
 
                 if (slot.GetChild(0).TryGetComponent<TileView>(out var tileView))
-                {
                     tasks.Add(tileView.AnimateOnTileSlotClearedAsync(index++));
-                }
             }
 
             await Task.WhenAll(tasks);
@@ -161,27 +186,35 @@ namespace Managers
                 if (view.Tile.ID == tile.ID) return view;
             }
 
-            return null; 
+            return null;
         }
-        
+
         private List<Tile> GetTilesInSlots()
         {
             var tiles = new List<Tile>();
 
             foreach (var slot in Slots)
             {
-                var tileView = slot.GetComponentInChildren<Views.TileView>();
+                var tileView = slot.GetComponentInChildren<TileView>();
                 if (tileView != null)
                     tiles.Add(tileView.Tile);
             }
 
             return tiles;
         }
-
+        
         private void DisplayDefaultPreviewedSlot()
         {
             _previewedSlot?.DisablePreviewFeedback();
-            _previewedSlot = GetFirstEmptySlot().GetComponent<SlotView>(); 
+
+            var firstEmpty = GetFirstEmptySlot();
+            if (firstEmpty == null)
+            {
+                _previewedSlot = null;
+                return;
+            }
+
+            _previewedSlot = firstEmpty.GetComponent<SlotView>();
             _previewedSlot.EnablePreviewFeedback();
         }
 
@@ -198,7 +231,6 @@ namespace Managers
                 var slot = Slots[i];
                 var distance = Vector3.Distance(_selectedTilePosition, slot.position);
 
-                // Priority => Left -> Distance
                 if (distance < minDistance)
                 {
                     minDistance = distance;
@@ -213,7 +245,7 @@ namespace Managers
             _previewedSlot = closest;
             _previewedSlot.EnablePreviewFeedback();
         }
-        
+
         private bool IsPlayableEmptySlot(int index)
         {
             if (Slots[index].childCount > 0)
@@ -222,11 +254,9 @@ namespace Managers
             var hasLeft = index > 0 && Slots[index - 1].childCount > 0;
             var hasRight = index < Slots.Count - 1 && Slots[index + 1].childCount > 0;
 
-            // First Slot
             if (!hasLeft && !hasRight)
                 return index == 0;
 
-            // Hole between two tiles
             return hasLeft || hasRight;
         }
     }

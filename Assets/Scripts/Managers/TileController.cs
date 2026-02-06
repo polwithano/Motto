@@ -53,6 +53,7 @@ namespace Managers
             else
             {
                 UpdateDrag();
+                
                 if (TryEndDrag())
                 {
                     Bus<TileDraggedEvent>.Raise(new TileDraggedEvent(_draggedTile, DragEventType.DragEnd));
@@ -78,7 +79,7 @@ namespace Managers
         #region Subscribed
         private void HandleLeftClick(Vector2 screenPos)
         {
-            SelectTile(screenPos);
+            TryToggleTileByClick(screenPos);
         }
 
         private void HandleRightClick(Vector2 screenPos)
@@ -102,7 +103,6 @@ namespace Managers
             SelectedTile = _draggedTile;
 
             UpdateDrag();
-            
             return true;
         }
 
@@ -139,71 +139,54 @@ namespace Managers
             
             redrawView.SetHovered(IsOverRedraw);
             
+            // Ending drag on the player's hand. 
             if (IsPointerOverLayer(pointerPos, handLayer))
             {
                 tile.EndDrag();
+                Bus<TileMoveRequestEvent>.Raise(new TileMoveRequestEvent(tile, GamePosition.Hand, null));
                 return true;
             }
             
+            // Ending drag on the redraw area. 
             if (IsPointerOverLayer(pointerPos, drawLayer))
             {
-                AnimationHelper.AnimateRectTransformToPosition(
-                    tile.RectTransform, 
-                    redrawView.GetComponent<RectTransform>().position,
-                    () => Bus<TileRedrawEvent>.Raise(new TileRedrawEvent(tile, tile.Tile)));
-
+                tile.EndDrag();
+                Bus<TileRedrawEvent>.Raise(new TileRedrawEvent(tile, tile.Tile));
                 return true;
             }
             
+            // Ending drag on the board or near the board area. 
             var slot = BoardManager.Instance.GetPreviewedSlot();
-            var target = slot.GetComponent<RectTransform>();
-            
-            if (slot && AnimationHelper.AreRectTransformCloseEnough(tile.RectTransform, target, snapToSlotDistance))
+            if (slot != null)
             {
-                AnimationHelper.AnimateRectTransformToPosition(
-                    tile.RectTransform, 
-                    target.position, 
-                    () => GameEvents.RaiseOnTileDropConfirmed(tile, slot));
-                
-                return true; 
+                var target = slot.GetComponent<RectTransform>();
+                if (AnimationHelper.AreRectTransformCloseEnough(tile.RectTransform, target, snapToSlotDistance))
+                {
+                    tile.EndDrag();
+                    Bus<TileMoveRequestEvent>.Raise(new TileMoveRequestEvent(tile, GamePosition.Board, slot));
+                    return true;
+                }
             }
-             
-            tile.EndDrag();
             
+            // Fallback => cancel the drag
+            tile.EndDrag();
             return true; 
         }
 
-        private void SelectTile(Vector2 screenPos)
+        private void TryToggleTileByClick(Vector2 screenPos)
         {
             var tileView = RaycastTile(screenPos);
             if (tileView == null) return;
-            
-            var newPosition = tileView.IsInHand ? GamePosition.Board : GamePosition.Hand;
-            
-            // Moving the tile from the hand to the board
-            if (newPosition == GamePosition.Board)
+
+            // Move from the hand to the board. 
+            if (tileView.IsInHand)
             {
-                var emptySlot = BoardManager.Instance.GetFirstEmptySlot();
-                if (!emptySlot)
-                {
-                    Debug.LogError("No Empty Slot found on the board" +
-                                   $"{tileView.gameObject.name} cannot be moved.");
-                    return;
-                }
-                AnimationHelper.AnimateRectTransformToPosition(
-                    tileView.RectTransform,
-                    emptySlot.transform.position,
-                    () => Bus<TilePositionUpdatedEvent>.Raise(
-                        new TilePositionUpdatedEvent(newPosition, tileView))
-                    );
+                Bus<TileMoveRequestEvent>.Raise(new TileMoveRequestEvent(tileView, GamePosition.Board, null));
+                return;
             }
-            // Moving the tile from the board to the hand
-            if (newPosition == GamePosition.Hand)
-            {
-                Bus<TilePositionUpdatedEvent>.Raise(new TilePositionUpdatedEvent(newPosition, tileView));
-            }
-            
-            // Bus<TileSelectedEvent>.Raise(new TileSelectedEvent(tileView, tileView.Tile));
+
+            // Move from the board to the hand. 
+            Bus<TileMoveRequestEvent>.Raise(new TileMoveRequestEvent(tileView, GamePosition.Hand, null));
         }
 
         private void RedrawTile(Vector2 screenPos)

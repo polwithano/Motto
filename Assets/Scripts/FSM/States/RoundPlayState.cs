@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Animation;
 using Events;
 using Events.Core;
 using Events.Game;
-using Events.Inputs;
 using Events.Rounds;
 using Events.Score;
 using Managers;
@@ -28,8 +26,8 @@ namespace FSM.States
         public override void Enter()
         {
             Bus<BoardUpdatedEvent>.OnEvent += HandleOnBoardUpdated;
-            Bus<TileSelectedEvent>.OnEvent += HandleOnTileSelected;
             Bus<TileRedrawEvent>.OnEvent += HandleOnTileRedraw; 
+            
             GameEvents.OnWordScored += HandleOnWordScored; 
             GameEvents.OnScoreSequenceCompleted += HandleOnScoreSequenceCompleted;
         }
@@ -37,8 +35,8 @@ namespace FSM.States
         public override void Exit()
         {
             Bus<BoardUpdatedEvent>.OnEvent -= HandleOnBoardUpdated; 
-            Bus<TileSelectedEvent>.OnEvent -= HandleOnTileSelected;
             Bus<TileRedrawEvent>.OnEvent -= HandleOnTileRedraw; 
+            
             GameEvents.OnWordScored -= HandleOnWordScored;
             GameEvents.OnScoreSequenceCompleted -= HandleOnScoreSequenceCompleted;
         }
@@ -56,21 +54,6 @@ namespace FSM.States
             Game.Run.Round.RemoveDraw();
             
             GameEvents.RaiseOnTileRedrawPerformed(evt.Model, newTile);
-        }
-
-        private void HandleOnTileSelected(TileSelectedEvent evt)
-        {
-            var position = evt.View.IsInHand ? GamePosition.Board : GamePosition.Hand;
-            if (position == GamePosition.Hand)
-            {
-                var emptySlot = BoardManager.Instance.GetFirstEmptySlot();
-                if (!emptySlot)
-                {
-                    Debug.LogError($"No Empty Slot found on the board, tile {evt.View.gameObject.name} cannot be moved.");
-                    return;
-                }
-            }
-            Bus<TilePositionUpdatedEvent>.Raise(new TilePositionUpdatedEvent(position, evt.View));
         }
         
         private async void HandleOnBoardUpdated(BoardUpdatedEvent evt)

@@ -101,10 +101,17 @@ namespace Views
                 .DOScale(Vector3.one * 1.15f, 0.15f)
                 .SetEase(Ease.OutBack);
         }
+        
+        public void BeginFreeMove(Transform animationLayer)
+        {
+            _originalParent = transform.parent;
+            transform.SetParent(animationLayer, true);
+            RectTransform.SetAsLastSibling();
+        }
 
         public void EndDrag()
         {
-            transform.SetParent(_originalParent, true);
+            // transform.SetParent(_originalParent, true);
 
             _scaleTween?.Kill();
             RectTransform.localScale = Vector3.one;
