@@ -51,11 +51,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb3bb9a1be36f424d90268f7882333cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Views.Animation.IdleHover
-  hoverDistance: 12
-  hoverDuration: 4
+  hoverDistance: 6
+  hoverDuration: 1
   randomOffset: 0.5
-  horizontalDrift: 5
-  driftDuration: 3
+  horizontalDrift: 12
+  driftDuration: 1
 --- !u!114 &5809551246215034498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,6 +510,7 @@ MonoBehaviour:
   charmIcon: {fileID: 2000034017504117861}
   charmIconShadow: {fileID: 7048533725349498973}
   charmEffect: {fileID: 7836138851945761969}
+  idleHover: {fileID: 9190156589402698207}
   punchScaleAmount: 0.5
   punchDuration: 0.33
   vibrato: 6

@@ -98,12 +98,12 @@ Material:
     - _SpinRotation: -2
     - _SpinSpeed: 2
     - _SplitFeather: 0
-    - _SplitLeft: 0.4
+    - _SplitLeft: 0.45
     - _SplitLineSoft: 0
     - _SplitLineStrength: 0.93
     - _SplitLineWidth: 0.005
-    - _SplitRight: 0.6
-    - _SplitValue: -0.045
+    - _SplitRight: 0.55
+    - _SplitValue: 0
     - _ZWrite: 0
     m_Colors:
     - _AColorA: {r: 0.8160377, g: 0.8945834, b: 1, a: 1}

@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using Animation;
 using DG.Tweening;
 using Events;
 using Events.Core;
+using Events.Game;
 using Events.Inputs;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -148,23 +150,27 @@ namespace Managers
             
             if (IsPointerOverLayer(pointerPos, drawLayer))
             {
-                AnimateTileToPosition(
-                    tile, 
+                AnimationHelper.AnimateRectTransformToPosition(
+                    tile.RectTransform, 
                     redrawView.GetComponent<RectTransform>().position,
-                    () => GameEvents.RaiseOnTileRedraw(tile.Tile));
+                    () => Bus<TileRedrawEvent>.Raise(new TileRedrawEvent(tile, tile.Tile)));
+
                 return true;
             }
             
             var slot = BoardManager.Instance.GetPreviewedSlot();
-            if (slot != null && IsCloseEnoughFromSlot(tile.RectTransform, slot.GetComponent<RectTransform>()))
+            var target = slot.GetComponent<RectTransform>();
+            
+            if (slot && AnimationHelper.AreRectTransformCloseEnough(tile.RectTransform, target, snapToSlotDistance))
             {
-                AnimateTileToPosition(
-                    tile, 
-                    slot.GetComponent<RectTransform>().position, 
+                AnimationHelper.AnimateRectTransformToPosition(
+                    tile.RectTransform, 
+                    target.position, 
                     () => GameEvents.RaiseOnTileDropConfirmed(tile, slot));
+                
                 return true; 
             }
-            
+             
             tile.EndDrag();
             return true; 
         }
@@ -182,7 +188,7 @@ namespace Managers
             var tileView = RaycastTile(screenPos);
             if (tileView && tileView.IsInHand)
             {
-                GameEvents.RaiseOnTileRedraw(tileView.Tile);
+                Bus<TileRedrawEvent>.Raise(new TileRedrawEvent(tileView, tileView.Tile));
             }
         }
         
@@ -202,11 +208,6 @@ namespace Managers
             return null;
         }
 
-        private bool IsCloseEnoughFromSlot(RectTransform tile, RectTransform slot)
-        {
-            return Vector2.Distance(tile.position, slot.position) <= snapToSlotDistance;
-        }
-
         private bool IsPointerOverLayer(Vector2 screenPos, LayerMask mask)
         {
             var ped = new PointerEventData(EventSystem.current)
@@ -219,7 +220,7 @@ namespace Managers
 
             foreach (var hit in results)
             {
-                Debug.Log($"Hit: {hit.gameObject.name} | layer={LayerMask.LayerToName(hit.gameObject.layer)}");
+                // Debug.Log($"Hit: {hit.gameObject.name} | layer={LayerMask.LayerToName(hit.gameObject.layer)}");
                 if ((mask.value & (1 << hit.gameObject.layer)) != 0)
                 {
                    // Debug.Log("Pointer over layer: " + LayerMask.LayerToName(hit.gameObject.layer));
@@ -228,25 +229,6 @@ namespace Managers
             }
 
             return false;
-        }
-        
-        private void AnimateTileToSlot(TileView tile, SlotView slot)
-        {
-            tile.RectTransform
-                .DOMove(slot.GetComponent<RectTransform>().position, 0.225f)
-                .SetEase(Ease.InExpo)
-                .OnComplete(() =>
-                {
-                    GameEvents.RaiseOnTileDropConfirmed(tile, slot);
-                });
-        }
-
-        private void AnimateTileToPosition(TileView tile, Vector3 position, System.Action onComplete = null)
-        {
-            tile.RectTransform
-                .DOMove(position, 0.225f)
-                .SetEase(Ease.InExpo)
-                .OnComplete(() => onComplete?.Invoke());
         }
     }
 }

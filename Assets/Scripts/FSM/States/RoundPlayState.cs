@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Animation;
 using Events;
 using Events.Core;
 using Events.Game;
@@ -27,7 +28,7 @@ namespace FSM.States
         {
             Bus<BoardUpdatedEvent>.OnEvent += HandleOnBoardUpdated;
             Bus<TileSelectedEvent>.OnEvent += HandleOnTileSelected;
-            GameEvents.OnTileRedraw += HandleOnTileRedraw;
+            Bus<TileRedrawEvent>.OnEvent += HandleOnTileRedraw; 
             GameEvents.OnWordScored += HandleOnWordScored; 
             GameEvents.OnScoreSequenceCompleted += HandleOnScoreSequenceCompleted;
         }
@@ -36,30 +37,30 @@ namespace FSM.States
         {
             Bus<BoardUpdatedEvent>.OnEvent -= HandleOnBoardUpdated; 
             Bus<TileSelectedEvent>.OnEvent -= HandleOnTileSelected;
-            GameEvents.OnTileRedraw -= HandleOnTileRedraw;
+            Bus<TileRedrawEvent>.OnEvent -= HandleOnTileRedraw; 
             GameEvents.OnWordScored -= HandleOnWordScored;
             GameEvents.OnScoreSequenceCompleted -= HandleOnScoreSequenceCompleted;
         }
         
         #region Event Handlers
-        private void HandleOnTileRedraw(Tile tile)
+        private void HandleOnTileRedraw(TileRedrawEvent evt)
         {
             if (!Game.Run.Round.AllowDraw()) return; 
             
-            Game.Hand.RemoveTile(tile);
-            Game.Deck.Discard(tile);
+            Game.Hand.RemoveTile(evt.Model);
+            Game.Deck.Discard(evt.Model);
             
             var newTile = Game.Deck.Draw(1)[0];
             Game.Hand.TryAddTile(newTile);
             Game.Run.Round.RemoveDraw();
             
-            GameEvents.RaiseOnTileRedrawPerformed(tile, newTile);
+            GameEvents.RaiseOnTileRedrawPerformed(evt.Model, newTile);
         }
 
         private void HandleOnTileSelected(TileSelectedEvent evt)
         {
-            var position = evt.View.IsInHand ? TilePosition.Board : TilePosition.Hand;
-            if (position == TilePosition.Hand)
+            var position = evt.View.IsInHand ? GamePosition.Board : GamePosition.Hand;
+            if (position == GamePosition.Hand)
             {
                 var emptySlot = BoardManager.Instance.GetFirstEmptySlot();
                 if (!emptySlot)

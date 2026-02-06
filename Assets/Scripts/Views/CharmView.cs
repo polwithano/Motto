@@ -7,6 +7,7 @@ using Models;
 using Models.Charms;
 using UnityEngine;
 using UnityEngine.UI;
+using Views.Animation;
 
 namespace Views
 {
@@ -17,6 +18,7 @@ namespace Views
         [SerializeField] private Image charmIcon;
         [SerializeField] private Image charmIconShadow;
         [SerializeField] private UIEffect charmEffect;
+        [SerializeField] private IdleHover idleHover; 
         
         [Header("Animation Settings")]
         [SerializeField] private float punchScaleAmount = 0.2f;
@@ -49,7 +51,7 @@ namespace Views
         private void OnDestroy() => OnDisable();
         #endregion
         
-        #region Subscribed
+        #region Events Handlers
         private void HandleOnRoundStarted(RoundStartedEvent evt)
         {
             SetActiveFeedback(false);
@@ -62,7 +64,6 @@ namespace Views
 
             AnimateCharm();
         }
-        
         #endregion
         
         public void Populate(Charm charm)
@@ -80,16 +81,21 @@ namespace Views
             var targetColor = active ? enabledColor : disabledColor;
             var targetOutline = active ? enabledColorOutline : disabledColorOutline;
 
+            // Update the icon
             charmIcon
                 .DOColor(targetColor, 0.25f)
                 .SetEase(Ease.OutCubic);
 
+            // Update the outline
             DOTween.To(
                 () => charmEffect.shadowColor,
                 c => charmEffect.shadowColor = c,
                 targetOutline,
                 0.25f
             ).SetEase(Ease.OutCubic);
+            
+            // Update the hover script
+            idleHover.enabled = active;
         }
 
         private void AnimateCharm()

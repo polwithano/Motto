@@ -28,6 +28,7 @@ namespace Managers
             {
                 SlotViews.Add(slot.GetComponent<SlotView>());
             }
+            DisplayDefaultPreviewedSlot();
         }
 
         private void Update()
@@ -36,11 +37,6 @@ namespace Managers
             {
                 _selectedTilePosition = TileController.Instance.SelectedTile.transform.position;
                 DisplayPreviewedSlot();
-            }
-            else if (TileController.Instance.SelectedTile == null && _previewedSlot != null)
-            {
-                _previewedSlot.DisablePreviewFeedback();
-                _previewedSlot = null;
             }
             else if (TileController.Instance.IsOverRedraw && _previewedSlot != null)
             {
@@ -51,13 +47,15 @@ namespace Managers
         
         private void OnEnable()
         {
-            Bus<TilePositionUpdatedEvent>.OnEvent += HandleTilePositionUpdated; 
+            Bus<TilePositionUpdatedEvent>.OnEvent += HandleTilePositionUpdated;
+            Bus<BoardUpdatedEvent>.OnEvent += HandleBoardUpdated; 
             GameEvents.OnTileDropConfirmed += HandleOnTileDropConfirmed; 
         }
 
         private void OnDisable()
         {
             Bus<TilePositionUpdatedEvent>.OnEvent -= HandleTilePositionUpdated; 
+            Bus<BoardUpdatedEvent>.OnEvent -= HandleBoardUpdated; 
             GameEvents.OnTileDropConfirmed -= HandleOnTileDropConfirmed;
         }
         
@@ -67,11 +65,11 @@ namespace Managers
         #region Subscribed Methods
         private void HandleTilePositionUpdated(TilePositionUpdatedEvent evt)
         {
-            if (evt.Position == TilePosition.Board)
+            if (evt.Position == GamePosition.Board)
             {
                 AddTileToBoard(evt.View);
             }
-            else if (evt.Position == TilePosition.Hand)
+            else if (evt.Position == GamePosition.Hand)
             {
                 AddTileToHand(evt.View);
             }
@@ -83,6 +81,11 @@ namespace Managers
         {
             AddTileToBoard(tileView, slotView);
             Bus<BoardUpdatedEvent>.Raise(new BoardUpdatedEvent(GetCurrentSlotString(), GetTilesInSlots()));
+        }
+        
+        private void HandleBoardUpdated(BoardUpdatedEvent args)
+        {
+            DisplayDefaultPreviewedSlot();
         }
         #endregion
 
@@ -166,6 +169,13 @@ namespace Managers
             }
 
             return tiles;
+        }
+
+        private void DisplayDefaultPreviewedSlot()
+        {
+            _previewedSlot?.DisablePreviewFeedback();
+            _previewedSlot = GetFirstEmptySlot().GetComponent<SlotView>(); 
+            _previewedSlot.EnablePreviewFeedback();
         }
 
         private void DisplayPreviewedSlot()

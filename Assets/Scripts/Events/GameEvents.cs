@@ -39,12 +39,9 @@ namespace Events
         #endregion
         
         #region Game Events
-        public static event Action<Tile> OnTileRedraw;
         public static event Action<Tile, Tile> OnTileRedrawPerformed;
         public static event Action<TileView, SlotView> OnTileDropConfirmed; 
         
-        public static void RaiseOnTileRedraw(Tile tile) 
-            => OnTileRedraw?.Invoke(tile);
         public static void RaiseOnTileRedrawPerformed(Tile tile, Tile newTile) 
             => OnTileRedrawPerformed?.Invoke(tile, newTile);
 

@@ -6,59 +6,93 @@ namespace Views.Animation
     public class IdleHover : MonoBehaviour
     {
         [Header("Hover Settings")]
-        [SerializeField] private float hoverDistance = 10f;        // pixels of up/down motion
-        [SerializeField] private float hoverDuration = 2f;         // time for one full up-down cycle
-        [SerializeField] private float randomOffset = 0.5f;        // random desync factor
-        [SerializeField] private float horizontalDrift = 5f;       // optional horizontal movement
+        [SerializeField] private float hoverDistance = 10f;
+        [SerializeField] private float hoverDuration = 2f;
+        [SerializeField] private float randomOffset = 0.5f;
+        [SerializeField] private float horizontalDrift = 5f;
         [SerializeField] private float driftDuration = 3f;
 
         private Vector3 _startPos;
         private Sequence _hoverSequence;
+        private Tween _horizontalTween;
+        private bool _initialized;
 
-        private void Start()
+        private void Awake()
         {
             _startPos = transform.localPosition;
-
-            // Add a random starting delay and offset so each charm moves differently
-            float startDelay = Random.Range(0f, hoverDuration * randomOffset);
-            float randomY = Random.Range(-2f, 2f);
-            float randomX = Random.Range(-2f, 2f);
-
-            transform.localPosition = _startPos + new Vector3(randomX, randomY, 0f);
-
-            CreateHoverSequence(startDelay);
         }
 
-        private void CreateHoverSequence(float delay)
+        private void OnEnable()
         {
-            _hoverSequence = DOTween.Sequence();
-
-            // Vertical bobbing
-            _hoverSequence.Append(
-                transform.DOLocalMoveY(_startPos.y + hoverDistance, hoverDuration)
-                    .SetEase(Ease.InOutSine)
-            );
-            _hoverSequence.Append(
-                transform.DOLocalMoveY(_startPos.y - hoverDistance, hoverDuration)
-                    .SetEase(Ease.InOutSine)
-            );
-
-            // Loop forever
-            _hoverSequence.SetLoops(-1, LoopType.Yoyo);
-            _hoverSequence.SetDelay(delay);
-
-            // Optional horizontal drift (looped separately)
-            transform.DOLocalMoveX(_startPos.x + Random.Range(-horizontalDrift, horizontalDrift), driftDuration)
-                .SetEase(Ease.InOutSine)
-                .SetLoops(-1, LoopType.Yoyo)
-                .SetDelay(delay * 0.5f);
+            Play();
         }
 
         private void OnDisable()
         {
-            // Clean up to avoid leaks if object gets disabled/destroyed
+            Stop();
+        }
+
+        private void OnDestroy()
+        {
+            Stop();
+        }
+
+        public void Play()
+        {
+            if (_hoverSequence != null && _hoverSequence.IsActive())
+                return;
+
+            if (!_initialized)
+            {
+                ApplyRandomOffset();
+                _initialized = true;
+            }
+
+            CreateHoverSequence();
+        }
+
+        public void Stop()
+        {
             _hoverSequence?.Kill();
-            transform.DOKill();
+            _hoverSequence = null;
+
+            _horizontalTween?.Kill();
+            _horizontalTween = null;
+
+            transform.localPosition = _startPos;
+        }
+
+        private void ApplyRandomOffset()
+        {
+            var randomY = Random.Range(-2f, 2f);
+            var randomX = Random.Range(-2f, 2f);
+            transform.localPosition = _startPos + new Vector3(randomX, randomY, 0f);
+        }
+
+        private void CreateHoverSequence()
+        {
+            var delay = Random.Range(0f, hoverDuration * randomOffset);
+
+            _hoverSequence = DOTween.Sequence()
+                .Append(
+                    transform.DOLocalMoveY(_startPos.y + hoverDistance, hoverDuration)
+                        .SetEase(Ease.InOutSine)
+                )
+                .Append(
+                    transform.DOLocalMoveY(_startPos.y - hoverDistance, hoverDuration)
+                        .SetEase(Ease.InOutSine)
+                )
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetDelay(delay);
+
+            _horizontalTween = transform
+                .DOLocalMoveX(
+                    _startPos.x + Random.Range(-horizontalDrift, horizontalDrift),
+                    driftDuration
+                )
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetDelay(delay * 0.5f);
         }
     }
 }
