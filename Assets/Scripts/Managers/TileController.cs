@@ -174,7 +174,7 @@ namespace Managers
             var tileView = RaycastTile(screenPos);
             if (tileView == null) return;
             
-            GameEvents.RaiseOnTileSelected(tileView);
+            Bus<TileSelectedEvent>.Raise(new TileSelectedEvent(tileView, tileView.Tile));
         }
 
         private void RedrawTile(Vector2 screenPos)

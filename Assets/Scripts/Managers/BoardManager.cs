@@ -76,19 +76,13 @@ namespace Managers
                 AddTileToHand(evt.View);
             }
   
-            GameEvents.RaiseOnBoardUpdated(GetCurrentSlotString(), GetTilesInSlots());
+            Bus<BoardUpdatedEvent>.Raise(new BoardUpdatedEvent(GetCurrentSlotString(), GetTilesInSlots()));
         }
         
         private void HandleOnTileDropConfirmed(TileView tileView, SlotView slotView)
         {
             AddTileToBoard(tileView, slotView);
-            GameEvents.RaiseOnBoardUpdated(GetCurrentSlotString(), GetTilesInSlots());
-        }
-
-        private void HandleOnTileRemovedFromBoard(TileView tileView)
-        {
-            AddTileToHand(tileView);
-            GameEvents.RaiseOnBoardUpdated(GetCurrentSlotString(), GetTilesInSlots());
+            Bus<BoardUpdatedEvent>.Raise(new BoardUpdatedEvent(GetCurrentSlotString(), GetTilesInSlots()));
         }
         #endregion
 

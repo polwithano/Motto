@@ -1,4 +1,5 @@
-using Events;
+using Events.Core;
+using Events.UI;
 using Managers;
 using Models.Charms;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace Views
         {
             var charmData = GetComponent<CharmView>().Charm;
             if (charmData == null) return;
-            GameEvents.RaiseOnCharmFocus(charmData);
+            Bus<DisplayTooltipEvent<Charm>>.Raise(new DisplayTooltipEvent<Charm>(charmData));
         }
 
         public void OnPointerExit(PointerEventData eventData)

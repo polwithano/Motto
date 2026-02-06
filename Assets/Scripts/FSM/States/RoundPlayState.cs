@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Events;
 using Events.Core;
 using Events.Game;
+using Events.Inputs;
 using Events.Rounds;
 using Events.Score;
 using Managers;
@@ -24,8 +25,8 @@ namespace FSM.States
 
         public override void Enter()
         {
-            GameEvents.OnBoardUpdated += HandleOnBoardUpdated;
-            GameEvents.OnTileSelected += HandleOnTileSelected; 
+            Bus<BoardUpdatedEvent>.OnEvent += HandleOnBoardUpdated;
+            Bus<TileSelectedEvent>.OnEvent += HandleOnTileSelected;
             GameEvents.OnTileRedraw += HandleOnTileRedraw;
             GameEvents.OnWordScored += HandleOnWordScored; 
             GameEvents.OnScoreSequenceCompleted += HandleOnScoreSequenceCompleted;
@@ -33,8 +34,8 @@ namespace FSM.States
 
         public override void Exit()
         {
-            GameEvents.OnBoardUpdated -= HandleOnBoardUpdated;
-            GameEvents.OnTileSelected -= HandleOnTileSelected; 
+            Bus<BoardUpdatedEvent>.OnEvent -= HandleOnBoardUpdated; 
+            Bus<TileSelectedEvent>.OnEvent -= HandleOnTileSelected;
             GameEvents.OnTileRedraw -= HandleOnTileRedraw;
             GameEvents.OnWordScored -= HandleOnWordScored;
             GameEvents.OnScoreSequenceCompleted -= HandleOnScoreSequenceCompleted;
@@ -55,29 +56,29 @@ namespace FSM.States
             GameEvents.RaiseOnTileRedrawPerformed(tile, newTile);
         }
 
-        private void HandleOnTileSelected(TileView tileView)
+        private void HandleOnTileSelected(TileSelectedEvent evt)
         {
-            var position = tileView.IsInHand ? TilePosition.Board : TilePosition.Hand;
+            var position = evt.View.IsInHand ? TilePosition.Board : TilePosition.Hand;
             if (position == TilePosition.Hand)
             {
                 var emptySlot = BoardManager.Instance.GetFirstEmptySlot();
                 if (!emptySlot)
                 {
-                    Debug.LogError($"No Empty Slot found on the board, tile {tileView.gameObject.name} cannot be moved.");
+                    Debug.LogError($"No Empty Slot found on the board, tile {evt.View.gameObject.name} cannot be moved.");
                     return;
                 }
             }
-            Bus<TilePositionUpdatedEvent>.Raise(new TilePositionUpdatedEvent(position, tileView));
+            Bus<TilePositionUpdatedEvent>.Raise(new TilePositionUpdatedEvent(position, evt.View));
         }
         
-        private async void HandleOnBoardUpdated(string word, List<Tile> tiles)
+        private async void HandleOnBoardUpdated(BoardUpdatedEvent evt)
         {
-            CurrentWord = word;
-            CurrentTiles = tiles;
+            CurrentWord = evt.Word;
+            CurrentTiles = evt.Tiles;
             
-            var isLegit = GameManager.Instance.DisableWordCheck || await word.CheckWordWithBlanksAsync();
+            var isLegit = GameManager.Instance.DisableWordCheck || await evt.Word.CheckWordWithBlanksAsync();
             
-            OnWordChecked(word, isLegit);
+            OnWordChecked(evt.Word, isLegit);
         }
 
         private void HandleOnWordScored()

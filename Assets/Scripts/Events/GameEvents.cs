@@ -27,7 +27,7 @@ namespace Events
         public static event Action<ScoreLogEntry, Action> OnScoreStepApplied;
         public static event Action<ScoreLog> OnScoreSequenceCompleted;
         
-        public static void RaiseOnWordScored()=>  OnWordScored?.Invoke();
+        public static void RaiseOnWordScored() =>  OnWordScored?.Invoke();
         public static void RaiseOnScoringStarted(string word, List<Tile> tiles)
             => OnScoringStarted?.Invoke(word, tiles);
         public static void RaiseOnScoreStepStarted(ScoreLogEntry entry)
@@ -39,13 +39,10 @@ namespace Events
         #endregion
         
         #region Game Events
-        public static event Action<string, List<Tile>> OnBoardUpdated; 
         public static event Action<Tile> OnTileRedraw;
         public static event Action<Tile, Tile> OnTileRedrawPerformed;
         public static event Action<TileView, SlotView> OnTileDropConfirmed; 
         
-        public static void RaiseOnBoardUpdated(string word, List<Tile> tiles)
-            => OnBoardUpdated?.Invoke(word, tiles);
         public static void RaiseOnTileRedraw(Tile tile) 
             => OnTileRedraw?.Invoke(tile);
         public static void RaiseOnTileRedrawPerformed(Tile tile, Tile newTile) 
@@ -53,18 +50,6 @@ namespace Events
 
         public static void RaiseOnTileDropConfirmed(TileView tile, SlotView slot)
             => OnTileDropConfirmed?.Invoke(tile, slot); 
-        #endregion
-        
-        #region UI Events
-        public static event Action<TileView> OnTileSelected; 
-        public static event Action<Charm> OnCharmFocus;
-        
-        public static void RaiseOnCharmFocus(Charm charm) 
-            => OnCharmFocus?.Invoke(charm);
-
-        public static void RaiseOnTileSelected(TileView tileView)
-            => OnTileSelected?.Invoke(tileView); 
-
         #endregion
     }
 }

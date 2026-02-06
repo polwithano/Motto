@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Events;
+using Events.Core;
+using Events.Game;
 using Models;
 using Models.Charms;
 using UnityEngine;
@@ -33,22 +35,22 @@ namespace Managers
         #region Mono
         private void OnEnable()
         {
-            GameEvents.OnBoardUpdated += HandleOnBoardUpdated;
+            Bus<BoardUpdatedEvent>.OnEvent += HandleOnBoardUpdated;
         }
 
         private void OnDisable()
         {
-            GameEvents.OnBoardUpdated -= HandleOnBoardUpdated;
+            Bus<BoardUpdatedEvent>.OnEvent -= HandleOnBoardUpdated;
         }
         #endregion
         
-        private void HandleOnBoardUpdated(string word, List<Tile> tiles)
+        private void HandleOnBoardUpdated(BoardUpdatedEvent evt)
         {
             var context = GameManager.Instance.Run.Round;
 
             foreach (var charm in ActiveCharms)
             {
-                var willTrigger = WillCharmTrigger(charm, word, tiles);
+                var willTrigger = WillCharmTrigger(charm, evt.Word, evt.Tiles);
                 var view = CharmViews[charm];
                 view.SetActiveFeedback(willTrigger);
             }      

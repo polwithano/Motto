@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Events;
 using Events.Core;
+using Events.Game;
 using Events.Rounds;
 using Events.Score;
 using Models;
@@ -26,14 +27,15 @@ namespace UI
         private void OnEnable()
         {
             Bus<RoundStartedEvent>.OnEvent += HandleOnRoundStarted;
-            Bus<WordValidationEvent>.OnEvent += HandleWordValidation; 
-            GameEvents.OnBoardUpdated += HandleOnBoardUpdated; 
+            Bus<WordValidationEvent>.OnEvent += HandleWordValidation;
+            Bus<BoardUpdatedEvent>.OnEvent += HandleOnBoardUpdated; 
         }
 
         private void OnDisable()
         {
             Bus<RoundStartedEvent>.OnEvent -= HandleOnRoundStarted; 
-            GameEvents.OnBoardUpdated -= HandleOnBoardUpdated;
+            Bus<WordValidationEvent>.OnEvent -= HandleWordValidation;
+            Bus<BoardUpdatedEvent>.OnEvent -= HandleOnBoardUpdated; 
         }
         
         private void OnDestroy() => OnDisable();
@@ -45,7 +47,7 @@ namespace UI
             DisableButton();
         }
 
-        private void HandleOnBoardUpdated(string word, List<Tile> tiles)
+        private void HandleOnBoardUpdated(BoardUpdatedEvent evt)
         {
             DisableButton();
         }
@@ -65,8 +67,8 @@ namespace UI
         private void DisableButton()
         {
             _button.interactable = false;
-            lettersCount.text = ""; 
             _button.onClick.RemoveAllListeners();
+            lettersCount.text = ""; 
         }
         
         private void EnableButton()

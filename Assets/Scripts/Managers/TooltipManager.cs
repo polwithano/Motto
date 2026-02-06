@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Events;
+using Events.Core;
+using Events.UI;
 using Models.Charms;
 using UI.Tooltips;
 using UnityEngine;
@@ -21,22 +23,21 @@ namespace Managers
         #region Mono
         private void OnEnable()
         {
-            GameEvents.OnCharmFocus += HandleOnCharmFocus;
+            Bus<DisplayTooltipEvent<Charm>>.OnEvent += HandleOnCharmFocus; 
         }
-
+        
         private void OnDisable()
         {
-            GameEvents.OnCharmFocus -= HandleOnCharmFocus;
+            Bus<DisplayTooltipEvent<Charm>>.OnEvent -= HandleOnCharmFocus; 
         }
         
         private void OnDestroy() => OnDisable();
         #endregion
         
         #region Subscribed
-
-        private void HandleOnCharmFocus(Charm charm)
+        private void HandleOnCharmFocus(DisplayTooltipEvent<Charm> evt)
         {
-            ShowTooltip(charm);
+            ShowTooltip(evt.ModelToDisplay);
         }
         #endregion
 
