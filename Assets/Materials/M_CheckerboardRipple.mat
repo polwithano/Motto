@@ -46,7 +46,7 @@ Material:
     - _AMoireFrequency: 4
     - _AMoireSpeed: 2
     - _AMoireStrength: 1
-    - _AOutlineSoft: 0.02
+    - _AOutlineSoft: 0
     - _AOutlineStrength: 1
     - _AOutlineWidth: 0
     - _ARotation: 0
@@ -57,7 +57,7 @@ Material:
     - _BMoireFrequency: 4
     - _BMoireSpeed: 2.2
     - _BMoireStrength: 1
-    - _BOutlineSoft: 0.02
+    - _BOutlineSoft: 0
     - _BOutlineStrength: 1
     - _BOutlineWidth: 0
     - _BRotation: 0

@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using Events;
 using Events.Core;
+using Events.Game;
 using Events.Rounds;
+using Events.Score;
 using Managers;
 using Misc;
 using Models;
@@ -55,18 +57,17 @@ namespace FSM.States
 
         private void HandleOnTileSelected(TileView tileView)
         {
-            if (tileView.IsInHand)
+            var position = tileView.IsInHand ? TilePosition.Board : TilePosition.Hand;
+            if (position == TilePosition.Hand)
             {
                 var emptySlot = BoardManager.Instance.GetFirstEmptySlot();
-                if (emptySlot)
+                if (!emptySlot)
                 {
-                    GameEvents.RaiseOnTileAddedToBoard(tileView);
+                    Debug.LogError($"No Empty Slot found on the board, tile {tileView.gameObject.name} cannot be moved.");
+                    return;
                 }
             }
-            else
-            {
-                GameEvents.RaiseOnTileRemovedFromBoard(tileView);
-            }
+            Bus<TilePositionUpdatedEvent>.Raise(new TilePositionUpdatedEvent(position, tileView));
         }
         
         private async void HandleOnBoardUpdated(string word, List<Tile> tiles)
@@ -116,25 +117,31 @@ namespace FSM.States
         #region Helpers
         private void OnWordChecked(string word, bool isLegit)
         {
-            if (isLegit) GameEvents.RaiseOnWordValidated(word);
-            else GameEvents.RaiseOnWordInvalidated();
+            var validationStatus = isLegit ? WordValidationStatus.Validated : WordValidationStatus.Invalidated; 
+            Bus<WordValidationEvent>.Raise(new WordValidationEvent(validationStatus, word));
         }
 
         private void CheckForExitConditions()
         {
-            if (Game.Run.Round.IsCompleted)
+            switch (Game.Run.Round.IsCompleted)
             {
-                var status = RoundEndedStatus.Success;
-                Bus<RoundEndedEvent>.Raise(new RoundEndedEvent(status, Game.Run.Round));
-                StateMachine.ChangeState(new RoundOverState(StateMachine, status));
-            }
-            else if (!Game.Run.Round.IsCompleted)
-            {
-                if (Game.Run.Round.WordsRemaining <= 0)
+                case true:
                 {
-                    var status = RoundEndedStatus.Failure;
+                    var status = RoundEndedStatus.Success;
                     Bus<RoundEndedEvent>.Raise(new RoundEndedEvent(status, Game.Run.Round));
                     StateMachine.ChangeState(new RoundOverState(StateMachine, status));
+                    break;
+                }
+                case false:
+                {
+                    if (Game.Run.Round.WordsRemaining <= 0)
+                    {
+                        var status = RoundEndedStatus.Failure;
+                        Bus<RoundEndedEvent>.Raise(new RoundEndedEvent(status, Game.Run.Round));
+                        StateMachine.ChangeState(new RoundOverState(StateMachine, status));
+                    }
+
+                    break;
                 }
             }
         }

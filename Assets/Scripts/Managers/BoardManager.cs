@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Events;
+using Events.Core;
+using Events.Game;
 using UnityEngine;
 using Models;
 using Views;
@@ -49,25 +51,31 @@ namespace Managers
         
         private void OnEnable()
         {
-            GameEvents.OnTileAddedToBoard += HandleOnTileAddedToBoard;
+            Bus<TilePositionUpdatedEvent>.OnEvent += HandleTilePositionUpdated; 
             GameEvents.OnTileDropConfirmed += HandleOnTileDropConfirmed; 
-            GameEvents.OnTileRemovedFromBoard += HandleOnTileRemovedFromBoard;
         }
 
         private void OnDisable()
         {
-            GameEvents.OnTileAddedToBoard -= HandleOnTileAddedToBoard;
+            Bus<TilePositionUpdatedEvent>.OnEvent -= HandleTilePositionUpdated; 
             GameEvents.OnTileDropConfirmed -= HandleOnTileDropConfirmed;
-            GameEvents.OnTileRemovedFromBoard -= HandleOnTileRemovedFromBoard;
         }
         
         private void OnDestroy() => OnDisable();
         #endregion
         
         #region Subscribed Methods
-        private void HandleOnTileAddedToBoard(TileView tileView)
+        private void HandleTilePositionUpdated(TilePositionUpdatedEvent evt)
         {
-            AddTileToBoard(tileView);
+            if (evt.Position == TilePosition.Board)
+            {
+                AddTileToBoard(evt.View);
+            }
+            else if (evt.Position == TilePosition.Hand)
+            {
+                AddTileToHand(evt.View);
+            }
+  
             GameEvents.RaiseOnBoardUpdated(GetCurrentSlotString(), GetTilesInSlots());
         }
         

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Events;
+using Events.Core;
+using Events.Game;
 using Models;
 using UnityEngine;
 using Views;
@@ -82,24 +84,24 @@ namespace Animation
 
         private void OnEnable()
         {
-            GameEvents.OnTileAddedToBoard += OnTileDrop;
+            Bus<TilePositionUpdatedEvent>.OnEvent += HandleTilePositionUpdated; 
             GameEvents.OnTileDropConfirmed += HandleOnTileDropConfirmed; 
         }
-        
+
         private void OnDisable()
         {
-            GameEvents.OnTileAddedToBoard -= OnTileDrop;
+            Bus<TilePositionUpdatedEvent>.OnEvent -= HandleTilePositionUpdated; 
             GameEvents.OnTileDropConfirmed -= HandleOnTileDropConfirmed;
         }
-    
-        private void OnTileDrop(TileView tileView)
+        
+        private void HandleTilePositionUpdated(TilePositionUpdatedEvent evt)
         {
             if (!targetMaterial) return;
 
-            if (WorldToUV(tileView.transform.position, out var uv))
+            if (WorldToUV(evt.View.transform.position, out var uv))
             {
                 AddRipple(uv);
-            }
+            }        
         }
         
         private void HandleOnTileDropConfirmed(TileView tileView, SlotView slotView)

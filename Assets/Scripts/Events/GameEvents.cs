@@ -20,18 +20,12 @@ namespace Events
         #endregion
         
         #region Score Events
-        public static event Action OnWordInvalidated;
-        public static event Action<string> OnWordValidated;
         public static event Action OnWordScored; 
         public static event Action<string, List<Tile>> OnScoringStarted;
         
         public static event Action<ScoreLogEntry> OnScoreStepStarted;
         public static event Action<ScoreLogEntry, Action> OnScoreStepApplied;
         public static event Action<ScoreLog> OnScoreSequenceCompleted;
-
-        public static void RaiseOnWordInvalidated () => OnWordInvalidated?.Invoke();
-        public static void RaiseOnWordValidated(string word) 
-            => OnWordValidated?.Invoke(word);
         
         public static void RaiseOnWordScored()=>  OnWordScored?.Invoke();
         public static void RaiseOnScoringStarted(string word, List<Tile> tiles)
@@ -45,17 +39,11 @@ namespace Events
         #endregion
         
         #region Game Events
-        public static event Action<TileView> OnTileAddedToBoard;
-        public static event Action<TileView> OnTileRemovedFromBoard;
         public static event Action<string, List<Tile>> OnBoardUpdated; 
         public static event Action<Tile> OnTileRedraw;
         public static event Action<Tile, Tile> OnTileRedrawPerformed;
         public static event Action<TileView, SlotView> OnTileDropConfirmed; 
-
-        public static void RaiseOnTileAddedToBoard(TileView tile) 
-            => OnTileAddedToBoard?.Invoke(tile);
-        public static void RaiseOnTileRemovedFromBoard(TileView tile)
-            => OnTileRemovedFromBoard?.Invoke(tile);
+        
         public static void RaiseOnBoardUpdated(string word, List<Tile> tiles)
             => OnBoardUpdated?.Invoke(word, tiles);
         public static void RaiseOnTileRedraw(Tile tile) 
@@ -68,7 +56,6 @@ namespace Events
         #endregion
         
         #region UI Events
-
         public static event Action<TileView> OnTileSelected; 
         public static event Action<Charm> OnCharmFocus;
         

@@ -2,11 +2,10 @@ using System.Collections.Generic;
 using Events;
 using Events.Core;
 using Events.Rounds;
-using Managers;
+using Events.Score;
 using Models;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 namespace UI
@@ -26,18 +25,15 @@ namespace UI
 
         private void OnEnable()
         {
-            Bus<RoundStartedEvent>.OnEvent += HandleOnRoundStarted; 
+            Bus<RoundStartedEvent>.OnEvent += HandleOnRoundStarted;
+            Bus<WordValidationEvent>.OnEvent += HandleWordValidation; 
             GameEvents.OnBoardUpdated += HandleOnBoardUpdated; 
-            GameEvents.OnWordInvalidated += HandleWordInvalidated;
-            GameEvents.OnWordValidated += HandleWordValidated; 
         }
 
         private void OnDisable()
         {
             Bus<RoundStartedEvent>.OnEvent -= HandleOnRoundStarted; 
             GameEvents.OnBoardUpdated -= HandleOnBoardUpdated;
-            GameEvents.OnWordInvalidated -= HandleWordInvalidated;
-            GameEvents.OnWordValidated -= HandleWordValidated;
         }
         
         private void OnDestroy() => OnDisable();
@@ -54,15 +50,15 @@ namespace UI
             DisableButton();
         }
         
-        private void HandleWordInvalidated()
+        private void HandleWordValidation(WordValidationEvent evt)
         {
-            DisableButton();
-        }
-        
-        private void HandleWordValidated(string word)
-        {
-            EnableButton();
-            lettersCount.text = word.Length.ToString();
+            if (evt.Status == WordValidationStatus.Validated)
+            {
+                EnableButton();
+                lettersCount.text = evt.Word.Length.ToString();
+            }
+            else
+                DisableButton();
         }
         #endregion
         
