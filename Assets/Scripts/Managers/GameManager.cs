@@ -12,8 +12,9 @@ namespace Managers
         [field: SerializeField] public string LanguageCode   { get; private set; } = "en";
         
         [field: SerializeField] public GameStateMachine GameState                  { get; private set; }
-        [field: SerializeField] public TileDistributionRuleSO TileDistributionRule { get; set; }
-        [field: SerializeField] public RunDataSO RunData                           { get; set; }
+        [field: SerializeField] public TileDistributionRuleSO TileDistributionRule { get; private set; }
+        [field: SerializeField] public TileDistributionRuleSO StartingDeck         { get; private set; }
+        [field: SerializeField] public RunDataSO RunData                           { get; private set; }
 
         [field: SerializeField] public Run Run       { get; set; }
         [field: SerializeField] public TileDeck Deck { get; set; }

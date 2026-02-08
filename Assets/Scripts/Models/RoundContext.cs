@@ -12,8 +12,9 @@ namespace Models
         [field: SerializeField] public int WordsRemaining          { get; private set; }
         [field: SerializeField] public int DrawsRemaining          { get; private set; }
         [field: SerializeField] public List<string> Words          { get; private set; }
-        [field: SerializeField] public List<List<Tile>> Tiles      { get; private set; }
         [field: SerializeField] public List<int> ScoreIncrements   { get; private set; }
+        
+        public List<List<Tile>> Tiles { get; private set; }
 
         public RoundContext(RoundDefinition definition)
         {

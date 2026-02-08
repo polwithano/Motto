@@ -5,6 +5,7 @@ using Animation;
 using Events.Core;
 using Events.Game;
 using Events.Rounds;
+using Events.Score;
 using UnityEngine;
 using Models;
 using Views;
@@ -48,14 +49,20 @@ namespace Managers
         {
             Bus<TileMoveRequestEvent>.OnEvent += HandleTileMoveRequest;
             Bus<BoardUpdatedEvent>.OnEvent += HandleBoardUpdated;
+            Bus<BoardClearedEvent>.OnEvent += HandleBoardCleared; 
             Bus<RoundStartedEvent>.OnEvent += HandleRoundStarted;
+            Bus<WordProcessedEvent>.OnEvent += HandleWordProcessed;
+            Bus<TileRedrawCompletedEvent>.OnEvent += HandleRedrawCompleted; 
         }
 
         private void OnDisable()
         {
             Bus<TileMoveRequestEvent>.OnEvent -= HandleTileMoveRequest;
             Bus<BoardUpdatedEvent>.OnEvent -= HandleBoardUpdated;
+            Bus<BoardClearedEvent>.OnEvent -= HandleBoardCleared; 
             Bus<RoundStartedEvent>.OnEvent -= HandleRoundStarted;
+            Bus<WordProcessedEvent>.OnEvent -= HandleWordProcessed; 
+            Bus<TileRedrawCompletedEvent>.OnEvent -= HandleRedrawCompleted; 
         }
 
         private void OnDestroy() => OnDisable();
@@ -88,6 +95,21 @@ namespace Managers
         }
 
         private void HandleRoundStarted(RoundStartedEvent evt)
+        {
+            DisplayDefaultPreviewedSlot();
+        }
+        
+        private void HandleWordProcessed(WordProcessedEvent evt)
+        {
+            DisablePreviewedSlot();
+        }
+        
+        private void HandleBoardCleared(BoardClearedEvent evt)
+        {
+            DisplayDefaultPreviewedSlot();
+        }
+        
+        private void HandleRedrawCompleted(TileRedrawCompletedEvent evt)
         {
             DisplayDefaultPreviewedSlot();
         }
@@ -176,6 +198,16 @@ namespace Managers
             }
 
             await Task.WhenAll(tasks);
+            
+            foreach (var slot in Slots)
+            {
+                foreach (Transform child in slot)
+                {
+                    DestroyImmediate(child.gameObject);
+                }
+            }
+
+            Bus<BoardClearedEvent>.Raise(new BoardClearedEvent());
         }
 
         public TileView GetTileViewFromTile(Tile tile)
@@ -202,6 +234,12 @@ namespace Managers
             }
 
             return tiles;
+        }
+
+        private void DisablePreviewedSlot()
+        {
+            _previewedSlot?.DisablePreviewFeedback();
+            _previewedSlot = null;
         }
         
         private void DisplayDefaultPreviewedSlot()

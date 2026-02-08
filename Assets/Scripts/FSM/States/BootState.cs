@@ -12,7 +12,7 @@ namespace FSM.States
         {
             CharmManager.Instance.InitializeCharms();
             
-            Game.Deck = new TileDeck(Game.TileDistributionRule);
+            Game.Deck = new TileDeck(Game.StartingDeck);
             Game.Hand = new TileHand();
             Game.Run = new Run(Game.RunData);
         

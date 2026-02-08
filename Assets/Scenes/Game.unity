@@ -334,7 +334,7 @@ MonoBehaviour:
   m_EdgeColorGlow: 1
   m_EdgeShinyRate: 0.285
   m_EdgeShinyWidth: 0.33
-  m_EdgeShinyAutoPlaySpeed: 0.5
+  m_EdgeShinyAutoPlaySpeed: 0.75
   m_PatternArea: 1
   m_DetailFilter: 0
   m_DetailIntensity: 1
@@ -2039,7 +2039,7 @@ MonoBehaviour:
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
@@ -2696,7 +2696,7 @@ MonoBehaviour:
   m_EdgeColorGlow: 1
   m_EdgeShinyRate: 0.285
   m_EdgeShinyWidth: 0.33
-  m_EdgeShinyAutoPlaySpeed: 0.5
+  m_EdgeShinyAutoPlaySpeed: 0.75
   m_PatternArea: 1
   m_DetailFilter: 0
   m_DetailIntensity: 1
@@ -3509,7 +3509,7 @@ MonoBehaviour:
   m_EdgeColorGlow: 1
   m_EdgeShinyRate: 0.285
   m_EdgeShinyWidth: 0.33
-  m_EdgeShinyAutoPlaySpeed: 0.5
+  m_EdgeShinyAutoPlaySpeed: 0.75
   m_PatternArea: 1
   m_DetailFilter: 0
   m_DetailIntensity: 1
@@ -4177,7 +4177,7 @@ MonoBehaviour:
   m_EdgeColorGlow: 1
   m_EdgeShinyRate: 0.285
   m_EdgeShinyWidth: 0.33
-  m_EdgeShinyAutoPlaySpeed: 0.5
+  m_EdgeShinyAutoPlaySpeed: 0.75
   m_PatternArea: 1
   m_DetailFilter: 0
   m_DetailIntensity: 1
@@ -4952,7 +4952,7 @@ MonoBehaviour:
   m_EdgeColorGlow: 1
   m_EdgeShinyRate: 0.285
   m_EdgeShinyWidth: 0.33
-  m_EdgeShinyAutoPlaySpeed: 0.5
+  m_EdgeShinyAutoPlaySpeed: 0.75
   m_PatternArea: 1
   m_DetailFilter: 0
   m_DetailIntensity: 1
@@ -6982,7 +6982,7 @@ MonoBehaviour:
   m_EdgeColorGlow: 1
   m_EdgeShinyRate: 0.285
   m_EdgeShinyWidth: 0.33
-  m_EdgeShinyAutoPlaySpeed: 0.5
+  m_EdgeShinyAutoPlaySpeed: 0.75
   m_PatternArea: 1
   m_DetailFilter: 0
   m_DetailIntensity: 1
@@ -10810,7 +10810,7 @@ MonoBehaviour:
   m_EdgeColorGlow: 1
   m_EdgeShinyRate: 0.285
   m_EdgeShinyWidth: 0.33
-  m_EdgeShinyAutoPlaySpeed: 0.5
+  m_EdgeShinyAutoPlaySpeed: 0.75
   m_PatternArea: 1
   m_DetailFilter: 0
   m_DetailIntensity: 1
@@ -11177,7 +11177,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.015625, y: 0.005004883}
+  m_AnchoredPosition: {x: 0.015625, y: 0.0063476562}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1891756476

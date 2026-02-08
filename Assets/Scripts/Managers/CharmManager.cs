@@ -36,11 +36,13 @@ namespace Managers
         private void OnEnable()
         {
             Bus<BoardUpdatedEvent>.OnEvent += HandleOnBoardUpdated;
+            Bus<BoardClearedEvent>.OnEvent += HandleBoardCleared; 
         }
 
         private void OnDisable()
         {
             Bus<BoardUpdatedEvent>.OnEvent -= HandleOnBoardUpdated;
+            Bus<BoardClearedEvent>.OnEvent -= HandleBoardCleared; 
         }
         #endregion
         
@@ -54,6 +56,15 @@ namespace Managers
                 var view = CharmViews[charm];
                 view.SetActiveFeedback(willTrigger);
             }      
+        }
+        
+        private void HandleBoardCleared(BoardClearedEvent args)
+        {
+            foreach (var charm in ActiveCharms)
+            {
+                var view = CharmViews[charm];
+                view.SetActiveFeedback(false);
+            }           
         }
         
         public void InitializeCharms()

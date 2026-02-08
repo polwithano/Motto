@@ -111,8 +111,6 @@ namespace Views
 
         public void EndDrag()
         {
-            // transform.SetParent(_originalParent, true);
-
             _scaleTween?.Kill();
             RectTransform.localScale = Vector3.one;
         }

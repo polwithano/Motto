@@ -16,7 +16,7 @@ MonoBehaviour:
   <CharmName>k__BackingField: Crab
   <CharmDescription>k__BackingField: Add {s:+|label} per blank tile.
   <CharmIcon>k__BackingField: {fileID: 1713448953119597589, guid: 02b9c170fe8084eca9463eee553dbde0, type: 3}
-  <PriorityOverride>k__BackingField: 0
+  <PriorityOverride>k__BackingField: 99
   <EffectTrigger>k__BackingField: 2
   <ScoreEffects>k__BackingField:
   - <Target>k__BackingField: 0

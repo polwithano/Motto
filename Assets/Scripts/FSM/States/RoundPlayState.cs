@@ -123,6 +123,7 @@ namespace FSM.States
                     var status = RoundEndedStatus.Success;
                     Bus<RoundEndedEvent>.Raise(new RoundEndedEvent(status, Game.Run.Round));
                     StateMachine.ChangeState(new RoundOverState(StateMachine, status));
+                    
                     break;
                 }
                 case false:
