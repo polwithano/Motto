@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Models.Charms.TwinPowerCharm
   <ID>k__BackingField: 7e16efad-7108-4ced-a7b4-3f950f6bd7a8
   <CharmName>k__BackingField: Black Cat
-  <CharmDescription>k__BackingField: Add +3 <color=blue>score</color> for each adjacent
-    similar letter
+  <CharmDescription>k__BackingField: Add {s:+|label} for each adjacent similar letter
   <CharmIcon>k__BackingField: {fileID: 335506236189848980, guid: 02b9c170fe8084eca9463eee553dbde0, type: 3}
   <PriorityOverride>k__BackingField: 0
   <EffectTrigger>k__BackingField: 2

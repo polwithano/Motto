@@ -9575,6 +9575,7 @@ GameObject:
   - component: {fileID: 1612748316}
   - component: {fileID: 1612748315}
   - component: {fileID: 1612748317}
+  - component: {fileID: 1612748318}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -9659,6 +9660,21 @@ MonoBehaviour:
   speed: 0.33
   damping: 300
   width: 0.2
+--- !u!114 &1612748318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612748313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5b9b14ea1fa4a81b0ac74c7446d5ac4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Animation.UIScoreLogEffect
+  targetMaterial: {fileID: 2100000, guid: e331ae283b3e3447596fa9af008841bc, type: 2}
+  tweenDuration: 0.5
+  tweenEase: 9
 --- !u!1 &1618736369
 GameObject:
   m_ObjectHideFlags: 0
@@ -11161,7 +11177,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.015625, y: 0.008544922}
+  m_AnchoredPosition: {x: 0.015625, y: 0.005004883}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1891756476

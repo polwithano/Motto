@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Models.Charms.ShortStackCharm
   <ID>k__BackingField: c1ae757a-d03a-46a2-83f4-1e516c8d1213
   <CharmName>k__BackingField: Moldy Bread
-  <CharmDescription>k__BackingField: Add +3 <color=blue>score</color> if the word
-    length is less or equal to 3 characters.
+  <CharmDescription>k__BackingField: Add {s:+|label} if the word length is less or
+    equal to 3 characters.
   <CharmIcon>k__BackingField: {fileID: -1287752153625068613, guid: 486127e5240a54ac0a050c3f04ffa81a, type: 3}
   <PriorityOverride>k__BackingField: 0
   <EffectTrigger>k__BackingField: 1

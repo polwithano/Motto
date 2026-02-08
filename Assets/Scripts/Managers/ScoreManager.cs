@@ -63,13 +63,15 @@ namespace Managers
             var log = new ScoreLog(word, tiles);
             
             // Shitty fix, first entry multiplier should be set to one
+            // ---
             var startValues = new List<ScoreEffect>
             {
-                new ScoreEffect(ScoreEffectTarget.Score, 1),
-                new ScoreEffect(ScoreEffectTarget.Modifier, 1),
+                new (ScoreEffectTarget.Score, 1),
+                new (ScoreEffectTarget.Modifier, 1),
             };
             var startEntry = new ScoreLogEntry(log.Logs.Count, null, startValues); 
             log.AddEntry(startEntry);
+            // ---
             
             var onLetterCharms = CharmManager.Instance.OnLetterCharms; 
             

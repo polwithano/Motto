@@ -24,7 +24,7 @@ namespace Models.Charms
         
         public override void ApplyEffect(ScoreLog log)
         {
-            var tileValue = log.Tiles[0].Points;
+            var tileValue = log.Tiles[0].Points * (ScoreEffects[0].Value - 1);
             var scoreEffect = new ScoreEffect(ScoreEffects[0].Target, tileValue);
             var entry = new ScoreLogEntry(log.Logs.Count, this, scoreEffect);
             log.AddEntry(entry);

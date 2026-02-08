@@ -42,22 +42,22 @@ Material:
     m_Ints: []
     m_Floats:
     - _ALineFrequency: 3
-    - _ALineWobble: 0.1
+    - _ALineWobble: 0.15
     - _AMoireFrequency: 4
-    - _AMoireSpeed: 2
+    - _AMoireSpeed: 4
     - _AMoireStrength: 1
-    - _AOutlineSoft: 0
+    - _AOutlineSoft: 0.02
     - _AOutlineStrength: 1
     - _AOutlineWidth: 0
     - _ARotation: 0
     - _AScale: 10
     - _ASpeed: 0
     - _BLineFrequency: 3
-    - _BLineWobble: 0.1
+    - _BLineWobble: 0.15
     - _BMoireFrequency: 4
-    - _BMoireSpeed: 2.2
+    - _BMoireSpeed: 4
     - _BMoireStrength: 1
-    - _BOutlineSoft: 0
+    - _BOutlineSoft: 0.02
     - _BOutlineStrength: 1
     - _BOutlineWidth: 0
     - _BRotation: 0
@@ -98,11 +98,11 @@ Material:
     - _SpinRotation: -2
     - _SpinSpeed: 2
     - _SplitFeather: 0
-    - _SplitLeft: 0.45
+    - _SplitLeft: -0.2
     - _SplitLineSoft: 0
     - _SplitLineStrength: 0.93
-    - _SplitLineWidth: 0.005
-    - _SplitRight: 0.55
+    - _SplitLineWidth: 0.0125
+    - _SplitRight: 1.2
     - _SplitValue: 0
     - _ZWrite: 0
     m_Colors:

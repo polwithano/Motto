@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Models.Charms.AllUniqueCharm
   <ID>k__BackingField: 7f968c48-de82-46d7-b8b8-bcb9cd62742c
   <CharmName>k__BackingField: Knight Helm
-  <CharmDescription>k__BackingField: Add +2 <color=orange>modifier</color> if all
-    letters are unique.
+  <CharmDescription>k__BackingField: Add {m:+|label}  if all letters are unique.
   <CharmIcon>k__BackingField: {fileID: -3101476515158678442, guid: 486127e5240a54ac0a050c3f04ffa81a, type: 3}
   <PriorityOverride>k__BackingField: 0
   <EffectTrigger>k__BackingField: 1
   <ScoreEffects>k__BackingField:
   - <Target>k__BackingField: 1
-    <Value>k__BackingField: 10
+    <Value>k__BackingField: 3

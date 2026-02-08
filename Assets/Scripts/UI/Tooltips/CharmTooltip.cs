@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using Models.Charms;
+using UI.Helpers;
 
 namespace UI.Tooltips
 {
@@ -18,7 +19,7 @@ namespace UI.Tooltips
             }
 
             titleText.text = charm.CharmName;
-            descriptionText.text = charm.CharmDescription;
+            descriptionText.text = CharmDescriptionParser.Parse(charm.CharmDescription, charm);
         }
     }
 }
