@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using Events;
+using Events.Core;
+using Events.Shop;
 using Managers;
 using TMPro;
 using UnityEngine;
@@ -22,20 +24,36 @@ namespace UI
         #region Mono
         private void OnEnable()
         {
-            GameEvents.OnShopOpened += HandleOnShopOpen; 
-            GameEvents.OnShopClosed += HandleOnShopClosed;
+            Bus<ShopStatusEvent>.OnEvent += HandleShopStatusUpdated; 
         }
 
         private void OnDisable()
         {
-            GameEvents.OnShopOpened -= HandleOnShopOpen;
-            GameEvents.OnShopClosed -= HandleOnShopClosed;
+            Bus<ShopStatusEvent>.OnEvent -= HandleShopStatusUpdated; 
+
         }
         
         private void OnDestroy() => OnDisable();
         #endregion
         
         #region Event Handlers
+        private void HandleShopStatusUpdated(ShopStatusEvent evt)
+        {
+            switch (evt.Status)
+            {
+                case ShopStatus.Open:
+                    HandleOnShopOpen();
+                    break; 
+                case ShopStatus.Closed:
+                    HandleOnShopClosed();
+                    break; 
+                case ShopStatus.Reroll:
+                    UpdateStaticUI();
+                    InstantiateShopItemViews();
+                    break;
+            }
+        }
+        
         private void HandleOnShopOpen()
         {
             UpdateStaticUI();
@@ -48,13 +66,11 @@ namespace UI
         }
         #endregion
 
-        public void OnNextRoundButton() => GameEvents.RaiseOnShopClosed();
+        public void OnNextRoundButton() => Bus<ShopStatusEvent>.Raise(new ShopStatusEvent(ShopStatus.Closed));
+
         public void OnRerollButton()
         {
-            GameEvents.RaiseOnShopReroll();
-            
-            UpdateStaticUI();
-            InstantiateShopItemViews(); 
+           Bus<ShopStatusEvent>.Raise(new ShopStatusEvent(ShopStatus.Reroll));
         }
 
         private void UpdateStaticUI()

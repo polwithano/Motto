@@ -1,6 +1,7 @@
 using System.Linq;
 using Events;
 using Events.Core;
+using Events.Game;
 using Events.Inputs;
 using Models;
 using UnityEngine;
@@ -18,13 +19,13 @@ namespace Views
         #region Mono
         private void OnEnable()
         {
-            GameEvents.OnTileRedrawPerformed += HandleOnTileRedrawPerformed;
+            Bus<TileRedrawCompletedEvent>.OnEvent += HandleOnTileRedrawPerformed; 
             Bus<TileDraggedEvent>.OnEvent += HandleOnTileDragged;
         }
 
         private void OnDisable()
         {
-            GameEvents.OnTileRedrawPerformed -= HandleOnTileRedrawPerformed;
+            Bus<TileRedrawCompletedEvent>.OnEvent -= HandleOnTileRedrawPerformed; 
             Bus<TileDraggedEvent>.OnEvent -= HandleOnTileDragged;
         }
 
@@ -32,8 +33,11 @@ namespace Views
         #endregion
         
         #region Subscribed
-        private void HandleOnTileRedrawPerformed(Tile tile, Tile newTile)
+        private void HandleOnTileRedrawPerformed(TileRedrawCompletedEvent evt)
         {
+            var tile = evt.PreviousTile;
+            var newTile = evt.NewTile;
+            
             if (tile == null || newTile == null)
                 return;
             

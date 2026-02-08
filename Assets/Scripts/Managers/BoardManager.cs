@@ -105,6 +105,7 @@ namespace Managers
                 {
                     AddTileToBoard(tileView, slotView);
                     Bus<BoardUpdatedEvent>.Raise(new BoardUpdatedEvent(GetCurrentSlotString(), GetTilesInSlots()));
+                    Bus<TileMoveCompletedEvent>.Raise(new TileMoveCompletedEvent(tileView));
                 }
             );
         }

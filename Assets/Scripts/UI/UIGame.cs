@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using Events;
+using Events.Core;
+using Events.Shop;
 using UnityEngine;
 
 namespace UI
@@ -24,20 +26,31 @@ namespace UI
         
         private void OnEnable()
         {
-            GameEvents.OnShopOpened += HandleOnShopOpened;
-            GameEvents.OnShopClosed += HandleOnShopClosed; 
+            Bus<ShopStatusEvent>.OnEvent += HandleOnShopStatusUpdated; 
         }
 
         private void OnDisable()
         {
-            GameEvents.OnShopOpened -= HandleOnShopOpened;
-            GameEvents.OnShopClosed -= HandleOnShopClosed;
+            Bus<ShopStatusEvent>.OnEvent -= HandleOnShopStatusUpdated; 
         }
 
         private void OnDestroy() => OnDisable(); 
         #endregion
         
         #region Event Handlers
+        private void HandleOnShopStatusUpdated(ShopStatusEvent evt)
+        {
+            switch (evt.Status)
+            {
+                case ShopStatus.Open:
+                    HandleOnShopOpened();
+                    break; 
+                case ShopStatus.Closed:
+                    HandleOnShopClosed();
+                    break; 
+            }
+        }
+        
         private void HandleOnShopOpened()
         {
             FadeCanvasGroups(gameCanvases, false);

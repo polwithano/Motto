@@ -1,4 +1,6 @@
 using Events;
+using Events.Core;
+using Events.Shop;
 using Managers;
 
 namespace FSM.States
@@ -10,18 +12,15 @@ namespace FSM.States
 
         public override void Enter()
         {
-            GameEvents.OnShopClosed += HandleOnShopClosed;
-            GameEvents.OnShopReroll += HandleOnShopReroll; 
-            
             ShopManager.Instance.InitializeShop();
-            
-            GameEvents.RaiseOnShopOpen();
+
+            Bus<ShopStatusEvent>.OnEvent += HandleOnShopStatusUpdated; 
+            Bus<ShopStatusEvent>.Raise(new ShopStatusEvent(ShopStatus.Open));
         }
-        
+
         public override void Exit()
         {
-            GameEvents.OnShopClosed -= HandleOnShopClosed; 
-            GameEvents.OnShopReroll -= HandleOnShopReroll;
+            Bus<ShopStatusEvent>.OnEvent -= HandleOnShopStatusUpdated; 
         }
 
         public override void Tick()
@@ -30,6 +29,22 @@ namespace FSM.States
         }
         
         #region Event Handlers
+        
+        private void HandleOnShopStatusUpdated(ShopStatusEvent evt)
+        {
+            switch (evt.Status)
+            {
+                case ShopStatus.Open:
+                    break; 
+                case ShopStatus.Closed:
+                    HandleOnShopClosed();
+                    break;
+                case ShopStatus.Reroll:
+                    HandleOnShopReroll();
+                    break;
+            }
+        }
+        
         private void HandleOnShopClosed()
         {
             StateMachine.ChangeState(new RoundStartState(StateMachine));

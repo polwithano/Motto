@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Animation;
-using Events;
 using Events.Core;
 using Events.Game;
 using Events.Inputs;

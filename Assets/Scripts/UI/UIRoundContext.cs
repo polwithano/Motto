@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DG.Tweening;
 using Events;
 using Events.Core;
+using Events.Game;
 using Events.Rounds;
 using Managers;
 using Models;
@@ -51,20 +52,20 @@ namespace UI
 
         private void OnEnable()
         {
-            Bus<RoundStartedEvent>.OnEvent += HandleOnRoundStarted; 
+            Bus<RoundStartedEvent>.OnEvent += HandleOnRoundStarted;
+            Bus<TileRedrawCompletedEvent>.OnEvent += HandleOnTileRedrawPerformed; 
+            
             GameEvents.OnScoringStarted += HandleOnScoringStarted; 
             GameEvents.OnScoreStepStarted += HandleOnScoreStepStarted;
-            GameEvents.OnTileRedrawPerformed += HandleOnTileRedrawPerformed;
-            GameEvents.OnPurchaseProcessed += HandleOnPurchaseProcessed;
         }
 
         private void OnDisable()
         {
             Bus<RoundStartedEvent>.OnEvent -= HandleOnRoundStarted; 
+            Bus<TileRedrawCompletedEvent>.OnEvent -= HandleOnTileRedrawPerformed; 
+            
             GameEvents.OnScoringStarted -= HandleOnScoringStarted; 
             GameEvents.OnScoreStepStarted -= HandleOnScoreStepStarted;
-            GameEvents.OnTileRedrawPerformed -= HandleOnTileRedrawPerformed; 
-            GameEvents.OnPurchaseProcessed -= HandleOnPurchaseProcessed;
         }
 
         private void OnDestroy() => OnDisable();
@@ -105,15 +106,9 @@ namespace UI
             await seq.AsyncWaitForCompletion();
         }
 
-        private void HandleOnTileRedrawPerformed(Tile tile, Tile newTile)
+        private void HandleOnTileRedrawPerformed(TileRedrawCompletedEvent evt)
         {
             UpdateDeckAndRedrawCounts();
-        }
-
-        private void HandleOnPurchaseProcessed()
-        {
-            currencyCountText.text = $"${GameManager.Instance.Run.Currency.ToString()}"; 
-            AnimatePunch(currencyCountText.rectTransform);
         }
         #endregion
 

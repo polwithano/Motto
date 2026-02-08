@@ -80,7 +80,7 @@ namespace UI
         
         private void OnButtonValidated()
         {
-            GameEvents.RaiseOnWordScored();
+            Bus<WordProcessedEvent>.Raise(new WordProcessedEvent());
             DisableButton();
         }
     }

@@ -5643,7 +5643,7 @@ GameObject:
   m_Component:
   - component: {fileID: 862444923}
   m_Layer: 5
-  m_Name: DragLayer
+  m_Name: AnimationAndDragLayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6547,7 +6547,7 @@ MonoBehaviour:
   tileContainer: {fileID: 395802012}
   nextRoundLabel: {fileID: 562664263}
   rerollLabel: {fileID: 1381439912}
-  ShopTiles: []
+  shopTiles: []
 --- !u!1 &1066040880
 GameObject:
   m_ObjectHideFlags: 0
@@ -8463,6 +8463,7 @@ MonoBehaviour:
   - {fileID: 467658912}
   - {fileID: 677500893}
   <SlotViews>k__BackingField: []
+  tileAnimationLayer: {fileID: 862444923}
 --- !u!114 &1313176247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11160,7 +11161,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.015625, y: 0.0026855469}
+  m_AnchoredPosition: {x: 0.015625, y: 0.008544922}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1891756476

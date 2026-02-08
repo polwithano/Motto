@@ -84,49 +84,24 @@ namespace Animation
 
         private void OnEnable()
         {
-            Bus<TilePositionUpdatedEvent>.OnEvent += HandleTilePositionUpdated; 
-            GameEvents.OnTileDropConfirmed += HandleOnTileDropConfirmed; 
+            Bus<TileMoveCompletedEvent>.OnEvent += HandleOnTileMoveCompleted; 
         }
 
         private void OnDisable()
         {
-            Bus<TilePositionUpdatedEvent>.OnEvent -= HandleTilePositionUpdated; 
-            GameEvents.OnTileDropConfirmed -= HandleOnTileDropConfirmed;
+            Bus<TileMoveCompletedEvent>.OnEvent -= HandleOnTileMoveCompleted; 
         }
         
-        private void HandleTilePositionUpdated(TilePositionUpdatedEvent evt)
+        private void HandleOnTileMoveCompleted(TileMoveCompletedEvent evt)
         {
             if (!targetMaterial) return;
 
             if (WorldToUV(evt.View.transform.position, out var uv))
             {
                 AddRipple(uv);
-            }        
-        }
-        
-        private void HandleOnTileDropConfirmed(TileView tileView, SlotView slotView)
-        {
-            if (!targetMaterial) return;
-
-            if (WorldToUV(tileView.transform.position, out var uv))
-            {
-                AddRipple(uv);
             }
         }
 
-/*
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            if (!targetMaterial) return;
-
-            Vector2 uv;
-            if (TryGetUV(eventData.position, eventData.pressEventCamera, out uv))
-            {
-                AddRipple(uv);
-            }
-        }
-*/
-    
         bool WorldToUV(Vector3 worldPos, out Vector2 uv)
         {
             uv = Vector2.zero;

@@ -26,9 +26,9 @@ namespace FSM.States
         public override void Enter()
         {
             Bus<BoardUpdatedEvent>.OnEvent += HandleOnBoardUpdated;
-            Bus<TileRedrawEvent>.OnEvent += HandleOnTileRedraw; 
-            
-            GameEvents.OnWordScored += HandleOnWordScored; 
+            Bus<TileRedrawEvent>.OnEvent += HandleOnTileRedraw;
+
+            Bus<WordProcessedEvent>.OnEvent += HandleOnWordProcessed; 
             GameEvents.OnScoreSequenceCompleted += HandleOnScoreSequenceCompleted;
         }
 
@@ -37,7 +37,7 @@ namespace FSM.States
             Bus<BoardUpdatedEvent>.OnEvent -= HandleOnBoardUpdated; 
             Bus<TileRedrawEvent>.OnEvent -= HandleOnTileRedraw; 
             
-            GameEvents.OnWordScored -= HandleOnWordScored;
+            Bus<WordProcessedEvent>.OnEvent -= HandleOnWordProcessed; 
             GameEvents.OnScoreSequenceCompleted -= HandleOnScoreSequenceCompleted;
         }
         
@@ -53,7 +53,7 @@ namespace FSM.States
             Game.Hand.TryAddTile(newTile);
             Game.Run.Round.RemoveDraw();
             
-            GameEvents.RaiseOnTileRedrawPerformed(evt.Model, newTile);
+            Bus<TileRedrawCompletedEvent>.Raise(new TileRedrawCompletedEvent(evt.Model, newTile));
         }
         
         private async void HandleOnBoardUpdated(BoardUpdatedEvent evt)
@@ -73,7 +73,7 @@ namespace FSM.States
             }
         }
 
-        private void HandleOnWordScored()
+        private void HandleOnWordProcessed(WordProcessedEvent evt)
         {
             if (Game.Run.Round.WordsRemaining <= 0) return;
             

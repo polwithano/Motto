@@ -21,16 +21,4 @@ namespace Events.Game
             View = view;
         }
     }
-
-    public struct TilePositionConfirmedEvent : IEvent
-    {
-        public GamePosition Position { get; private set; }
-        public TileView View { get; private set; }
-
-        public TilePositionConfirmedEvent(GamePosition position, TileView view)
-        {
-            Position = position;
-            View = view;
-        }
-    }
 }
