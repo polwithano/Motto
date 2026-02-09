@@ -230,7 +230,8 @@ MonoBehaviour:
   canvasGroup: {fileID: 5148731572223878023}
   scoreTargetColor: {r: 0.10980392, g: 0.6666667, b: 0.9490196, a: 1}
   modifierTargetColor: {r: 0.9490196, g: 0.6, b: 0.10980392, a: 1}
-  lifetime: 3
+  startingOffset: {x: 0, y: 75, z: 0}
+  lifetime: 1.5
   floatDistance: 200
   moveEase: 12
   fadeEase: 17

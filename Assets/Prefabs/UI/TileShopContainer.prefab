@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 335027384064976}
   - component: {fileID: 8789453450121892247}
   - component: {fileID: 2438066670756181577}
+  - component: {fileID: 6466738915114875816}
   m_Layer: 5
   m_Name: TileShopContainer
   m_TagString: Untagged
@@ -193,6 +194,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &6466738915114875816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4621738270312821796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1f15c690c9f469ba6b17253b4897ab0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Views.IBuyableViewer
+  buyButton: {fileID: 580604409784632696}
+  priceLabel: {fileID: 8303956121625390155}
 --- !u!1 &8866843044748862815
 GameObject:
   m_ObjectHideFlags: 0

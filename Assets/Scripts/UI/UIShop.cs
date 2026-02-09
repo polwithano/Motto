@@ -4,6 +4,7 @@ using Events;
 using Events.Core;
 using Events.Shop;
 using Managers;
+using Models;
 using TMPro;
 using UnityEngine;
 using Views;
@@ -12,112 +13,134 @@ namespace UI
 {
     public class UIShop : MonoBehaviour
     {
-        [SerializeField] private GameObject tileViewPrefab;
-        [SerializeField] private GameObject tileShopContainerPrefab; 
-        [SerializeField] private RectTransform tileContainer;
-        
+        [Header("Prefabs")]
+        [SerializeField] private GameObject itemContainerPrefab;
+        [SerializeField] private IBuyableViewer buyableViewerPrefab;
+
+        [Header("Layout")]
+        [SerializeField] private RectTransform itemsRoot;
+
+        [Header("Static UI")]
         [SerializeField] private TextMeshProUGUI nextRoundLabel;
-        [SerializeField] private TextMeshProUGUI rerollLabel; 
-        
-        [SerializeField] private List<GameObject>  shopTiles;
-        
+        [SerializeField] private TextMeshProUGUI rerollLabel;
+
+        private readonly List<GameObject> _spawnedItems = new();
+
         #region Mono
         private void OnEnable()
         {
-            Bus<ShopStatusEvent>.OnEvent += HandleShopStatusUpdated; 
+            Bus<ShopStatusEvent>.OnEvent += HandleShopStatus;
         }
 
         private void OnDisable()
         {
-            Bus<ShopStatusEvent>.OnEvent -= HandleShopStatusUpdated; 
-
+            Bus<ShopStatusEvent>.OnEvent -= HandleShopStatus;
         }
-        
-        private void OnDestroy() => OnDisable();
         #endregion
-        
-        #region Event Handlers
-        private void HandleShopStatusUpdated(ShopStatusEvent evt)
+
+        #region Events
+        private void HandleShopStatus(ShopStatusEvent evt)
         {
             switch (evt.Status)
             {
                 case ShopStatus.Open:
-                    HandleOnShopOpen();
-                    break; 
-                case ShopStatus.Closed:
-                    HandleOnShopClosed();
-                    break; 
+                    OpenShop();
+                    break;
+
                 case ShopStatus.Reroll:
-                    UpdateStaticUI();
-                    InstantiateShopItemViews();
+                    RefreshShop();
+                    break;
+
+                case ShopStatus.Closed:
+                    CloseShop();
                     break;
             }
         }
-        
-        private void HandleOnShopOpen()
+        #endregion
+
+        #region UI Flow
+        private void OpenShop()
         {
             UpdateStaticUI();
-            InstantiateShopItemViews();
+            SpawnItems();
         }
 
-        private void HandleOnShopClosed()
-        { 
-            ClearShopItemViews();
+        private void RefreshShop()
+        {
+            UpdateStaticUI();
+            SpawnItems();
+        }
+
+        private void CloseShop()
+        {
+            ClearItems();
         }
         #endregion
 
-        public void OnNextRoundButton() => Bus<ShopStatusEvent>.Raise(new ShopStatusEvent(ShopStatus.Closed));
-
-        public void OnRerollButton()
-        {
-           Bus<ShopStatusEvent>.Raise(new ShopStatusEvent(ShopStatus.Reroll));
-        }
-
+        #region UI Helpers
         private void UpdateStaticUI()
         {
-            var run = GameManager.Instance.Run; 
-            var nextRoundText = $"{run.Round.Definition.RoundType} ({run.RoundIndex + 1})";
-            var rerollValueText = $"${ShopManager.Instance.RerollPrice}"; 
-            
-            nextRoundLabel.text = nextRoundText;
-            rerollLabel.text = rerollValueText;
+            var run = GameManager.Instance.Run;
+            nextRoundLabel.text = $"{run.Round.Definition.RoundType} ({run.RoundIndex + 1})";
+            rerollLabel.text = $"${ShopManager.Instance.RerollPrice}";
         }
-        
-        private void InstantiateShopItemViews()
+
+        private void SpawnItems()
         {
-            ClearShopItemViews();
-            
-            var tiles = ShopManager.Instance.Tiles;
-            var delay = 0f; 
-            
-            foreach (var tile in tiles)
+            ClearItems();
+
+            var delay = 0f;
+
+            foreach (var bundle in ShopManager.Instance.ShopItems)
             {
-                var tileShopContainer = Instantiate(tileShopContainerPrefab, tileContainer);
-                var tileView = Instantiate(tileViewPrefab, tileShopContainer.transform);
-                var view = tileView.GetComponent<TileView>();
-
-                shopTiles.Add(tileShopContainer);
-                tileView.transform.SetAsFirstSibling();
-                view.Populate(tile);
+                var buyable = Instantiate(buyableViewerPrefab, itemsRoot);
+                var container = Instantiate(itemContainerPrefab, buyable.transform);
+                container.transform.SetAsFirstSibling();
                 
-                var t = tileView.transform;
-                t.localScale = Vector3.zero;
-
-                t.DOScale(1.33f, 0.15f)
-                    .SetEase(Ease.OutBounce)
-                    .SetDelay(delay)
-                    .OnComplete(() => t.DOScale(1f, 0.15f).SetEase(Ease.InOutSine));
-
-                delay += 0.033f; 
+                var view = container.GetComponent<TileView>(); 
                 
+                view.Populate(bundle.Item as Tile);
+                buyable.Initialize(bundle);
+
                 Destroy(view);
+                
+                AnimateAppear(container.transform, delay);
+                delay += 0.03f;
+
+                _spawnedItems.Add(buyable.gameObject);
             }
         }
 
-        private void ClearShopItemViews()
+        private void ClearItems()
         {
-            foreach (var obj in shopTiles) Destroy(obj);
-            shopTiles.Clear();
+            foreach (var obj in _spawnedItems)
+                Destroy(obj);
+
+            _spawnedItems.Clear();
         }
+
+        private static void AnimateAppear(Transform t, float delay)
+        {
+            t.localScale = Vector3.zero;
+
+            t.DOScale(1.15f, 0.15f)
+                .SetEase(Ease.OutBack)
+                .SetDelay(delay)
+                .OnComplete(() =>
+                    t.DOScale(1f, 0.1f).SetEase(Ease.InOutSine));
+        }
+        #endregion
+
+        #region Buttons
+        public void OnNextRoundClicked()
+        {
+            Bus<ShopStatusEvent>.Raise(new ShopStatusEvent(ShopStatus.Closed));
+        }
+
+        public void OnRerollClicked()
+        {
+            Bus<ShopStatusEvent>.Raise(new ShopStatusEvent(ShopStatus.Reroll));
+        }
+        #endregion
     }
 }

@@ -143,6 +143,7 @@ namespace Views
             return tcs.Task;
         }
 
+        /*
         private void AnimateOnTileScored()
         {
             var seq = DOTween.Sequence();
@@ -152,6 +153,45 @@ namespace Views
             
             seq.Append(transform.DOMoveY(endY, duration).SetEase(ease));
             seq.Append(transform.DOMoveY(startY, duration).SetEase(ease));
+        }
+        */
+        
+        private void AnimateOnTileScored()
+        {
+            transform.DOKill();
+
+            var seq = DOTween.Sequence();
+
+            // Rotation aléatoire gauche/droite
+            float randomAngle = Random.Range(15f, 30f);
+            float direction = Random.value > 0.5f ? 1f : -1f;
+            float targetAngle = randomAngle * direction;
+
+            // Rotate
+            seq.Join(
+                transform.DORotate(
+                    new Vector3(0, 0, targetAngle),
+                    duration * 0.5f
+                ).SetEase(ease)
+            );
+
+            // Retour à la rotation initiale
+            seq.Append(
+                transform.DORotate(
+                    Vector3.zero,
+                    duration * 0.5f
+                ).SetEase(ease)
+            );
+
+            // Punch scale
+            seq.Join(
+                transform.DOPunchScale(
+                    Vector3.one * 0.275f,   // force du punch
+                    duration,
+                    8,                    // vibrato
+                    0.8f                  // elasticity
+                )
+            );
         }
         
         private void AnimatePunch(RectTransform rect)

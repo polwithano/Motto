@@ -12,9 +12,10 @@ namespace UI.Popup
         [SerializeField] private CanvasGroup canvasGroup;
 
         [SerializeField] private Color scoreTargetColor;
-        [SerializeField] private Color modifierTargetColor; 
+        [SerializeField] private Color modifierTargetColor;
 
-        [Header("Anim")]
+        [Header("Anim")] 
+        [SerializeField] private Vector3 startingOffset;
         [SerializeField] private float lifetime = 0.6f;
         [SerializeField] private float floatDistance = 0.5f;
         [SerializeField] private Ease moveEase = Ease.OutQuad;
@@ -35,12 +36,23 @@ namespace UI.Popup
             // Reset state in case this prefab is reused
             canvasGroup.alpha = 1f;
 
-            Vector3 start = transform.localPosition;
-            Vector3 end = start + Vector3.up * floatDistance;
+            var start = transform.localPosition + startingOffset;
+            var end = start + Vector3.up * floatDistance;
 
+            transform.localPosition = start; 
+            
             // Create a sequence for clean timing control
-            Sequence seq = DOTween.Sequence();
+            var seq = DOTween.Sequence();
 
+            seq.Append(
+                transform.DOPunchScale(
+                    Vector3.one * 0.4f,  
+                    0.25f,                
+                    8,                   
+                    0.8f               
+                )
+            );
+            
             // Move upwards
             seq.Join(transform.DOLocalMove(end, lifetime)
                 .SetEase(moveEase));

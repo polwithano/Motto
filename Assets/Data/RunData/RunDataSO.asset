@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Models.RunDataSO
   <RoundsSequence>k__BackingField:
   - <RoundType>k__BackingField: 0
-    <BaseTargetScore>k__BackingField: 150
+    <BaseTargetScore>k__BackingField: 25
   - <RoundType>k__BackingField: 0
     <BaseTargetScore>k__BackingField: 350
   - <RoundType>k__BackingField: 1

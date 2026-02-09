@@ -146,9 +146,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3732917926907746033}
   - component: {fileID: 7355058181080077125}
+  - component: {fileID: 5148731572223878023}
   - component: {fileID: 3846810755173361603}
   - component: {fileID: 5905935188856207427}
-  - component: {fileID: 5148731572223878023}
   m_Layer: 5
   m_Name: ResultPopup
   m_TagString: Untagged
@@ -184,6 +184,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2020844204298077126}
   m_CullTransparentMesh: 1
+--- !u!225 &5148731572223878023
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020844204298077126}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!114 &3846810755173361603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,19 +242,8 @@ MonoBehaviour:
   canvasGroup: {fileID: 5148731572223878023}
   scoreTargetColor: {r: 0.10980392, g: 0.6666667, b: 0.9490196, a: 1}
   modifierTargetColor: {r: 0.9490196, g: 0.6, b: 0.10980392, a: 1}
-  lifetime: 3
-  floatDistance: 200
+  startingOffset: {x: 0, y: 30, z: 0}
+  lifetime: 1
+  floatDistance: 10
   moveEase: 12
   fadeEase: 17
---- !u!225 &5148731572223878023
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2020844204298077126}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0
