@@ -15,38 +15,68 @@ MonoBehaviour:
   <CharacterRules>k__BackingField:
   - character: 65
     isBlank: 0
-    pointValue: 3
-    countPerCharacter: 1
-    defaultValue: 0
-  - character: 66
-    isBlank: 0
-    pointValue: 3
-    countPerCharacter: 1
-    defaultValue: 0
+    pointValue: 1
+    countPerCharacter: 2
+    defaultValue: 2
   - character: 67
     isBlank: 0
     pointValue: 3
     countPerCharacter: 1
-    defaultValue: 0
+    defaultValue: 3
   - character: 68
     isBlank: 0
-    pointValue: 3
+    pointValue: 2
     countPerCharacter: 1
-    defaultValue: 0
+    defaultValue: 2
   - character: 69
     isBlank: 0
+    pointValue: 1
+    countPerCharacter: 2
+    defaultValue: 2
+  - character: 72
+    isBlank: 0
+    pointValue: 4
+    countPerCharacter: 1
+    defaultValue: 4
+  - character: 73
+    isBlank: 0
+    pointValue: 1
+    countPerCharacter: 1
+    defaultValue: 1
+  - character: 76
+    isBlank: 0
+    pointValue: 1
+    countPerCharacter: 1
+    defaultValue: 1
+  - character: 77
+    isBlank: 0
     pointValue: 3
     countPerCharacter: 1
-    defaultValue: 0
-  - character: 70
+    defaultValue: 3
+  - character: 78
     isBlank: 0
     pointValue: 1
     countPerCharacter: 1
-    defaultValue: 0
-  - character: 71
+    defaultValue: 1
+  - character: 79
     isBlank: 0
     pointValue: 1
     countPerCharacter: 1
-    defaultValue: 0
+    defaultValue: 1
+  - character: 82
+    isBlank: 0
+    pointValue: 1
+    countPerCharacter: 1
+    defaultValue: 1
+  - character: 83
+    isBlank: 0
+    pointValue: 1
+    countPerCharacter: 1
+    defaultValue: 1
+  - character: 84
+    isBlank: 0
+    pointValue: 1
+    countPerCharacter: 1
+    defaultValue: 1
   <DefaultTileModifier>k__BackingField: {fileID: 11400000, guid: b44cd9c6fa6614cbd904929f150c7ddb, type: 2}
-  totalTileCount: 7
+  totalTileCount: 15

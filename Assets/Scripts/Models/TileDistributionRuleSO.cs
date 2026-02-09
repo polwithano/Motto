@@ -27,15 +27,53 @@ namespace Models
         [field: SerializeField] public TileModifierSO DefaultTileModifier { get; private set; }
 
         [Header("Debug / Info")]
-        [SerializeField, ReadOnlyInspector] private int totalTileCount; // read-only field (custom drawer below)
+        [SerializeField, ReadOnlyInspector] private int totalTileCount;
 
-        /// <summary>
-        /// Calculates the total number of tiles represented by all CharacterRules.
-        /// </summary>
-        public int CalculateTotalTiles()
+        [SerializeField, ReadOnlyInspector] private int totalVowelCount;
+        [SerializeField, ReadOnlyInspector] private int totalConsonantCount;
+
+        [SerializeField, ReadOnlyInspector] private int totalVowelPoints;
+        [SerializeField, ReadOnlyInspector] private int totalConsonantPoints;
+
+        [SerializeField, ReadOnlyInspector] private int totalPoints;
+
+        private static readonly HashSet<char> Vowels = new()
         {
-            totalTileCount = CharacterRules.Sum(r => Mathf.Max(r.countPerCharacter, 0));
-            return totalTileCount;
+            'A','E','I','O','U'
+        };
+
+        private void CalculateDebugStats()
+        {
+            totalTileCount = 0;
+            totalVowelCount = 0;
+            totalConsonantCount = 0;
+
+            totalVowelPoints = 0;
+            totalConsonantPoints = 0;
+            totalPoints = 0;
+
+            foreach (var rule in CharacterRules)
+            {
+                int count = Mathf.Max(rule.countPerCharacter, 0);
+                int points = rule.pointValue * count;
+
+                totalTileCount += count;
+                totalPoints += points;
+
+                if (rule.isBlank)
+                    continue;
+
+                if (Vowels.Contains(char.ToUpper(rule.character)))
+                {
+                    totalVowelCount += count;
+                    totalVowelPoints += points;
+                }
+                else
+                {
+                    totalConsonantCount += count;
+                    totalConsonantPoints += points;
+                }
+            }
         }
 
 #if UNITY_EDITOR
@@ -45,13 +83,13 @@ namespace Models
             if (CharacterRules == null || CharacterRules.Count == 0)
                 GenerateDefaultEntries();
 
-            CalculateTotalTiles();
+            CalculateDebugStats();
         }
 
         // Automatically refresh tile count and maintain correct ordering when edited
         private void OnValidate()
         {
-            CalculateTotalTiles();
+            CalculateDebugStats();
 
             // Keep sorted alphabetically, blank always last
             CharacterRules = CharacterRules
@@ -65,7 +103,7 @@ namespace Models
             CharacterRules.Clear();
 
             // Add A–Z
-            for (char c = 'A'; c <= 'Z'; c++)
+            for (var c = 'A'; c <= 'Z'; c++)
             {
                 CharacterRules.Add(new CharacterRule
                 {
@@ -108,4 +146,32 @@ namespace Models
         }
     }
 #endif
+    
+#if UNITY_EDITOR
+    [CustomPropertyDrawer(typeof(TileDistributionRuleSO.CharacterRule))]
+    public class CharacterRuleDrawer : PropertyDrawer
+    {
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            var characterProp = property.FindPropertyRelative("character");
+            var countProp = property.FindPropertyRelative("countPerCharacter");
+            var isBlankProp = property.FindPropertyRelative("isBlank");
+            var pointValueProp = property.FindPropertyRelative("pointValue");
+
+            var c = (char)characterProp.intValue;
+
+            var title = isBlankProp.boolValue
+                ? $"_ (blank x{countProp.intValue}, {pointValueProp.intValue}pts)"
+                : $"{c} (x{countProp.intValue}, {pointValueProp.intValue}pts)";
+
+            EditorGUI.PropertyField(position, property, new GUIContent(title), true);
+        }
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return EditorGUI.GetPropertyHeight(property, true);
+        }
+    }
+#endif
+
 }

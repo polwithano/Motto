@@ -15,9 +15,10 @@ MonoBehaviour:
   <ID>k__BackingField: dde4441f-3382-4562-a7e5-3f8604d122b1
   <CharmName>k__BackingField: Philemon
   <CharmDescription>k__BackingField: 'Multiply by {s} the score of the first tile. '
-  <CharmIcon>k__BackingField: {fileID: -6678872327202774358, guid: 52b4f56dbe4b94511b536e1371ba5266, type: 3}
+  <CharmIcon>k__BackingField: {fileID: 5554645843333078547, guid: 02b9c170fe8084eca9463eee553dbde0, type: 3}
   <PriorityOverride>k__BackingField: 0
   <EffectTrigger>k__BackingField: 2
   <ScoreEffects>k__BackingField:
   - <Target>k__BackingField: 0
     <Value>k__BackingField: 3
+  <DefaultValue>k__BackingField: 1
