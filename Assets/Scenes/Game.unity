@@ -192,10 +192,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 822094470}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 393.71487, y: -100}
-  m_SizeDelta: {x: 103.91854, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 103.91854}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &50123370
 MonoBehaviour:
@@ -1704,10 +1704,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Managers.CharmManager
   PrintTrace: 0
   <ActiveCharms>k__BackingField:
-  - {fileID: 11400000, guid: 055f47095e89843299b53f6ce45e1db7, type: 2}
-  - {fileID: 11400000, guid: eabee3b17c25d4bbca8fc43a4b43d911, type: 2}
-  - {fileID: 11400000, guid: 7e0f8afed9fc349a2a072e3a1149051e, type: 2}
-  - {fileID: 11400000, guid: 3aea4992eee4f4797a2c37f67b995399, type: 2}
+  - {fileID: 11400000, guid: bab714d7f31f04b169e1399da0a78ff6, type: 2}
   <CharmViews>k__BackingField:
     m_Keys: []
     m_Values: []
@@ -1993,7 +1990,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.74509805}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.05882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2554,10 +2551,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 822094470}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 621.552, y: -100}
-  m_SizeDelta: {x: 103.91854, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 103.91854}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &467658913
 MonoBehaviour:
@@ -2973,14 +2970,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.9490196}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.8}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: dce37f17da32e4b6796b53ff63dc1d01, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3367,10 +3364,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 822094470}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 279.79636, y: -100}
-  m_SizeDelta: {x: 103.91854, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 103.91854}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &604322526
 MonoBehaviour:
@@ -4035,10 +4032,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 822094470}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 735.4705, y: -100}
-  m_SizeDelta: {x: 103.91854, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 103.91854}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &677500894
 MonoBehaviour:
@@ -4810,10 +4807,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 822094470}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 507.63342, y: -100}
-  m_SizeDelta: {x: 103.91854, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 103.91854}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &778677499
 MonoBehaviour:
@@ -5383,6 +5380,7 @@ GameObject:
   - component: {fileID: 837235061}
   - component: {fileID: 837235063}
   - component: {fileID: 837235062}
+  - component: {fileID: 837235064}
   m_Layer: 5
   m_Name: CharmsContainer
   m_TagString: Untagged
@@ -5422,7 +5420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.74509805}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.05882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5447,6 +5445,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837235060}
   m_CullTransparentMesh: 1
+--- !u!114 &837235064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837235060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.HorizontalLayoutGroup
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 10
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &839567124
 GameObject:
   m_ObjectHideFlags: 0
@@ -6217,7 +6241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.23584908, g: 0.23584908, b: 0.23584908, a: 0.9411765}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6542,9 +6566,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb65eefae6b4cf8a2fc87e90fe9b5da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.UIShop
-  itemContainerPrefab: {fileID: 4913170843465963909, guid: 7b19be5941581474db04450ffa0cbb4c, type: 3}
+  tilePrefab: {fileID: 4913170843465963909, guid: 7b19be5941581474db04450ffa0cbb4c, type: 3}
+  charmPrefab: {fileID: 7845023720379246952, guid: 62c2e2a81df794f7a9fec91033534398, type: 3}
   buyableViewerPrefab: {fileID: 6466738915114875816, guid: 6c1fb04b6a8b040f8ac617fa6f5c3148, type: 3}
-  itemsRoot: {fileID: 395802012}
+  tilesContainerRoot: {fileID: 395802012}
+  charmsContainerRoot: {fileID: 837235061}
   nextRoundLabel: {fileID: 562664263}
   rerollLabel: {fileID: 1381439912}
 --- !u!1 &1066040880
@@ -6839,10 +6865,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 822094470}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 165.8778, y: -100}
-  m_SizeDelta: {x: 103.91854, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 103.91854}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1081783765
 MonoBehaviour:
@@ -8402,6 +8428,7 @@ MonoBehaviour:
   <GameState>k__BackingField: {fileID: 0}
   <TileDistributionRule>k__BackingField: {fileID: 11400000, guid: c0489f970ab7d4d83966eb913ccf5209, type: 2}
   <StartingDeck>k__BackingField: {fileID: 11400000, guid: 1ad4b6d2aa3144203ad9fc7ab21dde34, type: 2}
+  <CharmsDatabase>k__BackingField: {fileID: 11400000, guid: 2685fc710686345ea8907d079e027a47, type: 2}
   <RunData>k__BackingField: {fileID: 11400000, guid: d764bb064a97e4f738515cf0f75e5a3e, type: 2}
   <Run>k__BackingField:
     <RoundIndex>k__BackingField: 0
@@ -8509,7 +8536,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 019b1dc28ca674528894e5c62dc6e3aa, type: 2}
   - {fileID: 11400000, guid: bf3c09f96626543ac9c964a8ac35538d, type: 2}
   defaultRerollPrice: 3
-  shopItemCount: 4
+  tileItemsCount: 4
+  charmItemsCount: 4
 --- !u!1 &1328343196
 GameObject:
   m_ObjectHideFlags: 0
@@ -9606,7 +9634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.101960786}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9645,11 +9673,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Animation.UIRippleController
   targetMaterial: {fileID: 2100000, guid: e331ae283b3e3447596fa9af008841bc, type: 2}
   maxSources: 4
-  amplitude: 2
-  frequency: 50
+  amplitude: 3
+  frequency: 80
   speed: 0.33
-  damping: 300
-  width: 0.2
+  damping: 250
+  width: 0.3
 --- !u!114 &1612748318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10606,10 +10634,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 822094470}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 51.95927, y: -100}
-  m_SizeDelta: {x: 103.91854, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 103.91854}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1804010965
 MonoBehaviour:
@@ -11167,7 +11195,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.015625, y: 0.004638672}
+  m_AnchoredPosition: {x: 0.015625, y: 0.0059814453}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1891756476

@@ -5,6 +5,7 @@ using Events.Core;
 using Events.Shop;
 using Managers;
 using Models;
+using Models.Charms;
 using TMPro;
 using UnityEngine;
 using Views;
@@ -14,11 +15,13 @@ namespace UI
     public class UIShop : MonoBehaviour
     {
         [Header("Prefabs")]
-        [SerializeField] private GameObject itemContainerPrefab;
+        [SerializeField] private GameObject tilePrefab;
+        [SerializeField] private GameObject charmPrefab; 
         [SerializeField] private IBuyableViewer buyableViewerPrefab;
 
         [Header("Layout")]
-        [SerializeField] private RectTransform itemsRoot;
+        [SerializeField] private RectTransform tilesContainerRoot;
+        [SerializeField] private RectTransform charmsContainerRoot;
 
         [Header("Static UI")]
         [SerializeField] private TextMeshProUGUI nextRoundLabel;
@@ -92,23 +95,50 @@ namespace UI
         private void SpawnShopBundleViews()
         {
             ClearBundleViews();
+            SpawnCharmBundleViews();
+            SpawnTileBundleViews();
+        }
 
+        private void SpawnCharmBundleViews()
+        {
             var delay = 0f;
 
-            foreach (var bundle in ShopManager.Instance.ShopItems)
+            foreach (var bundle in ShopManager.Instance.Charms)
             {
-                var buyable = Instantiate(buyableViewerPrefab, itemsRoot);
-                var container = Instantiate(itemContainerPrefab, buyable.transform);
-                container.transform.SetAsFirstSibling();
+                var buyable = Instantiate(buyableViewerPrefab, charmsContainerRoot);
+                var charm = Instantiate(charmPrefab, buyable.transform);
+                charm.transform.SetAsFirstSibling();
                 
-                var view = container.GetComponent<TileView>(); 
+                var view = charm.GetComponent<CharmView>(); 
+                
+                view.Populate(bundle.Item as Charm);
+                buyable.Initialize(bundle);
+                
+                AnimateAppear(charm.transform, delay);
+                delay += 0.03f;
+
+                _buyableViewers.Add(buyable);
+            }
+        }
+        
+        private void SpawnTileBundleViews()
+        {
+            var delay = 0f;
+
+            foreach (var bundle in ShopManager.Instance.Tiles)
+            {
+                var buyable = Instantiate(buyableViewerPrefab, tilesContainerRoot);
+                var tile = Instantiate(tilePrefab, buyable.transform);
+                tile.transform.SetAsFirstSibling();
+                
+                var view = tile.GetComponent<TileView>(); 
                 
                 view.Populate(bundle.Item as Tile);
                 buyable.Initialize(bundle);
 
                 Destroy(view);
                 
-                AnimateAppear(container.transform, delay);
+                AnimateAppear(tile.transform, delay);
                 delay += 0.03f;
 
                 _buyableViewers.Add(buyable);

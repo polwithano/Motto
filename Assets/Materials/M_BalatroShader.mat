@@ -41,20 +41,20 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Contrast: 2.8
+    - _Contrast: 1.5
     - _EnableExternalAlpha: 0
     - _IsRotate: 0
-    - _Lighting: 0.34
-    - _PixelFilter: 384
-    - _SpinAmount: 0.2
+    - _Lighting: 0.35
+    - _PixelFilter: 768
+    - _SpinAmount: 0.8
     - _SpinEase: 1
     - _SpinRotation: -2
     - _SpinSpeed: 2
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Colour1: {r: 0.87058824, g: 0.26666668, b: 0.23137255, a: 1}
-    - _Colour2: {r: 0, g: 0.41960785, b: 0.7058824, a: 1}
+    - _Colour1: {r: 0.1509434, g: 0.13950777, b: 0.13883945, a: 1}
+    - _Colour2: {r: 0.254717, g: 0.17181382, b: 0.17688707, a: 1}
     - _Colour3: {r: 0.08627451, g: 0.13725491, b: 0.14509805, a: 1}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}

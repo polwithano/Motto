@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Events.Core;
-using Events.Shop;
+using System.Linq;
 using Models;
+using Models.Charms;
 using Models.Shop;
 using UnityEngine;
 
@@ -14,9 +14,12 @@ namespace Managers
 
         [Header("Settings")]
         [SerializeField] private int defaultRerollPrice = 5;
-        [SerializeField] private int shopItemCount = 4;
+        [SerializeField] private int tileItemsCount = 4;
+        [SerializeField] private int charmItemsCount = 4;
 
-        public IReadOnlyList<ShopItemBundle> ShopItems => _shopItems;
+        public IReadOnlyList<ShopItemBundle> Tiles => _shopItems.Where(x => x.Item is Tile).ToList();
+        public IReadOnlyList<ShopItemBundle> Charms => _shopItems.Where(x => x.Item is Charm).ToList();
+        
         public int RerollPrice { get; private set; }
 
         private readonly List<ShopItemBundle> _shopItems = new();
@@ -47,10 +50,23 @@ namespace Managers
         {
             _shopItems.Clear();
 
+            // Tiles Shop Bundles
             // Allowed characters that will appear in the shop. 
             var allowedCharacters = GameManager.Instance.TileDistributionRule.CharacterRules;
+            _shopItems.AddRange(InitializeTilesItemBundles(allowedCharacters, tileItemsCount));
+            
+            // Charms Shop Bundles
+            var allowedCharms = CharmManager.Instance.GetNonActiveCharmsFromDatabase(GameManager.Instance.CharmsDatabase);
+            _shopItems.AddRange(InitializeCharmsItemBundles(allowedCharms, charmItemsCount));
+        }
 
-            for (var i = 0; i < shopItemCount; i++)
+        private List<ShopItemBundle> InitializeTilesItemBundles(
+            List<TileDistributionRuleSO.CharacterRule> allowedCharacters, 
+            int tilesCount)
+        {
+            var bundles = new List<ShopItemBundle>();
+            
+            for (var i = 0; i < tilesCount; i++)
             {
                 var character = allowedCharacters[Random.Range(0, allowedCharacters.Count)];
                 var modifier = tileModifiersPool[Random.Range(0, tileModifiersPool.Count)];
@@ -59,9 +75,44 @@ namespace Managers
                 var price = (uint)Mathf.FloorToInt(tile.Points * modifier.PriceModifier);
                 tile.SetPrice(price);
 
-                _shopItems.Add(new ShopItemBundle(tile));
+                bundles.Add(new ShopItemBundle(tile));
             }
+            
+            return bundles;
         }
+
+        private List<ShopItemBundle> InitializeCharmsItemBundles(
+            List<Charm> allowedCharms,
+            int charmsCount)
+        {
+            var bundles = new List<ShopItemBundle>();
+
+            if (allowedCharms == null || allowedCharms.Count == 0 || charmsCount <= 0)
+                return bundles;
+
+            var pool = new List<Charm>(allowedCharms);
+
+            for (var i = 0; i < pool.Count; i++)
+            {
+                var rand = Random.Range(i, pool.Count);
+                (pool[i], pool[rand]) = (pool[rand], pool[i]);
+            }
+
+            var count = Mathf.Min(charmsCount, pool.Count);
+
+            for (var i = 0; i < count; i++)
+            {
+                var charm = pool[i];
+
+                var price = (uint)Mathf.FloorToInt(charm.DefaultValue);
+                charm.SetPrice(price);
+
+                bundles.Add(new ShopItemBundle(charm));
+            }
+
+            return bundles;
+        }
+
         #endregion
     }
 }

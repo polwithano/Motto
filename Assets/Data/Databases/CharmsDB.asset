@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9543d2b62c5394b478cb014856d2b5bc, type: 3}
+  m_Name: CharmsDB
+  m_EditorClassIdentifier: Assembly-CSharp::Models.Charms.CharmDatabase
+  <Charms>k__BackingField:
+  - {fileID: 11400000, guid: 055f47095e89843299b53f6ce45e1db7, type: 2}
+  - {fileID: 11400000, guid: 3aea4992eee4f4797a2c37f67b995399, type: 2}
+  - {fileID: 11400000, guid: 7e0f8afed9fc349a2a072e3a1149051e, type: 2}
+  - {fileID: 11400000, guid: eabee3b17c25d4bbca8fc43a4b43d911, type: 2}
+  - {fileID: 11400000, guid: bab714d7f31f04b169e1399da0a78ff6, type: 2}

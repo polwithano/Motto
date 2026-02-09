@@ -1,6 +1,7 @@
 using FSM;
 using FSM.States;
 using Models;
+using Models.Charms;
 using UnityEngine;
 
 namespace Managers
@@ -14,6 +15,7 @@ namespace Managers
         [field: SerializeField] public GameStateMachine GameState                  { get; private set; }
         [field: SerializeField] public TileDistributionRuleSO TileDistributionRule { get; private set; }
         [field: SerializeField] public TileDistributionRuleSO StartingDeck         { get; private set; }
+        [field: SerializeField] public CharmDatabase CharmsDatabase                { get; private set; }
         [field: SerializeField] public RunDataSO RunData                           { get; private set; }
 
         [field: SerializeField] public Run Run       { get; set; }

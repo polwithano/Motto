@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_BalatroShaderDefault
-  m_Shader: {fileID: 4800000, guid: 56df2e236e8b544159c16dcd16eddc7d, type: 3}
+  m_Shader: {fileID: 4800000, guid: bbe9487cc38c34bd6829b3c506bea71d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []

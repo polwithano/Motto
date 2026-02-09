@@ -89,7 +89,7 @@ namespace FSM.States
 
         private void AddNewCharm(Charm charm)
         {
-            Debug.Log($"Charm {charm.CharmName} added to deck");
+            CharmManager.Instance.AddCharm(charm);
         }
     }
 }

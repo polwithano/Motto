@@ -28,7 +28,6 @@ namespace Models.Charms
         private void OnValidate()
         {
             if (string.IsNullOrEmpty(ID)) ID = Guid.NewGuid().ToString();
-            ScoreEffects ??= new List<ScoreEffect>();
         }
         
         public abstract bool TryApplyEffect(RoundContext context, int? index = null);

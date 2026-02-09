@@ -45,6 +45,7 @@ namespace Models
         public void RemoveAttempt() => WordsRemaining--;
         public void RemoveDraw() => DrawsRemaining--;
         public string LastlyAddedWord() => Words[^1]; 
+        public List<Tile> LastlyAddedTiles() => Tiles.Count > 0 ? Tiles[^1] : null;
         public int GetLastScore() => ScoreIncrements[^1];
         public float CompletionPercentage => (float)CurrentScore / TargetScore;
         public bool IsCompleted => CurrentScore >= TargetScore; 

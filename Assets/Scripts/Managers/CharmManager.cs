@@ -46,6 +46,7 @@ namespace Managers
         }
         #endregion
         
+        #region Events Handlers
         private void HandleOnBoardUpdated(BoardUpdatedEvent evt)
         {
             var context = GameManager.Instance.Run.Round;
@@ -66,6 +67,7 @@ namespace Managers
                 view.SetActiveFeedback(false);
             }           
         }
+        #endregion
         
         public void InitializeCharms()
         {
@@ -78,10 +80,31 @@ namespace Managers
             }
         }
 
+        public void AddCharm(Charm charm)
+        {
+            if (charm == null)
+                return;
+
+            if (ActiveCharms.Contains(charm))
+                return;
+
+            ActiveCharms.Add(charm);
+
+            var charmView = Instantiate(charmPrefab, charmContainer);
+            charmView.Populate(charm);
+
+            CharmViews[charm] = charmView;
+        }
+
         public CharmView GetCharmViewFromCharm(Charm charm)
         {
             return CharmViews[charm];
         }
+
+        public List<Charm> GetNonActiveCharmsFromDatabase(CharmDatabase db)
+        {
+            return db.Charms.Where(charm => !ActiveCharms.Contains(charm)).ToList();
+        } 
         
         private bool WillCharmTrigger(Charm charm, string word, List<Tile> tiles)
         {
