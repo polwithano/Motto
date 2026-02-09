@@ -14,7 +14,7 @@ namespace Models
         [System.Serializable]
         public class CharacterRule
         {
-            public string character;
+            public char character;
             public bool isBlank;
             public int pointValue;
             public int countPerCharacter;
@@ -55,7 +55,7 @@ namespace Models
 
             // Keep sorted alphabetically, blank always last
             CharacterRules = CharacterRules
-                .OrderBy(r => r.isBlank ? 999 : r.character[0])
+                .OrderBy(r => r.isBlank ? 999 : r.character)
                 .ToList();
         }
 
@@ -69,7 +69,7 @@ namespace Models
             {
                 CharacterRules.Add(new CharacterRule
                 {
-                    character = c.ToString(),
+                    character = c,
                     pointValue = 1,
                     countPerCharacter = 1,
                     isBlank = false,
@@ -80,7 +80,7 @@ namespace Models
             // Add one blank tile
             CharacterRules.Add(new CharacterRule
             {
-                character = "_",
+                character = '_',
                 pointValue = 0,
                 countPerCharacter = 2,
                 isBlank = true,

@@ -179,7 +179,7 @@ namespace Managers
             return string.Concat(Slots.Select(slot =>
             {
                 var tile = slot.GetComponentInChildren<TileView>();
-                return tile != null ? tile.Tile.Character : string.Empty;
+                return tile != null ? tile.Tile.Character.ToString() : string.Empty;
             }));
         }
 

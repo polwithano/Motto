@@ -74,7 +74,7 @@ namespace Views
         {
             Tile = tile;
             IsInHand = true; 
-            characterText.text = tile.Character;
+            characterText.text = tile.Character.ToString();
             valueText.text = tile.Points.ToString();
             
             gameObject.name = $"Tile_{tile.Character}";

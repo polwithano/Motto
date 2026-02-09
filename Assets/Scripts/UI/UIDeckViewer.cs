@@ -78,8 +78,8 @@ namespace UI
             if (sortAlphabetically)
             {
                 displayList = tiles
-                    .OrderBy(t => t.IsBlank)                      // blanks are last
-                    .ThenBy(t => t.Character.ToUpperInvariant()); // alphabetically
+                    .OrderBy(t => t.IsBlank)                                 // blanks are last
+                    .ThenBy(t => t.Character.ToString().ToUpperInvariant()); // alphabetically
             }
 
             foreach (var tile in displayList)

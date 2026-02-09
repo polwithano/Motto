@@ -9,7 +9,7 @@ namespace Models
     public class Tile : IEffectEmitter, IBuyable
     {
         [field: SerializeField] public string ID           { get; set; }
-        [field: SerializeField] public string Character    { get; private set; }
+        [field: SerializeField] public char Character    { get; private set; }
         [field: SerializeField] public int Points          { get; private set; }
         [field: SerializeField] public bool IsBlank        { get; private set; }
         
@@ -28,7 +28,7 @@ namespace Models
         public void SetPrice(uint price) => DefaultValue = price;
         #endregion
         
-        public Tile(string character, int points, bool isBlank, TileModifierSO modifier = null)
+        public Tile(char character, int points, bool isBlank, TileModifierSO modifier = null)
         {
             ID = Guid.NewGuid().ToString();
             Character = character;

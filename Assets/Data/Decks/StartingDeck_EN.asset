@@ -13,40 +13,40 @@ MonoBehaviour:
   m_Name: StartingDeck_EN
   m_EditorClassIdentifier: Assembly-CSharp::Models.TileDistributionSO
   <CharacterRules>k__BackingField:
-  - character: A
+  - character: 65
+    isBlank: 0
+    pointValue: 3
+    countPerCharacter: 1
+    defaultValue: 0
+  - character: 66
+    isBlank: 0
+    pointValue: 3
+    countPerCharacter: 1
+    defaultValue: 0
+  - character: 67
+    isBlank: 0
+    pointValue: 3
+    countPerCharacter: 1
+    defaultValue: 0
+  - character: 68
+    isBlank: 0
+    pointValue: 3
+    countPerCharacter: 1
+    defaultValue: 0
+  - character: 69
+    isBlank: 0
+    pointValue: 3
+    countPerCharacter: 1
+    defaultValue: 0
+  - character: 70
     isBlank: 0
     pointValue: 1
     countPerCharacter: 1
     defaultValue: 0
-  - character: B
+  - character: 71
     isBlank: 0
     pointValue: 1
     countPerCharacter: 1
-    defaultValue: 0
-  - character: C
-    isBlank: 0
-    pointValue: 3
-    countPerCharacter: 1
-    defaultValue: 0
-  - character: D
-    isBlank: 0
-    pointValue: 3
-    countPerCharacter: 1
-    defaultValue: 0
-  - character: E
-    isBlank: 0
-    pointValue: 3
-    countPerCharacter: 1
-    defaultValue: 0
-  - character: F
-    isBlank: 0
-    pointValue: 3
-    countPerCharacter: 1
-    defaultValue: 0
-  - character: G
-    isBlank: 0
-    pointValue: 3
-    countPerCharacter: 5
     defaultValue: 0
   <DefaultTileModifier>k__BackingField: {fileID: 11400000, guid: b44cd9c6fa6614cbd904929f150c7ddb, type: 2}
-  totalTileCount: 11
+  totalTileCount: 7
