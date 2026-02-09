@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Models.Charms.AlphabetRunCharm
   <ID>k__BackingField: ec114745-f007-44fd-9480-e7085466b5cd
   <CharmName>k__BackingField: Lighter
-  <CharmDescription>k__BackingField: Add {m:+|label} per consecutives letters that
+  <CharmDescription>k__BackingField: Add {m:+|label} per consecutive letters that
     are following the alphabet.
   <CharmIcon>k__BackingField: {fileID: -485712421605340106, guid: 486127e5240a54ac0a050c3f04ffa81a, type: 3}
   <PriorityOverride>k__BackingField: 0

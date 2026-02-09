@@ -16,6 +16,6 @@ MonoBehaviour:
   - <RoundType>k__BackingField: 0
     <BaseTargetScore>k__BackingField: 25
   - <RoundType>k__BackingField: 0
-    <BaseTargetScore>k__BackingField: 350
+    <BaseTargetScore>k__BackingField: 150
   - <RoundType>k__BackingField: 1
-    <BaseTargetScore>k__BackingField: 1000
+    <BaseTargetScore>k__BackingField: 350

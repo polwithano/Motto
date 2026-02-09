@@ -13,14 +13,14 @@ namespace Managers
         [SerializeField] private List<TileModifierSO> tileModifiersPool;
 
         [Header("Settings")]
-        [SerializeField] private int defaultRerollPrice = 5;
+        [SerializeField] private uint defaultRerollPrice = 5;
         [SerializeField] private int tileItemsCount = 4;
         [SerializeField] private int charmItemsCount = 4;
 
         public IReadOnlyList<ShopItemBundle> Tiles => _shopItems.Where(x => x.Item is Tile).ToList();
         public IReadOnlyList<ShopItemBundle> Charms => _shopItems.Where(x => x.Item is Charm).ToList();
         
-        public int RerollPrice { get; private set; }
+        public uint RerollPrice { get; private set; }
 
         private readonly List<ShopItemBundle> _shopItems = new();
 
@@ -34,8 +34,7 @@ namespace Managers
 
         public void RerollShop()
         {
-            RerollPrice = Mathf.Min(RerollPrice *= defaultRerollPrice, 1000);
-            
+            RerollPrice = (uint)Mathf.FloorToInt(Mathf.Min(RerollPrice *= defaultRerollPrice, 1000));
             InitializeShopItemBundles();
         }
 

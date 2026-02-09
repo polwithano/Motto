@@ -122,8 +122,13 @@ namespace FSM.States
             {
                 case true:
                 {
-                    var status = RoundEndedStatus.Success;
+                    const RoundEndedStatus status = RoundEndedStatus.Success;
+                    
+                    Game.Run.IncreaseCurrency(50);
+                    
+                    Bus<CurrencyUpdatedEvent>.Raise(new CurrencyUpdatedEvent(Game.Run.Currency));
                     Bus<RoundEndedEvent>.Raise(new RoundEndedEvent(status, Game.Run.Round));
+                    
                     StateMachine.ChangeState(new RoundOverState(StateMachine, status));
                     
                     break;
@@ -132,7 +137,8 @@ namespace FSM.States
                 {
                     if (Game.Run.Round.WordsRemaining <= 0)
                     {
-                        var status = RoundEndedStatus.Failure;
+                        const RoundEndedStatus status = RoundEndedStatus.Failure;
+                        
                         Bus<RoundEndedEvent>.Raise(new RoundEndedEvent(status, Game.Run.Round));
                         StateMachine.ChangeState(new RoundOverState(StateMachine, status));
                     }

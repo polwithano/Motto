@@ -1,7 +1,9 @@
 using System;
 using Events.Core;
+using Events.Game;
 using Events.Shop;
 using Interfaces;
+using Managers;
 using UnityEngine;
 
 namespace Models.Shop
@@ -20,20 +22,17 @@ namespace Models.Shop
 
         public bool CanBuy()
         {
-            // return GameManager.Instance.Run.Money >= Price;
-            return true; 
+            return GameManager.Instance.Run.Currency >= Price;
         }
 
         public bool TryPurchase()
         {
-            if (!CanBuy())
-                return false;
-
-            // GameManager.Instance.Run.SpendMoney(Price);
-            // Item.ProcessPurchase();
+            if (!CanBuy()) return false;
+            if (!GameManager.Instance.Run.TryPurchase(Price)) return false;
             
+            Bus<CurrencyUpdatedEvent>.Raise(new CurrencyUpdatedEvent(GameManager.Instance.Run.Currency));
             Bus<PurchaseProcessedEvent>.Raise(new PurchaseProcessedEvent(this));
-                
+
             return true;
         }
     }

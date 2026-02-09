@@ -1,5 +1,6 @@
 using Events;
 using Events.Core;
+using Events.Game;
 using Events.Shop;
 using Interfaces;
 using Managers;
@@ -77,7 +78,11 @@ namespace FSM.States
         
         private void HandleOnShopRerollRequested(ShopRerollRequestEvent args)
         {
+            if (!GameManager.Instance.Run.TryPurchase(ShopManager.Instance.RerollPrice)) return;
+            
             ShopManager.Instance.RerollShop();
+            
+            Bus<CurrencyUpdatedEvent>.Raise(new CurrencyUpdatedEvent(GameManager.Instance.Run.Currency));
             Bus<ShopInventoryUpdatedEvent>.Raise(new ShopInventoryUpdatedEvent());
         }
         #endregion

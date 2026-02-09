@@ -26,7 +26,7 @@ namespace UI
         [SerializeField] private TextMeshProUGUI remainingWordsText; 
         [SerializeField] private TextMeshProUGUI deckTilesCountText;
         [SerializeField] private TextMeshProUGUI redrawCountText;
-        [SerializeField] private TextMeshProUGUI currencyCountText; 
+        [SerializeField] private TextMeshProUGUI currencyCountText;
 
         [Header("Animation Settings")]
         [SerializeField] private float goalAnimationDuration = 2f;
@@ -53,7 +53,8 @@ namespace UI
         private void OnEnable()
         {
             Bus<RoundStartedEvent>.OnEvent += HandleOnRoundStarted;
-            Bus<TileRedrawCompletedEvent>.OnEvent += HandleOnTileRedrawPerformed; 
+            Bus<TileRedrawCompletedEvent>.OnEvent += HandleOnTileRedrawPerformed;
+            Bus<CurrencyUpdatedEvent>.OnEvent += HandleOnCurrencyUpdated; 
             
             GameEvents.OnScoringStarted += HandleOnScoringStarted; 
             GameEvents.OnScoreStepStarted += HandleOnScoreStepStarted;
@@ -63,6 +64,7 @@ namespace UI
         {
             Bus<RoundStartedEvent>.OnEvent -= HandleOnRoundStarted; 
             Bus<TileRedrawCompletedEvent>.OnEvent -= HandleOnTileRedrawPerformed; 
+            Bus<CurrencyUpdatedEvent>.OnEvent -= HandleOnCurrencyUpdated; 
             
             GameEvents.OnScoringStarted -= HandleOnScoringStarted; 
             GameEvents.OnScoreStepStarted -= HandleOnScoreStepStarted;
@@ -109,6 +111,11 @@ namespace UI
         private void HandleOnTileRedrawPerformed(TileRedrawCompletedEvent evt)
         {
             UpdateDeckAndRedrawCounts();
+        }
+        
+        private void HandleOnCurrencyUpdated(CurrencyUpdatedEvent evt)
+        {
+            currencyCountText.text = $"${evt.Currency}"; 
         }
         #endregion
 

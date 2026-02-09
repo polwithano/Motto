@@ -10,7 +10,7 @@ namespace Models
         [field: SerializeField] public RoundContext Round         { get; private set; }
         [field: SerializeField] public List<RoundContext> Rounds  { get; private set; }
         
-        [field: SerializeField] public int Currency               { get; private set; }
+        [field: SerializeField] public uint Currency               { get; private set; }
 
         private RunDataSO _data;
 
@@ -35,6 +35,19 @@ namespace Models
         {
             if (Round != null) Rounds.Add(Round);
             Round = CreateContext();
+        }
+
+        public bool TryPurchase(uint cost)
+        {
+            var newCount = (Currency - (int)cost);
+            if (newCount < 0) return false;
+            Currency = (uint)newCount;
+            return true;
+        }
+
+        public void IncreaseCurrency(uint amount)
+        {
+            Currency += amount;
         }
         
         private RoundContext CreateContext()
