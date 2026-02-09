@@ -17,9 +17,8 @@ namespace Models
 
         public void FillFromDeck(TileDeck deck)
         {
-            while (Tiles.Count < MaxHandSize)
+            while (Tiles.Count < MaxHandSize && deck.TryDraw(out var tile))
             {
-                var tile = deck.Draw(1)[0]; 
                 Tiles.Add(tile);
             }
         }

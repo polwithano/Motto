@@ -20,10 +20,12 @@ namespace Models
         #endregion
         
         #region IBuyable
+        [field: SerializeField] public uint DefaultValue { get; set; } = 1;
         public void ProcessPurchase()
         {
             throw new NotImplementedException();
         }
+        public void SetPrice(uint price) => DefaultValue = price;
         #endregion
         
         public Tile(string character, int points, bool isBlank, TileModifierSO modifier = null)

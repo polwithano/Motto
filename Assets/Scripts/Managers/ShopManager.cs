@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Events.Core;
+using Events.Shop;
 using Models;
 using Models.Shop;
 using UnityEngine;
@@ -11,7 +13,7 @@ namespace Managers
         [SerializeField] private List<TileModifierSO> tileModifiersPool;
 
         [Header("Settings")]
-        [SerializeField] private int defaultRerollPrice = 10;
+        [SerializeField] private int defaultRerollPrice = 5;
         [SerializeField] private int shopItemCount = 4;
 
         public IReadOnlyList<ShopItemBundle> ShopItems => _shopItems;
@@ -23,38 +25,41 @@ namespace Managers
         public void InitializeShop()
         {
             RerollPrice = defaultRerollPrice;
-            RegenerateShop();
+            
+            InitializeShopItemBundles();
         }
 
         public void RerollShop()
         {
-            RerollPrice += defaultRerollPrice;
-            RegenerateShop();
+            RerollPrice = Mathf.Min(RerollPrice *= defaultRerollPrice, 1000);
+            
+            InitializeShopItemBundles();
+        }
+
+        public void RemoveBundle(ShopItemBundle bundle)
+        {
+            _shopItems.Remove(bundle);
         }
         #endregion
 
         #region Internals
-        private void RegenerateShop()
+        private void InitializeShopItemBundles()
         {
             _shopItems.Clear();
 
-            var rules = GameManager.Instance.TileDistributionRule.CharacterRules;
+            // Allowed characters that will appear in the shop. 
+            var allowedCharacters = GameManager.Instance.TileDistributionRule.CharacterRules;
 
-            for (int i = 0; i < shopItemCount; i++)
+            for (var i = 0; i < shopItemCount; i++)
             {
-                var rule = rules[Random.Range(0, rules.Count)];
+                var character = allowedCharacters[Random.Range(0, allowedCharacters.Count)];
                 var modifier = tileModifiersPool[Random.Range(0, tileModifiersPool.Count)];
 
-                var tile = new Tile(
-                    rule.character,
-                    rule.pointValue,
-                    rule.isBlank,
-                    modifier
-                );
+                var tile = new Tile(character.character, character.pointValue, character.isBlank, modifier);
+                var price = (uint)Mathf.FloorToInt(tile.Points * modifier.PriceModifier);
+                tile.SetPrice(price);
 
-                var price = Mathf.FloorToInt(tile.Points * modifier.PriceModifier);
-
-                _shopItems.Add(new ShopItemBundle(tile, price));
+                _shopItems.Add(new ShopItemBundle(tile));
             }
         }
         #endregion

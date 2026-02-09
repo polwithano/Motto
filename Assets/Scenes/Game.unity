@@ -1081,9 +1081,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1891756475}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 540, y: -50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1080, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &206541844
@@ -2415,9 +2415,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1891756475}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 540, y: -190}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1080, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &464997959
@@ -8508,7 +8508,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b44cd9c6fa6614cbd904929f150c7ddb, type: 2}
   - {fileID: 11400000, guid: 019b1dc28ca674528894e5c62dc6e3aa, type: 2}
   - {fileID: 11400000, guid: bf3c09f96626543ac9c964a8ac35538d, type: 2}
-  defaultRerollPrice: 10
+  defaultRerollPrice: 3
   shopItemCount: 4
 --- !u!1 &1328343196
 GameObject:
@@ -11167,7 +11167,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.015625, y: 0.0056152344}
+  m_AnchoredPosition: {x: 0.015625, y: 0.004638672}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1891756476

@@ -26,26 +26,26 @@ namespace UI
         
         private void OnEnable()
         {
-            Bus<ShopStatusEvent>.OnEvent += HandleOnShopStatusUpdated; 
+            Bus<ShopStateEvent>.OnEvent += HandleOnShopStatusUpdated; 
         }
 
         private void OnDisable()
         {
-            Bus<ShopStatusEvent>.OnEvent -= HandleOnShopStatusUpdated; 
+            Bus<ShopStateEvent>.OnEvent -= HandleOnShopStatusUpdated; 
         }
 
         private void OnDestroy() => OnDisable(); 
         #endregion
         
         #region Event Handlers
-        private void HandleOnShopStatusUpdated(ShopStatusEvent evt)
+        private void HandleOnShopStatusUpdated(ShopStateEvent evt)
         {
-            switch (evt.Status)
+            switch (evt.State)
             {
-                case ShopStatus.Open:
+                case ShopState.Opened:
                     HandleOnShopOpened();
                     break; 
-                case ShopStatus.Closed:
+                case ShopState.Closed:
                     HandleOnShopClosed();
                     break; 
             }

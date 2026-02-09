@@ -1,6 +1,7 @@
 using System;
+using Events.Core;
+using Events.Shop;
 using Interfaces;
-using Managers;
 using UnityEngine;
 
 namespace Models.Shop
@@ -9,12 +10,12 @@ namespace Models.Shop
     public class ShopItemBundle
     {
         [SerializeReference] public IBuyable Item;
-        [field: SerializeField] public int Price { get; private set; }
+        [field: SerializeField] public uint Price { get; private set; }
 
-        public ShopItemBundle(IBuyable item, int price)
+        public ShopItemBundle(IBuyable item)
         {
             Item = item;
-            Price = price;
+            Price = item.DefaultValue; 
         }
 
         public bool CanBuy()
@@ -23,14 +24,16 @@ namespace Models.Shop
             return true; 
         }
 
-        public bool Purchase()
+        public bool TryPurchase()
         {
             if (!CanBuy())
                 return false;
 
             // GameManager.Instance.Run.SpendMoney(Price);
+            // Item.ProcessPurchase();
             
-            Item.ProcessPurchase();
+            Bus<PurchaseProcessedEvent>.Raise(new PurchaseProcessedEvent(this));
+                
             return true;
         }
     }

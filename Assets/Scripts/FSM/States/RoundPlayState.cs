@@ -48,12 +48,14 @@ namespace FSM.States
             
             Game.Hand.RemoveTile(evt.Model);
             Game.Deck.Discard(evt.Model);
+
+            if (Game.Deck.TryDraw(out var newTile))
+            {
+                Game.Hand.TryAddTile(newTile);
+                Game.Run.Round.RemoveDraw();
             
-            var newTile = Game.Deck.Draw(1).First();
-            Game.Hand.TryAddTile(newTile);
-            Game.Run.Round.RemoveDraw();
-            
-            Bus<TileRedrawCompletedEvent>.Raise(new TileRedrawCompletedEvent(evt.Model, newTile));
+                Bus<TileRedrawCompletedEvent>.Raise(new TileRedrawCompletedEvent(evt.Model, newTile));   
+            }
         }
         
         private async void HandleOnBoardUpdated(BoardUpdatedEvent evt)

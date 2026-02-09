@@ -24,37 +24,40 @@ namespace UI
         [SerializeField] private TextMeshProUGUI nextRoundLabel;
         [SerializeField] private TextMeshProUGUI rerollLabel;
 
-        private readonly List<GameObject> _spawnedItems = new();
+        private List<IBuyableViewer> _buyableViewers = new();
 
         #region Mono
         private void OnEnable()
         {
-            Bus<ShopStatusEvent>.OnEvent += HandleShopStatus;
+            Bus<ShopStateEvent>.OnEvent += HandleShopStatus;
+            Bus<ShopInventoryUpdatedEvent>.OnEvent += HandleShopRefresh; 
         }
 
         private void OnDisable()
         {
-            Bus<ShopStatusEvent>.OnEvent -= HandleShopStatus;
+            Bus<ShopStateEvent>.OnEvent -= HandleShopStatus;
+            Bus<ShopInventoryUpdatedEvent>.OnEvent -= HandleShopRefresh; 
         }
         #endregion
 
         #region Events
-        private void HandleShopStatus(ShopStatusEvent evt)
+        private void HandleShopStatus(ShopStateEvent evt)
         {
-            switch (evt.Status)
+            switch (evt.State)
             {
-                case ShopStatus.Open:
+                case ShopState.Opened:
                     OpenShop();
                     break;
-
-                case ShopStatus.Reroll:
-                    RefreshShop();
-                    break;
-
-                case ShopStatus.Closed:
+                
+                case ShopState.Closed:
                     CloseShop();
                     break;
             }
+        }
+        
+        private void HandleShopRefresh(ShopInventoryUpdatedEvent args)
+        {
+            RefreshShop();
         }
         #endregion
 
@@ -62,18 +65,18 @@ namespace UI
         private void OpenShop()
         {
             UpdateStaticUI();
-            SpawnItems();
+            SpawnShopBundleViews();
         }
 
         private void RefreshShop()
         {
             UpdateStaticUI();
-            SpawnItems();
+            SpawnShopBundleViews();
         }
 
         private void CloseShop()
         {
-            ClearItems();
+            ClearBundleViews();
         }
         #endregion
 
@@ -81,13 +84,14 @@ namespace UI
         private void UpdateStaticUI()
         {
             var run = GameManager.Instance.Run;
+            
             nextRoundLabel.text = $"{run.Round.Definition.RoundType} ({run.RoundIndex + 1})";
             rerollLabel.text = $"${ShopManager.Instance.RerollPrice}";
         }
 
-        private void SpawnItems()
+        private void SpawnShopBundleViews()
         {
-            ClearItems();
+            ClearBundleViews();
 
             var delay = 0f;
 
@@ -107,16 +111,16 @@ namespace UI
                 AnimateAppear(container.transform, delay);
                 delay += 0.03f;
 
-                _spawnedItems.Add(buyable.gameObject);
+                _buyableViewers.Add(buyable);
             }
         }
 
-        private void ClearItems()
+        private void ClearBundleViews()
         {
-            foreach (var obj in _spawnedItems)
-                Destroy(obj);
+            foreach (var obj in _buyableViewers)
+                Destroy(obj.gameObject);
 
-            _spawnedItems.Clear();
+            _buyableViewers.Clear();
         }
 
         private static void AnimateAppear(Transform t, float delay)
@@ -134,12 +138,12 @@ namespace UI
         #region Buttons
         public void OnNextRoundClicked()
         {
-            Bus<ShopStatusEvent>.Raise(new ShopStatusEvent(ShopStatus.Closed));
+            Bus<ShopStateEvent>.Raise(new ShopStateEvent(ShopState.Closed));
         }
 
         public void OnRerollClicked()
         {
-            Bus<ShopStatusEvent>.Raise(new ShopStatusEvent(ShopStatus.Reroll));
+            Bus<ShopRerollRequestEvent>.Raise(new ShopRerollRequestEvent());
         }
         #endregion
     }

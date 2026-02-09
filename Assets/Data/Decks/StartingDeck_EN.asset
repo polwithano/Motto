@@ -16,82 +16,34 @@ MonoBehaviour:
   - character: A
     isBlank: 0
     pointValue: 1
-    countPerCharacter: 2
+    countPerCharacter: 1
   - character: B
     isBlank: 0
     pointValue: 1
-    countPerCharacter: 2
+    countPerCharacter: 1
   - character: C
     isBlank: 0
     pointValue: 3
-    countPerCharacter: 2
+    countPerCharacter: 1
   - character: D
     isBlank: 0
-    pointValue: 2
-    countPerCharacter: 2
+    pointValue: 3
+    countPerCharacter: 1
   - character: E
     isBlank: 0
-    pointValue: 1
-    countPerCharacter: 6
+    pointValue: 3
+    countPerCharacter: 1
   - character: F
     isBlank: 0
-    pointValue: 4
-    countPerCharacter: 2
+    pointValue: 3
+    countPerCharacter: 1
   - character: G
     isBlank: 0
-    pointValue: 2
+    pointValue: 3
     countPerCharacter: 1
-  - character: H
-    isBlank: 0
-    pointValue: 4
-    countPerCharacter: 1
-  - character: I
-    isBlank: 0
-    pointValue: 1
-    countPerCharacter: 3
-  - character: J
-    isBlank: 0
-    pointValue: 8
-    countPerCharacter: 1
-  - character: K
-    isBlank: 0
-    pointValue: 5
-    countPerCharacter: 1
-  - character: L
-    isBlank: 0
-    pointValue: 1
-    countPerCharacter: 2
-  - character: M
+  - character: G
     isBlank: 0
     pointValue: 3
-    countPerCharacter: 2
-  - character: N
-    isBlank: 0
-    pointValue: 1
-    countPerCharacter: 2
-  - character: O
-    isBlank: 0
-    pointValue: 1
-    countPerCharacter: 2
-  - character: P
-    isBlank: 0
-    pointValue: 3
-    countPerCharacter: 2
-  - character: R
-    isBlank: 0
-    pointValue: 1
-    countPerCharacter: 2
-  - character: S
-    isBlank: 0
-    pointValue: 1
-    countPerCharacter: 2
-  - character: T
-    isBlank: 0
-    pointValue: 1
-    countPerCharacter: 2
-  - character: U
-    isBlank: 0
-    pointValue: 1
-    countPerCharacter: 2
+    countPerCharacter: 1
   <DefaultTileModifier>k__BackingField: {fileID: 11400000, guid: b44cd9c6fa6614cbd904929f150c7ddb, type: 2}
-  totalTileCount: 41
+  totalTileCount: 8

@@ -18,6 +18,7 @@ namespace Models
             public bool isBlank;
             public int pointValue;
             public int countPerCharacter;
+            public uint defaultValue; 
         }
 
         [Header("Letter Distribution (auto-generated A–Z + blank)")]
@@ -71,7 +72,8 @@ namespace Models
                     character = c.ToString(),
                     pointValue = 1,
                     countPerCharacter = 1,
-                    isBlank = false
+                    isBlank = false,
+                    defaultValue = 1
                 });
             }
 
@@ -81,7 +83,8 @@ namespace Models
                 character = "_",
                 pointValue = 0,
                 countPerCharacter = 2,
-                isBlank = true
+                isBlank = true,
+                defaultValue = 1
             });
 
             Debug.Log("[TileDistributionSO] Generated default A–Z + blank entries.");

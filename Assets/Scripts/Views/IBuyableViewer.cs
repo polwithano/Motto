@@ -26,7 +26,7 @@ namespace Views
 
         private void OnBuyClicked()
         {
-            if (_bundle.Purchase())
+            if (_bundle.TryPurchase())
             {
                 buyButton.interactable = false;
             }

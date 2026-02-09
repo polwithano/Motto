@@ -21,6 +21,8 @@ namespace Models.Charms
 
         #region Interface
         public bool IsInstance(string id) => ID == id;
+        [field: SerializeField] public uint DefaultValue { get; set; } = 1;
+        public void SetPrice(uint price) => DefaultValue = price;
         #endregion
 
         private void OnValidate()
