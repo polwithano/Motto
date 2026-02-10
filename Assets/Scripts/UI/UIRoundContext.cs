@@ -213,13 +213,13 @@ namespace UI
                 return 0;
             }
 
-            // Instantiate popup
+            // === Instantiation ===
             var popupGO = Instantiate(resultPopupPrefab, popupCanvas.transform);
             var popupText = popupGO.GetComponentInChildren<TextMeshProUGUI>();
             var rect = popupGO.GetComponent<RectTransform>();
             var canvasGroup = popupGO.GetComponent<CanvasGroup>();
 
-            // ✅ Position over header (even in another canvas)
+            // Position over header (even in another canvas)
             if (goalPercentageText != null)
             {
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -232,33 +232,33 @@ namespace UI
             }
 
             // === Animation Parameters ===
-            float duration = Mathf.Lerp(0.8f, 2f, Mathf.Clamp01(scoreGain / 100f)) * 1.5f;
-            float punchBase = 0.2f;
-            float punchIntensity = Mathf.Lerp(1f, 1.6f, Mathf.Clamp01(scoreGain / 10f));
+            var duration = Mathf.Lerp(0.8f, 2f, Mathf.Clamp01(scoreGain / 100f)) * 1.5f;
+            var punchBase = 0.2f;
+            var punchIntensity = Mathf.Lerp(1f, 1.6f, Mathf.Clamp01(scoreGain / 10f));
 
-            // Steps
-            int steps = Mathf.Clamp(scoreGain, 6, 30); 
-            int displayedValue = 0;
-            float totalTime = 0f;
+            // Compute the number of steps
+            var steps = Mathf.Clamp(scoreGain, 6, 30); 
+            var displayedValue = 0;
+            var totalTime = 0f;
 
             // Curved distribution of step timing
-            AnimationCurve distributionCurve = AnimationCurve.EaseInOut(0, 0, 1, 1); 
-            Sequence seq = DOTween.Sequence();
+            var distributionCurve = AnimationCurve.EaseInOut(0, 0, 1, 1); 
+            var seq = DOTween.Sequence();
 
-            for (int i = 0; i < steps; i++)
+            for (var i = 0; i < steps; i++)
             {
-                float t = (i + 1f) / steps;
-                float curvedT = distributionCurve.Evaluate(t);
-                float nextTime = curvedT * duration;
+                var t = (i + 1f) / steps;
+                var curvedT = distributionCurve.Evaluate(t);
+                var nextTime = curvedT * duration;
 
-                float stepDelay = nextTime - totalTime;
+                var stepDelay = nextTime - totalTime;
                 totalTime = nextTime;
 
                 seq.AppendInterval(Mathf.Max(0f, stepDelay));
 
                 seq.AppendCallback(() =>
                 {
-                    int targetValue = Mathf.RoundToInt(scoreGain * t);
+                    var targetValue = Mathf.RoundToInt(scoreGain * t);
 
                     if (targetValue <= displayedValue)
                         return;
@@ -277,14 +277,16 @@ namespace UI
                 });
             }
             
+            // Final value displayed
             seq.AppendCallback(() =>
             {
                 displayedValue = scoreGain;
                 popupText.text = $"+{scoreGain}";
             });
+            // Some breathing before the fade-out
             seq.AppendInterval(0.5f);
 
-            // End: fade out and cleanup
+            // Ending => fade-out and cleanup
             seq.Append(canvasGroup.DOFade(0f, 0.4f).SetEase(Ease.OutQuad));
             seq.OnComplete(() =>
             {
