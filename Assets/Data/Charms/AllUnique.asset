@@ -20,4 +20,5 @@ MonoBehaviour:
   <EffectTrigger>k__BackingField: 1
   <ScoreEffects>k__BackingField:
   - <Target>k__BackingField: 1
-    <Value>k__BackingField: 3
+    <Value>k__BackingField: 20
+  <DefaultValue>k__BackingField: 1

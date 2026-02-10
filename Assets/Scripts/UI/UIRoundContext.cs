@@ -237,50 +237,52 @@ namespace UI
             float punchIntensity = Mathf.Lerp(1f, 1.6f, Mathf.Clamp01(scoreGain / 10f));
 
             // Steps
-            int steps = Mathf.Clamp(Mathf.RoundToInt(Mathf.Log10(scoreGain + 10) * 15), 8, 30);
+            int steps = Mathf.Clamp(scoreGain, 6, 30); 
             int displayedValue = 0;
-            int increment = Mathf.Max(1, scoreGain / steps);
+            float totalTime = 0f;
 
             // Curved distribution of step timing
             AnimationCurve distributionCurve = AnimationCurve.EaseInOut(0, 0, 1, 1); 
-            float totalTime = 0f;
-
-            // Build the sequence
             Sequence seq = DOTween.Sequence();
 
             for (int i = 0; i < steps; i++)
             {
-                // Curve-based step spacing
                 float t = (i + 1f) / steps;
                 float curvedT = distributionCurve.Evaluate(t);
                 float nextTime = curvedT * duration;
 
-                // Delta since last step
                 float stepDelay = nextTime - totalTime;
                 totalTime = nextTime;
 
-                // Add ±10% randomness to timing
-                stepDelay *= Random.Range(0.9f, 1.1f);
-
-                // Schedule step
                 seq.AppendInterval(Mathf.Max(0f, stepDelay));
+
                 seq.AppendCallback(() =>
                 {
-                    displayedValue = Mathf.Min(displayedValue + increment, scoreGain);
+                    int targetValue = Mathf.RoundToInt(scoreGain * t);
+
+                    if (targetValue <= displayedValue)
+                        return;
+
+                    displayedValue = targetValue;
                     popupText.text = $"+{displayedValue}";
 
-                    // --- Punch scale ---
                     popupText.rectTransform.DOKill();
                     popupText.rectTransform.localScale = Vector3.one;
                     popupText.rectTransform
                         .DOPunchScale(Vector3.one * (punchBase * punchIntensity), 0.1f, 8, 1f)
                         .SetEase(Ease.OutQuad);
 
-                    // --- Optional subtle shake (position jitter) ---
                     rect.DOShakeAnchorPos(0.12f, 2f * punchIntensity, 10, 90, false, true)
                         .SetEase(Ease.OutSine);
                 });
             }
+            
+            seq.AppendCallback(() =>
+            {
+                displayedValue = scoreGain;
+                popupText.text = $"+{scoreGain}";
+            });
+            seq.AppendInterval(0.5f);
 
             // End: fade out and cleanup
             seq.Append(canvasGroup.DOFade(0f, 0.4f).SetEase(Ease.OutQuad));
