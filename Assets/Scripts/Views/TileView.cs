@@ -6,6 +6,7 @@ using Models;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Views
 {
@@ -15,6 +16,7 @@ namespace Views
         
         [SerializeField] private TextMeshProUGUI characterText;
         [SerializeField] private TextMeshProUGUI valueText;
+        [SerializeField] private RawImage blankIcon; 
         [SerializeField] private UIEffect uiEffect;
         [SerializeField] private UIEffectTweener uiEffectTweener;
 
@@ -74,8 +76,18 @@ namespace Views
         {
             Tile = tile;
             IsInHand = true; 
-            characterText.text = tile.Character.ToString();
             valueText.text = tile.Points.ToString();
+
+            if (tile.IsBlank)
+            {
+                blankIcon.enabled = true;
+                characterText.enabled = false;
+            }
+            else
+            {
+                blankIcon.enabled = false;
+                characterText.text = tile.Character.ToString();
+            }
             
             gameObject.name = $"Tile_{tile.Character}";
             

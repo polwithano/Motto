@@ -78,5 +78,15 @@ MonoBehaviour:
     pointValue: 1
     countPerCharacter: 1
     defaultValue: 1
+  - character: 95
+    isBlank: 1
+    pointValue: 0
+    countPerCharacter: 1
+    defaultValue: 5
   <DefaultTileModifier>k__BackingField: {fileID: 11400000, guid: b44cd9c6fa6614cbd904929f150c7ddb, type: 2}
-  totalTileCount: 15
+  totalTileCount: 16
+  totalVowelCount: 6
+  totalConsonantCount: 9
+  totalVowelPoints: 6
+  totalConsonantPoints: 17
+  totalPoints: 23
