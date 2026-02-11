@@ -82,7 +82,10 @@ namespace FSM.States
             
             ShopManager.Instance.RerollShop();
             
-            Bus<CurrencyUpdatedEvent>.Raise(new CurrencyUpdatedEvent(GameManager.Instance.Run.Currency));
+            Bus<CurrencyUpdatedEvent>.Raise(new CurrencyUpdatedEvent(
+                CurrencyType.Default, 
+                GameManager.Instance.Run.Currency));
+            
             Bus<ShopInventoryUpdatedEvent>.Raise(new ShopInventoryUpdatedEvent());
         }
         #endregion

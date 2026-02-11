@@ -10,6 +10,7 @@ using Managers;
 using Misc;
 using Models;
 using UI;
+using UI.Containers;
 using UnityEngine;
 using Views;
 
@@ -126,7 +127,10 @@ namespace FSM.States
                     
                     Game.Run.IncreaseCurrency(50);
                     
-                    Bus<CurrencyUpdatedEvent>.Raise(new CurrencyUpdatedEvent(Game.Run.Currency));
+                    Bus<CurrencyUpdatedEvent>.Raise(new CurrencyUpdatedEvent(
+                        CurrencyType.Default, 
+                        Game.Run.Currency));
+                    
                     Bus<RoundEndedEvent>.Raise(new RoundEndedEvent(status, Game.Run.Round));
                     
                     StateMachine.ChangeState(new RoundOverState(StateMachine, status));

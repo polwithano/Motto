@@ -1705,6 +1705,7 @@ MonoBehaviour:
   PrintTrace: 0
   <ActiveCharms>k__BackingField:
   - {fileID: 11400000, guid: be6217a26fde34eb195cdaa5b13c0811, type: 2}
+  - {fileID: 11400000, guid: bab714d7f31f04b169e1399da0a78ff6, type: 2}
   <CharmViews>k__BackingField:
     m_Keys: []
     m_Values: []
@@ -2783,6 +2784,7 @@ GameObject:
   - component: {fileID: 477762453}
   - component: {fileID: 477762455}
   - component: {fileID: 477762454}
+  - component: {fileID: 477762456}
   m_Layer: 5
   m_Name: SoftCurrency
   m_TagString: Untagged
@@ -2848,6 +2850,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 477762452}
   m_CullTransparentMesh: 1
+--- !u!114 &477762456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477762452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c680d3ef3af3c46b0b0ef4021952e1ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.Components.CurrencyComponent
+  text: {fileID: 912935214}
+  currencyType: 0
+  OnEventSucceeded:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 912935216}
+        m_TargetAssemblyTypeName: UI.Animation.AnimationPunch, Assembly-CSharp
+        m_MethodName: Animate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &526666792
 GameObject:
   m_ObjectHideFlags: 0
@@ -5039,6 +5070,7 @@ GameObject:
   - component: {fileID: 790799904}
   - component: {fileID: 790799906}
   - component: {fileID: 790799905}
+  - component: {fileID: 790799907}
   m_Layer: 5
   m_Name: Value
   m_TagString: Untagged
@@ -5164,6 +5196,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 790799903}
   m_CullTransparentMesh: 1
+--- !u!114 &790799907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790799903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b53e178a84bf48558b0e477201fe19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.Animation.AnimationPunch
+  scale: 0.5
+  duration: 0.3
+  vibrato: 6
+  elasticity: 0.3
+  ease: 27
 --- !u!1 &803563048
 GameObject:
   m_ObjectHideFlags: 0
@@ -5703,6 +5752,7 @@ GameObject:
   - component: {fileID: 912935213}
   - component: {fileID: 912935215}
   - component: {fileID: 912935214}
+  - component: {fileID: 912935216}
   m_Layer: 5
   m_Name: Value
   m_TagString: Untagged
@@ -5828,6 +5878,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 912935212}
   m_CullTransparentMesh: 1
+--- !u!114 &912935216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912935212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b53e178a84bf48558b0e477201fe19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.Animation.AnimationPunch
+  scale: 0.5
+  duration: 0.3
+  vibrato: 6
+  elasticity: 0.3
+  ease: 27
 --- !u!1 &917348969
 GameObject:
   m_ObjectHideFlags: 0
@@ -8076,7 +8143,6 @@ MonoBehaviour:
   remainingWordsText: {fileID: 408035976}
   deckTilesCountText: {fileID: 1532918363}
   redrawCountText: {fileID: 1879206198}
-  currencyCountText: {fileID: 912935214}
   goalAnimationDuration: 2
   punchScale: 0.5
   punchDuration: 0.3
@@ -8966,6 +9032,7 @@ GameObject:
   - component: {fileID: 1402966449}
   - component: {fileID: 1402966451}
   - component: {fileID: 1402966450}
+  - component: {fileID: 1402966452}
   m_Layer: 5
   m_Name: HardCurrency
   m_TagString: Untagged
@@ -9031,6 +9098,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1402966448}
   m_CullTransparentMesh: 1
+--- !u!114 &1402966452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402966448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c680d3ef3af3c46b0b0ef4021952e1ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.Components.CurrencyComponent
+  text: {fileID: 790799905}
+  currencyType: 1
+  OnEventSucceeded:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 790799907}
+        m_TargetAssemblyTypeName: UI.Animation.AnimationPunch, Assembly-CSharp
+        m_MethodName: Animate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1420161504
 GameObject:
   m_ObjectHideFlags: 0
@@ -11195,7 +11291,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.015625, y: 0.0020751953}
+  m_AnchoredPosition: {x: 0.015625, y: 0.0087890625}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1891756476

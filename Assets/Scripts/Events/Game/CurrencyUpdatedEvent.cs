@@ -4,11 +4,13 @@ namespace Events.Game
 {
     public struct CurrencyUpdatedEvent : IEvent
     {
-        public uint Currency { get; private set; }
+        public CurrencyType Currency { get; private set; }
+        public uint Amount { get; private set; }
         
-        public CurrencyUpdatedEvent(uint currency)
+        public CurrencyUpdatedEvent(CurrencyType currency, uint amount)
         {
             Currency = currency;
+            Amount = amount;
         }
     }
 }

@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Models;
-using Models.Charms;
-using Views;
 
 namespace Events
 {

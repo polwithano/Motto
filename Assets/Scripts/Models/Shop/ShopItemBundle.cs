@@ -30,7 +30,10 @@ namespace Models.Shop
             if (!CanBuy()) return false;
             if (!GameManager.Instance.Run.TryPurchase(Price)) return false;
             
-            Bus<CurrencyUpdatedEvent>.Raise(new CurrencyUpdatedEvent(GameManager.Instance.Run.Currency));
+            Bus<CurrencyUpdatedEvent>.Raise(new CurrencyUpdatedEvent(
+                CurrencyType.Default,
+                GameManager.Instance.Run.Currency));
+            
             Bus<PurchaseProcessedEvent>.Raise(new PurchaseProcessedEvent(this));
 
             return true;
