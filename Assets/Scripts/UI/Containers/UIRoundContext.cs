@@ -23,7 +23,6 @@ namespace UI.Containers
         [SerializeField] private TextMeshProUGUI goalText; 
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private TextMeshProUGUI modifierText;
-        [SerializeField] private TextMeshProUGUI remainingWordsText; 
         [SerializeField] private TextMeshProUGUI deckTilesCountText;
         [SerializeField] private TextMeshProUGUI redrawCountText;
 
@@ -92,8 +91,6 @@ namespace UI.Containers
         
         public async Task PlayScoreSequenceAsync(ScoreLog log)
         {
-            UpdateRemainingWords();
-
             int scoreGain = (int)log.Result;
             Sequence seq = DOTween.Sequence();
 
@@ -118,7 +115,6 @@ namespace UI.Containers
         {
             deckTilesCountText.text = GameManager.Instance.Deck.DrawPile.Count.ToString();
             redrawCountText.text = _currentRound.DrawsRemaining.ToString();
-            remainingWordsText.text = _currentRound.WordsRemaining.ToString();
             goalText.text = $"{_currentRound.CurrentScore}/{_currentRound.TargetScore}";
         }
 
@@ -161,13 +157,6 @@ namespace UI.Containers
             }, endValue, goalAnimationDuration).SetEase(goalEase));
 
             return seq;
-        }
-
-
-        private void UpdateRemainingWords()
-        {
-            remainingWordsText.text = _currentRound.WordsRemaining.ToString();
-            AnimatePunch(remainingWordsText.rectTransform);
         }
         
         private void UpdateDeckAndRedrawCounts()
@@ -225,12 +214,12 @@ namespace UI.Containers
             }
 
             // === Animation Parameters ===
-            var duration = Mathf.Lerp(0.8f, 2f, Mathf.Clamp01(scoreGain / 100f)) * 1.5f;
+            var duration = Mathf.Lerp(0.5f, 2f, Mathf.Clamp01(scoreGain / 100f)) * 1.5f;
             var punchBase = 0.2f;
             var punchIntensity = Mathf.Lerp(1f, 1.6f, Mathf.Clamp01(scoreGain / 10f));
 
             // Compute the number of steps
-            var steps = Mathf.Clamp(scoreGain, 6, 30); 
+            var steps = Mathf.Clamp(scoreGain, 1, 30); 
             var displayedValue = 0;
             var totalTime = 0f;
 

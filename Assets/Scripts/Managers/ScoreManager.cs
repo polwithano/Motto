@@ -66,7 +66,7 @@ namespace Managers
             // ---
             var startValues = new List<ScoreEffect>
             {
-                new (ScoreEffectTarget.Score, 1),
+                new (ScoreEffectTarget.Score, 0),
                 new (ScoreEffectTarget.Modifier, 1),
             };
             var startEntry = new ScoreLogEntry(log.Logs.Count, null, startValues); 

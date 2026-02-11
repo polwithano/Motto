@@ -46,7 +46,7 @@ Material:
     - _AMoireFrequency: 4
     - _AMoireSpeed: 4
     - _AMoireStrength: 1
-    - _AOutlineSoft: 0.02
+    - _AOutlineSoft: 0
     - _AOutlineStrength: 1
     - _AOutlineWidth: 0
     - _ARotation: 0
@@ -57,7 +57,7 @@ Material:
     - _BMoireFrequency: 4
     - _BMoireSpeed: 4
     - _BMoireStrength: 1
-    - _BOutlineSoft: 0.02
+    - _BOutlineSoft: 0
     - _BOutlineStrength: 1
     - _BOutlineWidth: 0
     - _BRotation: 0
@@ -103,7 +103,7 @@ Material:
     - _SplitLineStrength: 2
     - _SplitLineWidth: 0.0125
     - _SplitRight: 1.2
-    - _SplitValue: -0.26315743
+    - _SplitValue: 0
     - _ZWrite: 0
     m_Colors:
     - _AColorA: {r: 0.8160377, g: 0.8945834, b: 1, a: 1}

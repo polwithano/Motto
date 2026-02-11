@@ -17,6 +17,8 @@ ShaderVariantCollection:
         passType: 0
       - keywords: COLOR_FILTER EDGE_SHINY
         passType: 0
+      - keywords: COLOR_FILTER SAMPLING_BLUR_FAST
+        passType: 0
       - keywords: COLOR_FILTER SAMPLING_EDGE_ALPHA
         passType: 0
       - keywords: COLOR_FILTER SAMPLING_EDGE_LUMINANCE
@@ -56,6 +58,8 @@ ShaderVariantCollection:
   - first: {fileID: 4800000, guid: 935b7be1c88464d2eb87204fdfab5a38, type: 3}
     second:
       variants:
+      - keywords: COLOR_FILTER UNDERLAY_ON
+        passType: 0
       - keywords: SAMPLING_BLUR_MEDIUM
         passType: 0
       - keywords: SAMPLING_BLUR_MEDIUM UNDERLAY_ON
