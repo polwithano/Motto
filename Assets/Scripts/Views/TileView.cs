@@ -2,6 +2,8 @@ using System.Threading.Tasks;
 using Coffee.UIEffects;
 using DG.Tweening;
 using Events;
+using Events.Core;
+using Events.Score;
 using Models;
 using UnityEngine;
 using TMPro;
@@ -51,22 +53,22 @@ namespace Views
         
         private void OnEnable()
         {
-            GameEvents.OnScoreStepStarted += HandleOnTileScored; 
+            Bus<ScoringStepStartedEvent>.OnEvent += HandleOnTileScored;
         }
 
         private void OnDisable()
         {
-            GameEvents.OnScoreStepStarted -= HandleOnTileScored;
+            Bus<ScoringStepStartedEvent>.OnEvent -= HandleOnTileScored;
         }
         
         private void OnDestroy() => OnDisable();
         #endregion
         
         #region Subscribed
-        private void HandleOnTileScored(ScoreLogEntry entry)
+        private void HandleOnTileScored(ScoringStepStartedEvent evt)
         {
-            if (entry.Emitter is not Models.Tile) return; 
-            if (!Tile.IsInstance(entry.Emitter.ID)) return;
+            if (evt.Entry.Emitter is not Models.Tile) return; 
+            if (!Tile.IsInstance(evt.Entry.Emitter.ID)) return;
 
             AnimateOnTileScored();
         }

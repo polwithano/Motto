@@ -3,6 +3,7 @@ using DG.Tweening;
 using Events;
 using Events.Core;
 using Events.Rounds;
+using Events.Score;
 using Models;
 using Models.Charms;
 using UnityEngine;
@@ -38,14 +39,14 @@ namespace Views
         #region Mono
         private void OnEnable()
         {
-            Bus<RoundStartedEvent>.OnEvent += HandleOnRoundStarted; 
-            GameEvents.OnScoreStepStarted += HandleOnScoreStepStarted;
+            Bus<RoundStartedEvent>.OnEvent += HandleOnRoundStarted;
+            Bus<ScoringStepStartedEvent>.OnEvent += HandleOnScoreStepStarted; 
         }
 
         private void OnDisable()
         {
             Bus<RoundStartedEvent>.OnEvent -= HandleOnRoundStarted; 
-            GameEvents.OnScoreStepStarted -= HandleOnScoreStepStarted;
+            Bus<ScoringStepStartedEvent>.OnEvent -= HandleOnScoreStepStarted; 
         }
 
         private void OnDestroy() => OnDisable();
@@ -57,9 +58,9 @@ namespace Views
             SetActiveFeedback(false);
         }
         
-        private void HandleOnScoreStepStarted(ScoreLogEntry entry)
+        private void HandleOnScoreStepStarted(ScoringStepStartedEvent evt)
         {
-            if (entry.Emitter is not Charm charm) return;
+            if (evt.Entry.Emitter is not Charm charm) return;
             if (!charm.IsInstance(Charm.ID)) return; 
 
             AnimateCharm();

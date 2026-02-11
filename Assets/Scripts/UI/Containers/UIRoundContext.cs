@@ -5,6 +5,7 @@ using Events;
 using Events.Core;
 using Events.Game;
 using Events.Rounds;
+using Events.Score;
 using Managers;
 using Models;
 using TMPro;
@@ -52,9 +53,9 @@ namespace UI.Containers
         {
             Bus<RoundStartedEvent>.OnEvent += HandleOnRoundStarted;
             Bus<TileRedrawCompletedEvent>.OnEvent += HandleOnTileRedrawPerformed;
-            
-            GameEvents.OnScoringStarted += HandleOnScoringStarted; 
-            GameEvents.OnScoreStepStarted += HandleOnScoreStepStarted;
+
+            Bus<ScoringSequenceStartedEvent>.OnEvent += HandleOnScoringStarted; 
+            Bus<ScoringStepStartedEvent>.OnEvent += HandleOnScoreStepStarted; 
         }
 
         private void OnDisable()
@@ -62,8 +63,8 @@ namespace UI.Containers
             Bus<RoundStartedEvent>.OnEvent -= HandleOnRoundStarted; 
             Bus<TileRedrawCompletedEvent>.OnEvent -= HandleOnTileRedrawPerformed; 
             
-            GameEvents.OnScoringStarted -= HandleOnScoringStarted; 
-            GameEvents.OnScoreStepStarted -= HandleOnScoreStepStarted;
+            Bus<ScoringSequenceStartedEvent>.OnEvent -= HandleOnScoringStarted; 
+            Bus<ScoringStepStartedEvent>.OnEvent -= HandleOnScoreStepStarted; 
         }
 
         private void OnDestroy() => OnDisable();
@@ -78,15 +79,15 @@ namespace UI.Containers
             AnimateRoundReset(_currentRound);
         }
 
-        private void HandleOnScoringStarted(string word, List<Tile> tiles)
+        private void HandleOnScoringStarted(ScoringSequenceStartedEvent evt)
         {
             AnimateNumberText(scoreText, 0, 0.5f);
             AnimateFloatText(modifierText, 1f, 0.5f);
         }
 
-        private void HandleOnScoreStepStarted(ScoreLogEntry entry)
+        private void HandleOnScoreStepStarted(ScoringStepStartedEvent evt)
         {
-            UpdateScoreEffects(entry);
+            UpdateScoreEffects(evt.Entry);
         }
         
         public async Task PlayScoreSequenceAsync(ScoreLog log)

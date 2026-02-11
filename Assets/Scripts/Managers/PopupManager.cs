@@ -1,4 +1,6 @@
 using Events;
+using Events.Core;
+using Events.Score;
 using Interfaces;
 using Models;
 using Models.Charms;
@@ -15,24 +17,24 @@ namespace Managers
         #region Mono
         private void OnEnable()
         {
-            GameEvents.OnScoreStepStarted += HandleOnScoreStepStarted; 
+            Bus<ScoringStepStartedEvent>.OnEvent += HandleOnScoreStepStarted; 
         }
 
         private void OnDisable()
         {
-            GameEvents.OnScoreStepStarted -= HandleOnScoreStepStarted; 
+            Bus<ScoringStepStartedEvent>.OnEvent -= HandleOnScoreStepStarted; 
         }
 
         private void OnDestroy() => OnDisable();
         #endregion
     
         #region Subscribed
-        private void HandleOnScoreStepStarted(ScoreLogEntry entry)
+        private void HandleOnScoreStepStarted(ScoringStepStartedEvent evt)
         {
-            foreach (var effect in entry.ScoreEffects)
+            foreach (var effect in evt.Entry.ScoreEffects)
             {
                 var popupPosition = Vector3.zero;
-                if (TryGetEffectEmitterPosition(entry.Emitter, out popupPosition))
+                if (TryGetEffectEmitterPosition(evt.Entry.Emitter, out popupPosition))
                 {
                     SpawnPopup(popupPosition, effect); 
                 }

@@ -3,6 +3,7 @@ using DG.Tweening;
 using Events;
 using Events.Core;
 using Events.Rounds;
+using Events.Score;
 using Models;
 using UnityEngine;
 
@@ -21,13 +22,13 @@ namespace Animation
         private void OnEnable()
         {
             Bus<RoundStartedEvent>.OnEvent += HandleOnRoundStarted;
-            GameEvents.OnScoreStepApplied += HandleScoreStepApplied;
+            Bus<ScoringStepProcessedEvent>.OnEvent += HandleScoreStepApplied;
         }
 
         private void OnDisable()
         {
             Bus<RoundStartedEvent>.OnEvent -= HandleOnRoundStarted;
-            GameEvents.OnScoreStepApplied -= HandleScoreStepApplied;
+            Bus<ScoringStepProcessedEvent>.OnEvent -= HandleScoreStepApplied;
 
             _splitTween?.Kill();
         }
@@ -38,10 +39,10 @@ namespace Animation
             AnimateSplitValue(0f);
         }
 
-        private void HandleScoreStepApplied(ScoreLogEntry entry, Action _)
+        private void HandleScoreStepApplied(ScoringStepProcessedEvent evt)
         {
-            var score = Mathf.Max(entry.EntryScore, 0f);
-            var modifier = Mathf.Max(entry.EntryModifier, 0f);
+            var score = Mathf.Max(evt.Entry.EntryScore, 0f);
+            var modifier = Mathf.Max(evt.Entry.EntryModifier, 0f);
 
             var targetValue = (modifier - score) / (modifier + score + 0.0001f);
 

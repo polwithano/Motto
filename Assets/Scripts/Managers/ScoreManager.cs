@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Events;
+using Events.Core;
+using Events.Score;
 using Models;
 using UI.Popup;
 using UnityEngine;
@@ -28,21 +30,24 @@ namespace Managers
         #region Mono
         private void OnEnable()
         {
-            GameEvents.OnScoringStarted += HandleOnScoringStarted; 
-            GameEvents.OnScoreStepApplied += HandleOnScoreStepApplied;
+            Bus<ScoringSequenceStartedEvent>.OnEvent += HandleOnScoringStarted;
+            Bus<ScoringStepProcessedEvent>.OnEvent += HandleOnScoreStepApplied;
         }
 
         private void OnDisable()
         {
-            GameEvents.OnScoringStarted -= HandleOnScoringStarted;
-            GameEvents.OnScoreStepApplied -= HandleOnScoreStepApplied;
+            Bus<ScoringSequenceStartedEvent>.OnEvent -= HandleOnScoringStarted;
+            Bus<ScoringStepProcessedEvent>.OnEvent -= HandleOnScoreStepApplied;
         }
         private void OnDestroy() => OnDisable();
         #endregion
         
         #region Subscribed
-        private void HandleOnScoringStarted(string word, List<Tile> tiles)
+        private void HandleOnScoringStarted(ScoringSequenceStartedEvent evt)
         {
+            var word = evt.Word;
+            var tiles = evt.Tiles;
+            
             Debug.Log($"HandleOnScoringStarted: {word}");
             
             Log = GenerateScoreLog(word, tiles);
@@ -52,9 +57,9 @@ namespace Managers
             StartCoroutine(AnimateScore(Log));
         }
 
-        private void HandleOnScoreStepApplied(ScoreLogEntry entry, Action onComplete)
+        private void HandleOnScoreStepApplied(ScoringStepProcessedEvent evt)
         {
-            DOVirtual.DelayedCall(logEntrySequenceDelay, () => onComplete?.Invoke());
+            DOVirtual.DelayedCall(logEntrySequenceDelay, () => evt.Callback?.Invoke());
         }
         #endregion
 
@@ -119,17 +124,17 @@ namespace Managers
         {
             foreach (var entry in scoreLog.Logs)
             {
-                GameEvents.RaiseOnScoreStepStarted(entry);
+                Bus<ScoringStepStartedEvent>.Raise(new ScoringStepStartedEvent(entry));
 
                 // Wait until animation completes
                 bool done = false;
-                GameEvents.RaiseOnScoreStepApplied(entry, () => done = true);
+                Bus<ScoringStepProcessedEvent>.Raise(new ScoringStepProcessedEvent(entry, () => done = true));
 
                 // Wait for completion callback or timeout
                 yield return new WaitUntil(() => done);
             }
 
-            GameEvents.RaiseOnScoreSequenceCompleted(scoreLog);
+            Bus<ScoringSequenceEndedEvent>.Raise(new ScoringSequenceEndedEvent(scoreLog));
         }
     }
 }

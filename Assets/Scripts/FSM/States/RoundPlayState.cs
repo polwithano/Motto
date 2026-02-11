@@ -28,18 +28,18 @@ namespace FSM.States
         {
             Bus<BoardUpdatedEvent>.OnEvent += HandleOnBoardUpdated;
             Bus<TileRedrawEvent>.OnEvent += HandleOnTileRedraw;
-
-            Bus<WordProcessedEvent>.OnEvent += HandleOnWordProcessed; 
-            GameEvents.OnScoreSequenceCompleted += HandleOnScoreSequenceCompleted;
+            Bus<WordProcessedEvent>.OnEvent += HandleOnWordProcessed;
+            
+            Bus<ScoringSequenceEndedEvent>.OnEvent += HandleOnScoringSequenceEnded;
         }
 
         public override void Exit()
         {
             Bus<BoardUpdatedEvent>.OnEvent -= HandleOnBoardUpdated; 
             Bus<TileRedrawEvent>.OnEvent -= HandleOnTileRedraw; 
+            Bus<WordProcessedEvent>.OnEvent -= HandleOnWordProcessed;
             
-            Bus<WordProcessedEvent>.OnEvent -= HandleOnWordProcessed; 
-            GameEvents.OnScoreSequenceCompleted -= HandleOnScoreSequenceCompleted;
+            Bus<ScoringSequenceEndedEvent>.OnEvent -= HandleOnScoringSequenceEnded;
         }
         
         #region Event Handlers
@@ -83,11 +83,13 @@ namespace FSM.States
             Game.Run.Round.RemoveAttempt();
             Game.Run.Round.AddWord(CurrentWord, CurrentTiles);
             
-            GameEvents.RaiseOnScoringStarted(CurrentWord, CurrentTiles);
+            Bus<ScoringSequenceStartedEvent>.Raise(new ScoringSequenceStartedEvent(CurrentWord, CurrentTiles));
         }
 
-        private async void HandleOnScoreSequenceCompleted(ScoreLog log)
+        private async void HandleOnScoringSequenceEnded(ScoringSequenceEndedEvent evt)
         {
+            var log = evt.ScoreLog; 
+            
             try
             {
                 await UIGame.Instance.RoundContext.PlayScoreSequenceAsync(log); 
