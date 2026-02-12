@@ -2554,8 +2554,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c680d3ef3af3c46b0b0ef4021952e1ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.Components.CurrencyComponent
-  text: {fileID: 912935214}
-  currencyType: 0
   OnEventSucceeded:
     m_PersistentCalls:
       m_Calls:
@@ -2571,6 +2569,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnEventFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  label: {fileID: 912935214}
+  format: ${0}
+  currencyType: 0
 --- !u!1 &526666792
 GameObject:
   m_ObjectHideFlags: 0
@@ -6836,6 +6840,7 @@ GameObject:
   - component: {fileID: 1101482117}
   - component: {fileID: 1101482116}
   - component: {fileID: 1101482115}
+  - component: {fileID: 1101482118}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -7112,6 +7117,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101482113}
   m_CullTransparentMesh: 1
+--- !u!114 &1101482118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101482113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d30b10db5c064744ae65b55b69f4ac65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.Components.WordsCountComponent
+  OnEventSucceeded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEventFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  text: {fileID: 1101482116}
+  format: 'words left: {0}'
 --- !u!1 &1113750853
 GameObject:
   m_ObjectHideFlags: 0
@@ -7811,7 +7836,6 @@ MonoBehaviour:
   goalText: {fileID: 99667894}
   scoreText: {fileID: 847070762}
   modifierText: {fileID: 803563050}
-  remainingWordsText: {fileID: 1101482116}
   deckTilesCountText: {fileID: 1532918363}
   redrawCountText: {fileID: 1879206198}
   goalAnimationDuration: 2
@@ -8627,8 +8651,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c680d3ef3af3c46b0b0ef4021952e1ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.Components.CurrencyComponent
-  text: {fileID: 790799905}
-  currencyType: 1
   OnEventSucceeded:
     m_PersistentCalls:
       m_Calls:
@@ -8644,6 +8666,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnEventFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  label: {fileID: 790799905}
+  format: '@{0}'
+  currencyType: 1
 --- !u!1 &1420161504
 GameObject:
   m_ObjectHideFlags: 0
@@ -8920,6 +8948,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 847fae3b2cbc4e2fa488af1f1beb2f1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.ValidateWordButton
+  OnEventSucceeded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEventFailed:
+    m_PersistentCalls:
+      m_Calls: []
   lettersCount: {fileID: 300372489}
 --- !u!1 &1532918360
 GameObject:
@@ -10806,7 +10840,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.015625, y: 0.013427734}
+  m_AnchoredPosition: {x: 0.015625, y: 0.006225586}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1891756476

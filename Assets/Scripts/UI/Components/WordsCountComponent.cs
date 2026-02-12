@@ -2,48 +2,22 @@ using Events.Core;
 using Events.Rounds;
 using Events.Score;
 using Managers;
-using TMPro;
-using UnityEngine;
-using UnityEngine.Events;
+using UI.Components.Core;
 
 namespace UI.Components
 {
-    public class WordsCountComponent : MonoBehaviour
+    public class WordsCountComponent 
+        : MultiEventReactiveLabelComponent<int>
     {
-        [SerializeField] private TextMeshProUGUI text;
-        
-        public UnityEvent OnEventSucceeded; 
-
-        #region Monobehaviour
-        private void OnEnable()
+        protected override void RegisterEvents()
         {
-            Bus<RoundStartedEvent>.OnEvent += HandleOnRoundStarted; 
-            Bus<ScoringSequenceStartedEvent>.OnEvent += HandleOnScoringStarted; 
+            ListenTo<RoundStartedEvent>();
+            ListenTo<ScoringSequenceStartedEvent>();
         }
 
-        private void OnDisable()
+        protected override int GetValue()
         {
-            Bus<RoundStartedEvent>.OnEvent += HandleOnRoundStarted; 
-            Bus<ScoringSequenceStartedEvent>.OnEvent -= HandleOnScoringStarted;
+            return GameManager.Instance.Run.Round.WordsRemaining;
         }
-        #endregion
-
-        private void HandleOnRoundStarted(RoundStartedEvent args)
-        {
-            UpdateLabel();
-        }
-        
-        private void HandleOnScoringStarted(ScoringSequenceStartedEvent evt)
-        {
-            UpdateLabel();
-        }
-
-        private void UpdateLabel()
-        {
-            text.text = GetLabel(GameManager.Instance.Run.Round.WordsRemaining);
-            OnEventSucceeded?.Invoke(); 
-        }
-
-        private string GetLabel(int count) => $"words left: {count}";
     }
 }

@@ -2,38 +2,35 @@ using System;
 using Events.Core;
 using Events.Game;
 using TMPro;
+using UI.Components.Core;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace UI.Components
 {
-    public class CurrencyComponent : MonoBehaviour
+    public class CurrencyComponent : ReactiveLabelComponent<CurrencyUpdatedEvent, uint>
     {
-        [SerializeField] private TextMeshProUGUI text;
-        [SerializeField] public CurrencyType currencyType;
+        [SerializeField] private CurrencyType currencyType;
         
-        public UnityEvent OnEventSucceeded; 
-        
-        #region Monobehaviour
-        private void OnEnable()
+        protected override bool ShouldHandle(CurrencyUpdatedEvent evt)
         {
-            Bus<CurrencyUpdatedEvent>.OnEvent += HandleCurrencyUpdated; 
+            return evt.Currency == currencyType;
         }
 
-        private void OnDisable()
+        protected override uint ExtractValue(CurrencyUpdatedEvent evt)
         {
-            Bus<CurrencyUpdatedEvent>.OnEvent -= HandleCurrencyUpdated; 
-        }
-        #endregion
-        
-        private void HandleCurrencyUpdated(CurrencyUpdatedEvent evt)
-        {
-            if (evt.Currency != currencyType) return;
-            
-            text.text = GetCurrencySymbol(evt.Currency) + evt.Amount;
-            OnEventSucceeded?.Invoke();
+            return evt.Amount;
         }
 
+        protected override bool HandleEvent(CurrencyUpdatedEvent evt)
+        {
+            if (!ShouldHandle(evt))
+                return false;
+
+            label.text = GetCurrencySymbol(evt.Currency) + evt.Amount;
+            return true;
+        }
+        
         private string GetCurrencySymbol(CurrencyType currency)
         {
             return currency switch

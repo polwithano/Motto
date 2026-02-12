@@ -55,7 +55,12 @@ namespace FSM.States
                 Game.Hand.TryAddTile(newTile);
                 Game.Run.Round.RemoveDraw();
             
-                Bus<TileRedrawCompletedEvent>.Raise(new TileRedrawCompletedEvent(evt.Model, newTile));   
+                Bus<TileRedrawCompletedEvent>.Raise(
+                    new TileRedrawCompletedEvent(
+                        evt.Model, 
+                        newTile, 
+                        Game.Run.Round.DrawsRemaining, 
+                        Game.Deck.DrawPile.Count));   
             }
         }
         
