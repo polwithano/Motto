@@ -22,6 +22,7 @@ namespace UI.Containers.Core
             
             canvasGroup.alpha = 1;
             canvasGroup.blocksRaycasts = true;
+            canvasGroup.interactable = true;
         }
 
         protected virtual void Close()
@@ -30,6 +31,7 @@ namespace UI.Containers.Core
             
             canvasGroup.alpha = 0;
             canvasGroup.blocksRaycasts = false;
+            canvasGroup.interactable = false;
         }
 
         public void UpdateContainerState(UIState state)
