@@ -1,4 +1,3 @@
-using Events.Core;
 using Events.Rounds;
 using Events.Score;
 using Managers;
