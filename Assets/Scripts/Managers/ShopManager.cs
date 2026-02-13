@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Models;
 using Models.Charms;
+using Models.Charms.Core;
 using Models.Shop;
+using Models.SO;
 using UnityEngine;
 
 namespace Managers

@@ -1,5 +1,8 @@
-public enum CurrencyType
+namespace Models
 {
-    Default,
-    Special
+    public enum CurrencyType
+    {
+        Soft,
+        Hard
+    }
 }

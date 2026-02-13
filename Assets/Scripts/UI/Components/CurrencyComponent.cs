@@ -1,6 +1,7 @@
 using System;
 using Events.Core;
 using Events.Game;
+using Models;
 using TMPro;
 using UI.Components.Core;
 using UnityEngine;
@@ -35,8 +36,8 @@ namespace UI.Components
         {
             return currency switch
             {
-                CurrencyType.Default => "$",
-                CurrencyType.Special => "@",
+                CurrencyType.Soft => "$",
+                CurrencyType.Hard => "@",
                 _ => throw new ArgumentOutOfRangeException(nameof(currency), currency, null)
             };
         }

@@ -4,6 +4,7 @@ using Events;
 using Events.Core;
 using Events.UI;
 using Models.Charms;
+using Models.Charms.Core;
 using UI.Tooltips;
 using UnityEngine;
 

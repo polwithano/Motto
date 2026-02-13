@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Interfaces;
+using Models.SO;
 using UnityEngine;
 
 namespace Models
@@ -9,7 +10,7 @@ namespace Models
     public class Tile : IEffectEmitter, IBuyable
     {
         [field: SerializeField] public string ID           { get; set; }
-        [field: SerializeField] public char Character    { get; private set; }
+        [field: SerializeField] public char Character      { get; private set; }
         [field: SerializeField] public int Points          { get; private set; }
         [field: SerializeField] public bool IsBlank        { get; private set; }
         
@@ -21,10 +22,6 @@ namespace Models
         
         #region IBuyable
         [field: SerializeField] public uint DefaultValue { get; set; } = 1;
-        public void ProcessPurchase()
-        {
-            throw new NotImplementedException();
-        }
         public void SetPrice(uint price) => DefaultValue = price;
         #endregion
         

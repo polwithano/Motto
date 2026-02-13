@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Models.Charms.Core;
+using Models.Rounds;
 using UnityEngine;
 
 namespace Models.Charms

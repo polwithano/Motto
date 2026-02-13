@@ -2,10 +2,12 @@ using Events;
 using Events.Core;
 using Events.Game;
 using Events.Shop;
+using Events.UI;
 using Interfaces;
 using Managers;
 using Models;
 using Models.Charms;
+using Models.Charms.Core;
 using UnityEngine;
 
 namespace FSM.States
@@ -19,16 +21,18 @@ namespace FSM.States
         {
             ShopManager.Instance.InitializeShop();
 
-            Bus<ShopStateEvent>.OnEvent += HandleOnShopStatusUpdated;
+            Bus<SetUIContainerStateEvent>.OnEvent += HandleOnShopStatusUpdated; 
             Bus<ShopRerollRequestEvent>.OnEvent += HandleOnShopRerollRequested; 
             Bus<PurchaseProcessedEvent>.OnEvent += HandleOnPurchaseProcessed; 
             
-            Bus<ShopStateEvent>.Raise(new ShopStateEvent(Events.Shop.ShopState.Opened));
+            Bus<SetUIContainerStateEvent>.Raise(new SetUIContainerStateEvent(
+                UIType.Shop, 
+                UIState.Opened));
         }
 
         public override void Exit()
         {
-            Bus<ShopStateEvent>.OnEvent -= HandleOnShopStatusUpdated; 
+            Bus<SetUIContainerStateEvent>.OnEvent -= HandleOnShopStatusUpdated; 
             Bus<ShopRerollRequestEvent>.OnEvent -= HandleOnShopRerollRequested; 
             Bus<PurchaseProcessedEvent>.OnEvent -= HandleOnPurchaseProcessed; 
         }
@@ -39,16 +43,11 @@ namespace FSM.States
         }
         
         #region Event Handlers
-        private void HandleOnShopStatusUpdated(ShopStateEvent evt)
+        private void HandleOnShopStatusUpdated(SetUIContainerStateEvent evt)
         {
-            switch (evt.State)
-            {
-                case Events.Shop.ShopState.Opened:
-                    break; 
-                case Events.Shop.ShopState.Closed:
-                    HandleOnShopClosed();
-                    break;
-            }
+            if (evt.Container != UIType.Shop) return; 
+            if (evt.State != UIState.Closed) return;
+            HandleOnShopClosed();
         }
         
         private void HandleOnShopClosed()
@@ -83,8 +82,8 @@ namespace FSM.States
             ShopManager.Instance.RerollShop();
             
             Bus<CurrencyUpdatedEvent>.Raise(new CurrencyUpdatedEvent(
-                CurrencyType.Default, 
-                GameManager.Instance.Run.Currency));
+                CurrencyType.Soft, 
+                GameManager.Instance.Run.SoftCurrency));
             
             Bus<ShopInventoryUpdatedEvent>.Raise(new ShopInventoryUpdatedEvent());
         }

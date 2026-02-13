@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Models.Rounds;
+using Models.SO;
 using UnityEngine;
 
 namespace Models
@@ -10,7 +12,8 @@ namespace Models
         [field: SerializeField] public RoundContext Round         { get; private set; }
         [field: SerializeField] public List<RoundContext> Rounds  { get; private set; }
         
-        [field: SerializeField] public uint Currency               { get; private set; }
+        [field: SerializeField] public uint SoftCurrency { get; private set; }
+        [field: SerializeField] public uint HardCurrency { get; private set; }
 
         private RunDataSO _data;
 
@@ -18,8 +21,10 @@ namespace Models
         {
             _data = data;
             RoundIndex = 0;
-            Rounds = new List<RoundContext>(); 
-            Currency = 0;
+            Rounds = new List<RoundContext>();
+            
+            SetCurrencyValue(0, CurrencyType.Soft);
+            SetCurrencyValue(0, CurrencyType.Hard);
         }
 
         public bool TryIncrementRound()
@@ -39,15 +44,23 @@ namespace Models
 
         public bool TryPurchase(uint cost)
         {
-            var newCount = (Currency - (int)cost);
+            var newCount = (SoftCurrency - (int)cost);
             if (newCount < 0) return false;
-            Currency = (uint)newCount;
+            SoftCurrency = (uint)newCount;
             return true;
         }
 
-        public void IncreaseCurrency(uint amount)
+        public void SetCurrencyValue(uint amount, CurrencyType type)
         {
-            Currency += amount;
+            switch (type)
+            {
+                case CurrencyType.Soft:
+                    SoftCurrency += amount;
+                    break; 
+                case CurrencyType.Hard:
+                    HardCurrency += amount;
+                    break;
+            }
         }
         
         private RoundContext CreateContext()

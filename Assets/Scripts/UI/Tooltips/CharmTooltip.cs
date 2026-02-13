@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using Models.Charms;
+using Models.Charms.Core;
 using UI.Helpers;
 
 namespace UI.Tooltips

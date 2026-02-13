@@ -19,9 +19,11 @@ namespace FSM.States
             
             if (CanTransitionToShop())
                 StateMachine.ChangeState(new ShopState(StateMachine));
+            else
+                StateMachine.ChangeState(new RunOverState(StateMachine, Status));
         }
-        public override void Exit() { }
-        public override void Tick() { }
+        public override void Exit() {}
+        public override void Tick() {}
 
         private bool CanTransitionToShop() => Status == RoundEndedStatus.Success && Game.Run.TryIncrementRound(); 
     }

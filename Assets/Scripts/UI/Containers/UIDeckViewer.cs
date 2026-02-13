@@ -4,18 +4,16 @@ using DG.Tweening;
 using Managers;
 using Models;
 using TMPro;
+using UI.Containers.Core;
 using UnityEngine;
 using UnityEngine.UI;
 using Views;
 
 namespace UI.Containers
 {
-    public class UIDeckViewer : MonoBehaviour
+    public class UIDeckViewer : UIContainer
     {
-        [SerializeField] private bool sortAlphabetically; 
-        
         [Header("UI References")]
-        [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private TextMeshProUGUI drawPileLabel;
         [SerializeField] private TextMeshProUGUI discardPileLabel;
         [SerializeField] private Transform drawPileGrid;
@@ -23,35 +21,24 @@ namespace UI.Containers
         [SerializeField] private TileView tileViewPrefab;
         
         [Header("Layout")]
+        [SerializeField] private bool sortAlphabetically; 
         [SerializeField] private float fadeDuration = 0.33f;
         [SerializeField] private float gridCellHeight = 100f;
         [SerializeField] private ScrollRect scrollContent; 
-        
-        private void Awake()
-        {
-            if (canvasGroup == null)
-                canvasGroup = GetComponentInParent<CanvasGroup>();
-        }
 
-        public void Open()
+        protected override void Open()
         {
+            base.Open();
+            
             Construct();
-            FadeWindow(true);
         }
 
-        public void Close()
+        protected override void Close()
         {
-            FadeWindow(false);
+            base.Close();
+
             ClearGrid(drawPileGrid);
             ClearGrid(discardPileGrid);
-        }
-
-        private void FadeWindow(bool fadeIn)
-        {
-            canvasGroup.DOFade(fadeIn ? 1 : 0, fadeDuration)
-                .SetEase(Ease.OutExpo);
-            canvasGroup.interactable = fadeIn;
-            canvasGroup.blocksRaycasts = fadeIn;
         }
 
         private void Construct()
@@ -95,7 +82,7 @@ namespace UI.Containers
 
         private void ClearGrid(Transform parent)
         {
-            for (int i = parent.childCount - 1; i >= 0; i--)
+            for (var i = parent.childCount - 1; i >= 0; i--)
                 Destroy(parent.GetChild(i).gameObject);
         }
     }

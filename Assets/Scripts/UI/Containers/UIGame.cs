@@ -1,15 +1,24 @@
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using Events.Core;
-using Events.Shop;
+using Events.UI;
+using UI.Containers.Core;
 using UnityEngine;
 
 namespace UI.Containers
 {
+    [System.Serializable]
+    public class UIContainerWrapper
+    {
+        [field: SerializeField] public UIContainer Container { get; private set; }
+        [field: SerializeField] public UIType ContainerType  { get; private set; }
+    }
+    
     public class UIGame : MonoBehaviourSingleton<UIGame>
     {
-        [SerializeField] private List<CanvasGroup> gameCanvases; 
-        [SerializeField] private CanvasGroup shopCanvas;
+        [SerializeField] private List<UIContainerWrapper> containers = new ();
+        [SerializeField] private CanvasGroup overlayCanvasGroup;
         [field: SerializeField] public UIRoundContext RoundContext { get; private set; }
 
         [Header("Tween Settings")]
@@ -17,86 +26,38 @@ namespace UI.Containers
         [SerializeField] private Ease fadeEase = Ease.OutQuad;
         
         #region Mono
-        private void Start()
-        {
-            SetCanvasGroupsActive(gameCanvases, true);
-            SetCanvasGroupActive(shopCanvas, false);
-        }
-        
         private void OnEnable()
         {
-            Bus<ShopStateEvent>.OnEvent += HandleOnShopStatusUpdated; 
+            Bus<SetUIContainerStateEvent>.OnEvent += HandleOnUIContainerStateUpdated; 
         }
 
         private void OnDisable()
         {
-            Bus<ShopStateEvent>.OnEvent -= HandleOnShopStatusUpdated; 
+            Bus<SetUIContainerStateEvent>.OnEvent -= HandleOnUIContainerStateUpdated; 
         }
-
+        
         private void OnDestroy() => OnDisable(); 
         #endregion
         
         #region Event Handlers
-        private void HandleOnShopStatusUpdated(ShopStateEvent evt)
+        private void HandleOnUIContainerStateUpdated(SetUIContainerStateEvent evt)
         {
-            switch (evt.State)
+            foreach (var container in containers.Where(container => container.ContainerType == evt.Container))
             {
-                case ShopState.Opened:
-                    HandleOnShopOpened();
-                    break; 
-                case ShopState.Closed:
-                    HandleOnShopClosed();
-                    break; 
+                container.Container.UpdateContainerState(evt.State);
             }
-        }
-        
-        private void HandleOnShopOpened()
-        {
-            FadeCanvasGroups(gameCanvases, false);
-            FadeCanvasGroup(shopCanvas, true);
+            FadeOverlay(evt.State);
         }
 
-        private void HandleOnShopClosed()
+        private void FadeOverlay(UIState state)
         {
-            FadeCanvasGroups(gameCanvases, true);
-            FadeCanvasGroup(shopCanvas, false);
+            var active = state == UIState.Opened;
+            var endValue = state == UIState.Opened ? 1f : 0f; 
+            
+            overlayCanvasGroup.DOFade(endValue, fadeDuration).SetEase(fadeEase);
+            overlayCanvasGroup.interactable = active;
+            overlayCanvasGroup.blocksRaycasts = active;
         }
         #endregion
-        
-        private void FadeCanvasGroup(CanvasGroup group, bool fadeIn)
-        {
-            if (group == null) return;
-            
-            float targetAlpha = fadeIn ? 1f : 0f;
-            group.DOKill();
-            group.DOFade(targetAlpha, fadeDuration)
-                .SetEase(fadeEase);
-
-            group.interactable = fadeIn;
-            group.blocksRaycasts = fadeIn;
-        }
-
-        private void FadeCanvasGroups(IEnumerable<CanvasGroup> groups, bool fadeIn)
-        {
-            if (groups == null) return;
-            foreach (var group in groups)
-                FadeCanvasGroup(group, fadeIn);
-        }
-        
-        private void SetCanvasGroupActive(CanvasGroup group, bool active)
-        {
-            if (group == null) return;
-            group.DOKill(); // cancel tweens if any
-            group.alpha = active ? 1f : 0f;
-            group.interactable = active;
-            group.blocksRaycasts = active;
-        }
-
-        private void SetCanvasGroupsActive(IEnumerable<CanvasGroup> groups, bool active)
-        {
-            if (groups == null) return;
-            foreach (var group in groups)
-                SetCanvasGroupActive(group, active);
-        }
     }
 }

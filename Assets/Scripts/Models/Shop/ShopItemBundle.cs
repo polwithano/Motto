@@ -22,7 +22,7 @@ namespace Models.Shop
 
         public bool CanBuy()
         {
-            return GameManager.Instance.Run.Currency >= Price;
+            return GameManager.Instance.Run.SoftCurrency >= Price;
         }
 
         public bool TryPurchase()
@@ -31,8 +31,8 @@ namespace Models.Shop
             if (!GameManager.Instance.Run.TryPurchase(Price)) return false;
             
             Bus<CurrencyUpdatedEvent>.Raise(new CurrencyUpdatedEvent(
-                CurrencyType.Default,
-                GameManager.Instance.Run.Currency));
+                CurrencyType.Soft,
+                GameManager.Instance.Run.SoftCurrency));
             
             Bus<PurchaseProcessedEvent>.Raise(new PurchaseProcessedEvent(this));
 

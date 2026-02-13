@@ -2,6 +2,8 @@ using FSM;
 using FSM.States;
 using Models;
 using Models.Charms;
+using Models.Charms.Core;
+using Models.SO;
 using UnityEngine;
 
 namespace Managers

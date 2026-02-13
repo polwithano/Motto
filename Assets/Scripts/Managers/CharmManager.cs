@@ -6,6 +6,7 @@ using Events.Core;
 using Events.Game;
 using Models;
 using Models.Charms;
+using Models.Charms.Core;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Views;

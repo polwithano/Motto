@@ -1,4 +1,5 @@
 using Events.Core;
+using Models;
 
 namespace Events.Game
 {

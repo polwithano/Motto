@@ -29,7 +29,6 @@ namespace FSM.States
             Bus<BoardUpdatedEvent>.OnEvent += HandleOnBoardUpdated;
             Bus<TileRedrawEvent>.OnEvent += HandleOnTileRedraw;
             Bus<WordProcessedEvent>.OnEvent += HandleOnWordProcessed;
-            
             Bus<ScoringSequenceEndedEvent>.OnEvent += HandleOnScoringSequenceEnded;
         }
 
@@ -38,7 +37,6 @@ namespace FSM.States
             Bus<BoardUpdatedEvent>.OnEvent -= HandleOnBoardUpdated; 
             Bus<TileRedrawEvent>.OnEvent -= HandleOnTileRedraw; 
             Bus<WordProcessedEvent>.OnEvent -= HandleOnWordProcessed;
-            
             Bus<ScoringSequenceEndedEvent>.OnEvent -= HandleOnScoringSequenceEnded;
         }
         
@@ -93,10 +91,10 @@ namespace FSM.States
 
         private async void HandleOnScoringSequenceEnded(ScoringSequenceEndedEvent evt)
         {
-            var log = evt.ScoreLog; 
-            
             try
             {
+                var log = evt.ScoreLog; 
+
                 await UIGame.Instance.RoundContext.PlayScoreSequenceAsync(log); 
 
                 CheckForExitConditions();
@@ -132,14 +130,13 @@ namespace FSM.States
                 {
                     const RoundEndedStatus status = RoundEndedStatus.Success;
                     
-                    Game.Run.IncreaseCurrency(50);
+                    Game.Run.SetCurrencyValue(50, CurrencyType.Soft);
                     
                     Bus<CurrencyUpdatedEvent>.Raise(new CurrencyUpdatedEvent(
-                        CurrencyType.Default, 
-                        Game.Run.Currency));
+                        CurrencyType.Soft, 
+                        Game.Run.SoftCurrency));
                     
                     Bus<RoundEndedEvent>.Raise(new RoundEndedEvent(status, Game.Run.Round));
-                    
                     StateMachine.ChangeState(new RoundOverState(StateMachine, status));
                     
                     break;

@@ -130,14 +130,14 @@ namespace Views
 
         private void SetTileViewsRaycast(DragEventType dragEventType)
         {
-            var enabled = dragEventType != DragEventType.DragStart;
+            var interactable = dragEventType != DragEventType.DragStart;
 
             foreach (var kvp in ViewsById.Where(kvp => kvp.Value != null))
             {
                 kvp.Value.gameObject.TryGetComponent(out CanvasGroup canvasGroup);
                 {
-                    canvasGroup.interactable = enabled;
-                    canvasGroup.blocksRaycasts = enabled;
+                    canvasGroup.interactable = interactable;
+                    canvasGroup.blocksRaycasts = interactable;
                 }
             }
         }

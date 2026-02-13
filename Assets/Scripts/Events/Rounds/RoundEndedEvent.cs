@@ -1,5 +1,6 @@
 using Events.Core;
 using Models;
+using Models.Rounds;
 
 namespace Events.Rounds
 {

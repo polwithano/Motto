@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Models;
 using Models.Charms;
+using Models.Charms.Core;
 using UnityEngine;
 
 namespace UI.Helpers

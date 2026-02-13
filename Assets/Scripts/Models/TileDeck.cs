@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Models.SO;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;

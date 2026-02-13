@@ -2,6 +2,7 @@ using Events.Core;
 using Events.UI;
 using Managers;
 using Models.Charms;
+using Models.Charms.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

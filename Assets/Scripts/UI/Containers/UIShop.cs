@@ -4,14 +4,15 @@ using Events.Core;
 using Events.Shop;
 using Managers;
 using Models;
-using Models.Charms;
+using Models.Charms.Core;
 using TMPro;
+using UI.Containers.Core;
 using UnityEngine;
 using Views;
 
 namespace UI.Containers
 {
-    public class UIShop : MonoBehaviour
+    public class UIShop : UIContainer
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject tilePrefab;
@@ -28,35 +29,21 @@ namespace UI.Containers
 
         private List<IBuyableViewer> _buyableViewers = new();
 
-        #region Mono
-        private void OnEnable()
+        #region UI Container
+        protected override void RegisterEvents()
         {
-            Bus<ShopStateEvent>.OnEvent += HandleShopStatus;
+            base.RegisterEvents();
             Bus<ShopInventoryUpdatedEvent>.OnEvent += HandleShopRefresh; 
         }
 
-        private void OnDisable()
+        protected override void UnregisterEvents()
         {
-            Bus<ShopStateEvent>.OnEvent -= HandleShopStatus;
+            base.UnregisterEvents();
             Bus<ShopInventoryUpdatedEvent>.OnEvent -= HandleShopRefresh; 
         }
         #endregion
 
         #region Events
-        private void HandleShopStatus(ShopStateEvent evt)
-        {
-            switch (evt.State)
-            {
-                case ShopState.Opened:
-                    OpenShop();
-                    break;
-                
-                case ShopState.Closed:
-                    CloseShop();
-                    break;
-            }
-        }
-        
         private void HandleShopRefresh(ShopInventoryUpdatedEvent args)
         {
             RefreshShop();
@@ -64,8 +51,9 @@ namespace UI.Containers
         #endregion
 
         #region UI Flow
-        private void OpenShop()
+        protected override void Open()
         {
+            base.Open();
             UpdateStaticUI();
             SpawnShopBundleViews();
         }
@@ -76,8 +64,9 @@ namespace UI.Containers
             SpawnShopBundleViews();
         }
 
-        private void CloseShop()
+        protected override void Close()
         {
+            base.Close();
             ClearBundleViews();
         }
         #endregion
@@ -165,11 +154,6 @@ namespace UI.Containers
         #endregion
 
         #region Buttons
-        public void OnNextRoundClicked()
-        {
-            Bus<ShopStateEvent>.Raise(new ShopStateEvent(ShopState.Closed));
-        }
-
         public void OnRerollClicked()
         {
             Bus<ShopRerollRequestEvent>.Raise(new ShopRerollRequestEvent());
