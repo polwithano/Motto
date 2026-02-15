@@ -5,6 +5,7 @@ namespace Events.UI
         DeckViewer,
         Shop,
         RoundOver,
-        RunOver
+        RunOver, 
+        SpecialRoundPicker
     }
 }
