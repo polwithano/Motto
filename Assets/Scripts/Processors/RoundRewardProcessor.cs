@@ -18,7 +18,7 @@ namespace Processors
             entries
                 .Add(new RoundRewardEntry(
                     "Words remaining", 
-                    context.WordsRemaining,
+                    context.WordsRemaining.ToString(),
                     bonusRemainingWords));
             
             // Value remaining draws
@@ -26,7 +26,7 @@ namespace Processors
             entries
                 .Add(new RoundRewardEntry(
                     "Draws remaining", 
-                    context.DrawsRemaining,
+                    context.DrawsRemaining.ToString(),
                     bonusRemainingDraws));
             
             // Value score overshoot
@@ -35,14 +35,14 @@ namespace Processors
             entries
                 .Add(new RoundRewardEntry(
                     "Score overshoot", 
-                    overshoot,
+                    $"{overshoot * 100f}%",
                     bonusOvershoot));
             
             // Value round
             entries
                 .Add(new RoundRewardEntry(
                     "Round reward", 
-                    run.RoundIndex,
+                    run.RoundIndex.ToString(),
                     context.SoftCurrencyReward));
             
             // Value hoarding
@@ -50,7 +50,7 @@ namespace Processors
             entries
                 .Add(new RoundRewardEntry(
                     "Hoard bonus",
-                    (int)currentSoftCurrency,
+                    currentSoftCurrency.ToString(),
                     bonusHoard));
             
             return new RoundRewardResult(entries); ; 
