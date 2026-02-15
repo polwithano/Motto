@@ -35,6 +35,8 @@ namespace Models
             RoundIndex += 1;
             return true;
         }
+        
+        public RoundType GetRoundType() => _data.RoundsSequence[RoundIndex].RoundType;
 
         public void LoadContext()
         {

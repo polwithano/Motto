@@ -1,7 +1,6 @@
 using Events.Core;
 using Events.Rounds;
 using Events.UI;
-using UnityEngine;
 
 namespace FSM.States
 {
