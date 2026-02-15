@@ -103,7 +103,7 @@ Material:
     - _SplitLineStrength: 2
     - _SplitLineWidth: 0.0125
     - _SplitRight: 1.2
-    - _SplitValue: 0
+    - _SplitValue: -0.6172836
     - _ZWrite: 0
     m_Colors:
     - _AColorA: {r: 0.8160377, g: 0.8945834, b: 1, a: 1}

@@ -3,6 +3,8 @@ using Animation;
 using Events.Core;
 using Events.Game;
 using Events.Inputs;
+using FSM;
+using FSM.States;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Views;
@@ -19,7 +21,7 @@ namespace Managers
         
         [field: SerializeField] public TileView SelectedTile { get;  private set; }
         [field: SerializeField] public bool IsOverRedraw { get; private set; }
-        
+
         private InputManager _input;
         private Canvas _canvas;
         private Camera _uiCamera;
@@ -32,6 +34,7 @@ namespace Managers
         private void Start()
         {
             _input = InputManager.Instance;
+            
             _dragLayerRect = dragLayer as RectTransform;
 
             if (_dragLayerRect != null) _canvas = _dragLayerRect.GetComponentInParent<Canvas>(true);
@@ -42,6 +45,8 @@ namespace Managers
 
         private void Update()
         {
+            if (!GameManager.Instance.IsControllerAllowed()) return; 
+            
             if (_draggedTile == null)
             {
                 if (TryStartDrag())
@@ -78,11 +83,15 @@ namespace Managers
         #region Subscribed
         private void HandleLeftClick(Vector2 screenPos)
         {
+            if (!GameManager.Instance.IsControllerAllowed()) return; 
+            
             TryToggleTileByClick(screenPos);
         }
 
         private void HandleRightClick(Vector2 screenPos)
         {
+            if (!GameManager.Instance.IsControllerAllowed()) return;
+            
             RedrawTile(screenPos);
         }
         #endregion

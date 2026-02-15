@@ -31,5 +31,10 @@ namespace Managers
             GameState.ChangeState(new BootState(GameState));
         }
         #endregion
+
+        public bool IsControllerAllowed()
+        {
+            return GameState && GameState.CurrentState is RoundPlayState; 
+        }
     }
 }

@@ -4,5 +4,7 @@ namespace Events.UI
     {
         DeckViewer,
         Shop,
+        RoundOver,
+        RunOver
     }
 }

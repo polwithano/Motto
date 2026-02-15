@@ -47,6 +47,7 @@ namespace FSM.States
         {
             if (evt.Container != UIType.Shop) return; 
             if (evt.State != UIState.Closed) return;
+            
             HandleOnShopClosed();
         }
         

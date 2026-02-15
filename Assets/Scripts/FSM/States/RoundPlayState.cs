@@ -9,7 +9,6 @@ using Events.Score;
 using Managers;
 using Misc;
 using Models;
-using UI;
 using UI.Containers;
 using UnityEngine;
 using Views;
@@ -53,8 +52,8 @@ namespace FSM.States
                 Game.Hand.TryAddTile(newTile);
                 Game.Run.Round.RemoveDraw();
             
-                Bus<TileRedrawCompletedEvent>.Raise(
-                    new TileRedrawCompletedEvent(
+                Bus<TileRedrawCompletedEvent>
+                    .Raise(new TileRedrawCompletedEvent(
                         evt.Model, 
                         newTile, 
                         Game.Run.Round.DrawsRemaining, 
@@ -86,7 +85,8 @@ namespace FSM.States
             Game.Run.Round.RemoveAttempt();
             Game.Run.Round.AddWord(CurrentWord, CurrentTiles);
             
-            Bus<ScoringSequenceStartedEvent>.Raise(new ScoringSequenceStartedEvent(CurrentWord, CurrentTiles));
+            Bus<ScoringSequenceStartedEvent>
+                .Raise(new ScoringSequenceStartedEvent(CurrentWord, CurrentTiles));
         }
 
         private async void HandleOnScoringSequenceEnded(ScoringSequenceEndedEvent evt)
@@ -119,7 +119,9 @@ namespace FSM.States
         private void OnWordChecked(string word, bool isLegit)
         {
             var validationStatus = isLegit ? WordValidationStatus.Validated : WordValidationStatus.Invalidated; 
-            Bus<WordValidationEvent>.Raise(new WordValidationEvent(validationStatus, word));
+            
+            Bus<WordValidationEvent>
+                .Raise(new WordValidationEvent(validationStatus, word));
         }
 
         private void CheckForExitConditions()
@@ -132,11 +134,13 @@ namespace FSM.States
                     
                     Game.Run.SetCurrencyValue(50, CurrencyType.Soft);
                     
-                    Bus<CurrencyUpdatedEvent>.Raise(new CurrencyUpdatedEvent(
-                        CurrencyType.Soft, 
-                        Game.Run.SoftCurrency));
+                    Bus<CurrencyUpdatedEvent>
+                        .Raise(new CurrencyUpdatedEvent(
+                            CurrencyType.Soft, Game.Run.SoftCurrency));
                     
-                    Bus<RoundEndedEvent>.Raise(new RoundEndedEvent(status, Game.Run.Round));
+                    Bus<RoundEndedEvent>
+                        .Raise(new RoundEndedEvent(status, Game.Run.Round));
+                    
                     StateMachine.ChangeState(new RoundOverState(StateMachine, status));
                     
                     break;
@@ -147,7 +151,9 @@ namespace FSM.States
                     {
                         const RoundEndedStatus status = RoundEndedStatus.Failure;
                         
-                        Bus<RoundEndedEvent>.Raise(new RoundEndedEvent(status, Game.Run.Round));
+                        Bus<RoundEndedEvent>
+                            .Raise(new RoundEndedEvent(status, Game.Run.Round));
+                        
                         StateMachine.ChangeState(new RoundOverState(StateMachine, status));
                     }
 

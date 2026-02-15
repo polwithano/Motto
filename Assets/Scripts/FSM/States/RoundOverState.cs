@@ -1,4 +1,6 @@
+using Events.Core;
 using Events.Rounds;
+using Events.UI;
 using UnityEngine;
 
 namespace FSM.States
@@ -15,16 +17,33 @@ namespace FSM.States
 
         public override void Enter()
         {
-            Debug.Log(Status == RoundEndedStatus.Success ? "Round is won" : "Round is lost");
-            
-            if (CanTransitionToShop())
-                StateMachine.ChangeState(new ShopState(StateMachine));
+            Bus<SetUIContainerStateEvent>.OnEvent += HandleOnUIStateUpdated;
+
+            if (RunCanContinue())
+            {
+                Bus<SetUIContainerStateEvent>
+                    .Raise(new SetUIContainerStateEvent(UIType.RoundOver, UIState.Opened));   
+            }
             else
+            {
                 StateMachine.ChangeState(new RunOverState(StateMachine, Status));
+            }
         }
-        public override void Exit() {}
+
+        public override void Exit()
+        {
+            Bus<SetUIContainerStateEvent>.OnEvent -= HandleOnUIStateUpdated; 
+        }
         public override void Tick() {}
 
-        private bool CanTransitionToShop() => Status == RoundEndedStatus.Success && Game.Run.TryIncrementRound(); 
+        private void HandleOnUIStateUpdated(SetUIContainerStateEvent evt)
+        {
+            if (evt.Container != UIType.RoundOver) return; 
+            if (evt.State != UIState.Closed) return;
+            
+            StateMachine.ChangeState(new ShopState(StateMachine));
+        }
+        
+        private bool RunCanContinue() => Status == RoundEndedStatus.Success && Game.Run.TryIncrementRound(); 
     }
 }
