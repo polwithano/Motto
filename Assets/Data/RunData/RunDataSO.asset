@@ -15,7 +15,10 @@ MonoBehaviour:
   <RoundsSequence>k__BackingField:
   - <RoundType>k__BackingField: 0
     <BaseTargetScore>k__BackingField: 25
+    <BaseSoftCurrencyReward>k__BackingField: 3
   - <RoundType>k__BackingField: 0
     <BaseTargetScore>k__BackingField: 150
+    <BaseSoftCurrencyReward>k__BackingField: 5
   - <RoundType>k__BackingField: 1
     <BaseTargetScore>k__BackingField: 350
+    <BaseSoftCurrencyReward>k__BackingField: 10

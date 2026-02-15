@@ -132,12 +132,6 @@ namespace FSM.States
                 {
                     const RoundEndedStatus status = RoundEndedStatus.Success;
                     
-                    Game.Run.SetCurrencyValue(50, CurrencyType.Soft);
-                    
-                    Bus<CurrencyUpdatedEvent>
-                        .Raise(new CurrencyUpdatedEvent(
-                            CurrencyType.Soft, Game.Run.SoftCurrency));
-                    
                     Bus<RoundEndedEvent>
                         .Raise(new RoundEndedEvent(status, Game.Run.Round));
                     

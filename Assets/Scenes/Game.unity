@@ -6478,6 +6478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b8d3ec7033674703821803f516c9168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.Containers.UIRoundOver
+  scrollViewRoot: {fileID: 119237471}
   recapEntryPrefab: {fileID: 5474883072826534372, guid: 94bab1edb22aa4571bbede2924787dfe, type: 3}
   totalLabel: {fileID: 543438097}
   continueButton: {fileID: 421167696}
@@ -9395,8 +9396,10 @@ MonoBehaviour:
       <Definition>k__BackingField:
         <RoundType>k__BackingField: 0
         <BaseTargetScore>k__BackingField: 0
+        <BaseSoftCurrencyReward>k__BackingField: 0
       <TargetScore>k__BackingField: 0
       <CurrentScore>k__BackingField: 0
+      <SoftCurrencyReward>k__BackingField: 0
       <WordsRemaining>k__BackingField: 0
       <DrawsRemaining>k__BackingField: 0
       <Words>k__BackingField: []
@@ -9404,6 +9407,9 @@ MonoBehaviour:
     <Rounds>k__BackingField: []
     <SoftCurrency>k__BackingField: 0
     <HardCurrency>k__BackingField: 0
+    <CurrentRoundResult>k__BackingField:
+      <Entries>k__BackingField: []
+      <TotalCurrency>k__BackingField: 0
   <Deck>k__BackingField:
     <DrawPile>k__BackingField: []
     <DiscardPile>k__BackingField: []
@@ -12551,7 +12557,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.015625, y: 0.005126953}
+  m_AnchoredPosition: {x: 0.015625, y: 0.002319336}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1891756476

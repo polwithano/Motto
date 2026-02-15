@@ -9,6 +9,7 @@ namespace Models.Rounds
         [field: SerializeField] public RoundDefinition Definition  { get; private set; }
         [field: SerializeField] public int TargetScore             { get; private set; }
         [field: SerializeField] public int CurrentScore            { get; private set; }
+        [field: SerializeField] public int SoftCurrencyReward      { get; private set; }
         [field: SerializeField] public int WordsRemaining          { get; private set; }
         [field: SerializeField] public int DrawsRemaining          { get; private set; }
         [field: SerializeField] public List<string> Words          { get; private set; }
@@ -20,6 +21,7 @@ namespace Models.Rounds
         {
             Definition = definition;
             TargetScore = definition.BaseTargetScore;
+            SoftCurrencyReward = definition.BaseSoftCurrencyReward;
 
             CurrentScore = 0;
             WordsRemaining = 5;

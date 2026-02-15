@@ -1,6 +1,9 @@
 using Events.Core;
+using Events.Game;
 using Events.Rounds;
 using Events.UI;
+using Models;
+using Processors;
 
 namespace FSM.States
 {
@@ -20,6 +23,8 @@ namespace FSM.States
 
             if (RunCanContinue())
             {
+                Game.Run.SetRewardsResult(RoundRewardProcessor.ProcessRoundResult(Game.Run));
+                
                 Bus<SetUIContainerStateEvent>
                     .Raise(new SetUIContainerStateEvent(UIType.RoundOver, UIState.Opened));   
             }
@@ -39,6 +44,14 @@ namespace FSM.States
         {
             if (evt.Container != UIType.RoundOver) return; 
             if (evt.State != UIState.Closed) return;
+
+            var softCurrencyGained = Game.Run.CurrentRoundResult.TotalCurrency; 
+            Game.Run.UpdateCurrencyValue((uint)softCurrencyGained, CurrencyType.Soft);
+            
+            Bus<CurrencyUpdatedEvent>
+                .Raise(new CurrencyUpdatedEvent(
+                    CurrencyType.Soft, 
+                    Game.Run.SoftCurrency));
             
             StateMachine.ChangeState(new ShopState(StateMachine));
         }

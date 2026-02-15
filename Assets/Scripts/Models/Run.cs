@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Models.Rewards;
 using Models.Rounds;
 using Models.SO;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace Models
         
         [field: SerializeField] public uint SoftCurrency { get; private set; }
         [field: SerializeField] public uint HardCurrency { get; private set; }
+        [field: SerializeField] public RoundRewardResult CurrentRoundResult { get; private set; }
 
         private RunDataSO _data;
 
@@ -23,8 +25,8 @@ namespace Models
             RoundIndex = 0;
             Rounds = new List<RoundContext>();
             
-            SetCurrencyValue(0, CurrencyType.Soft);
-            SetCurrencyValue(0, CurrencyType.Hard);
+            UpdateCurrencyValue(0, CurrencyType.Soft);
+            UpdateCurrencyValue(0, CurrencyType.Hard);
         }
 
         public bool TryIncrementRound()
@@ -36,12 +38,13 @@ namespace Models
             return true;
         }
         
-        public RoundType GetRoundType() => _data.RoundsSequence[RoundIndex].RoundType;
+        public RoundContext GetCurrentRoundContext() => Rounds[^1];
+        public RoundType GetRoundType() => Rounds[RoundIndex].Definition.RoundType;
 
         public void LoadContext()
         {
-            if (Round != null) Rounds.Add(Round);
             Round = CreateContext();
+            if (Round != null) Rounds.Add(Round);
         }
 
         public bool TryPurchase(uint cost)
@@ -52,7 +55,7 @@ namespace Models
             return true;
         }
 
-        public void SetCurrencyValue(uint amount, CurrencyType type)
+        public void UpdateCurrencyValue(uint amount, CurrencyType type)
         {
             switch (type)
             {
@@ -64,6 +67,8 @@ namespace Models
                     break;
             }
         }
+        
+        public void SetRewardsResult(RoundRewardResult result) => CurrentRoundResult = result;
         
         private RoundContext CreateContext()
         {
