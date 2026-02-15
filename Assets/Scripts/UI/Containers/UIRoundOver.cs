@@ -1,4 +1,7 @@
+using System;
+using System.Threading.Tasks;
 using Managers;
+using Models.Rewards;
 using TMPro;
 using UI.Containers.Core;
 using UI.Containers.Sub;
@@ -14,38 +17,68 @@ namespace UI.Containers
         [SerializeField] private TextMeshProUGUI totalLabel; 
         [SerializeField] private Button continueButton;
         
-        protected override void Open()
+        protected async override void Open()
         {
             base.Open();
             
-            BeginRecap();
+            var result = GameManager.Instance.Run.CurrentRoundResult;
+            if (result == null) return;
+
+            totalLabel.text = "Total: 0$"; 
+            continueButton.interactable = false;
+
+            await BeginRecap(result);
+            await AnimateTotal(result);
+
+            continueButton.interactable = true;
         }
 
         protected override void Close()
         {
             base.Close();
+            
+            DestroyRewardEntries();
         }
 
-        private void BeginRecap()
+        private async Task BeginRecap(RoundRewardResult result)
         {
-            continueButton.interactable = false;
-
-            var rewardResult = GameManager.Instance.Run.CurrentRoundResult;
-            if (rewardResult == null) return;
-
-            var accumulated = 0; 
-            
-            foreach (var entry in rewardResult.Entries)
+            foreach (var entry in result.Entries)
             {
-                var go =  Instantiate(recapEntryPrefab, scrollViewRoot);
-                var view = go.GetComponent<UIRewardEntry>(); 
-                view.PopulateEntry(entry);
-                
-                accumulated += entry.SoftReward;
-                totalLabel.text = $"+{accumulated}$";
+                var go = Instantiate(recapEntryPrefab, scrollViewRoot);
+                var view = go.GetComponent<UIRewardEntry>();
+
+                await view.AnimateEntry(entry);
             }
-            
-            continueButton.interactable = true;
+        }
+
+        private async Task AnimateTotal(RoundRewardResult result)
+        {
+            var displayed = 0;
+            var target = result.TotalCurrency;
+
+            var duration = 0.75f;
+            var elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = elapsed / duration;
+
+                displayed = Mathf.RoundToInt(Mathf.Lerp(0, target, t));
+                totalLabel.text = $"Total: +{displayed}$";
+
+                await Task.Yield();
+            }
+
+            totalLabel.text = $"Total: +{target}$";
+        }
+        
+        private void DestroyRewardEntries()
+        {
+            for (var i = 0; i < scrollViewRoot.childCount; i++)
+            {
+                Destroy(scrollViewRoot.GetChild(i).gameObject);
+            }
         }
     }
 }

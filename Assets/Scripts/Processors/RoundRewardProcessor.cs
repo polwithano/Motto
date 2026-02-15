@@ -30,7 +30,7 @@ namespace Processors
                     bonusRemainingDraws));
             
             // Value score overshoot
-            var overshoot = Mathf.Max(0, context.CurrentScore / context.TargetScore);
+            var overshoot = context.CurrentScore / context.TargetScore;
             var bonusOvershoot = Mathf.RoundToInt(overshoot * 2f); 
             entries
                 .Add(new RoundRewardEntry(
