@@ -3,7 +3,7 @@ using Models;
 
 namespace Events.Score
 {
-    public class ScoringSequenceEndedEvent : IEvent
+    public struct ScoringSequenceEndedEvent : IEvent
     {
         public ScoreLog ScoreLog { get; private set; }
         

@@ -225,6 +225,7 @@ MonoBehaviour:
   punchVibrato: 6
   punchElasticity: 0.4
   punchEase: 11
+  inactiveStateColor: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 1}
   <Tile>k__BackingField:
     <ID>k__BackingField: 
     <Character>k__BackingField: 0

@@ -32,7 +32,7 @@ namespace Managers
         }
         #endregion
 
-        public bool IsControllerAllowed()
+        public bool IsRoundPlayState()
         {
             return GameState && GameState.CurrentState is RoundPlayState; 
         }

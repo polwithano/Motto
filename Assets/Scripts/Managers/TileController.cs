@@ -3,6 +3,7 @@ using Animation;
 using Events.Core;
 using Events.Game;
 using Events.Inputs;
+using Events.Score;
 using FSM;
 using FSM.States;
 using UnityEngine;
@@ -29,6 +30,7 @@ namespace Managers
         private RectTransform _dragLayerRect;
         private TileView _draggedTile;
         private Vector2 _dragOffset;
+        private bool _canInteract; 
         
         #region Mono
         private void Start()
@@ -41,11 +43,14 @@ namespace Managers
 
             _uiCamera = _canvas.renderMode == RenderMode.ScreenSpaceOverlay
                 ? null : (_canvas.worldCamera != null ? _canvas.worldCamera : Camera.main);
+
+            _canInteract = true; 
         }
 
         private void Update()
         {
-            if (!GameManager.Instance.IsControllerAllowed()) return; 
+            if (!GameManager.Instance.IsRoundPlayState()) return;
+            if (!_canInteract) return; 
             
             if (_draggedTile == null)
             {
@@ -70,12 +75,18 @@ namespace Managers
         {
             InputManager.Instance.OnLeftClick += HandleLeftClick;
             InputManager.Instance.OnRightClick += HandleRightClick;
+            
+            Bus<ScoringSequenceStartedEvent>.OnEvent += HandleScoringSequenceStarted;
+            Bus<ScoringSequenceOverEvent>.OnEvent += HandleScoringSequenceOver; 
         }
-
+        
         private void OnDisable()
         {
             InputManager.Instance.OnLeftClick -= HandleLeftClick;
             InputManager.Instance.OnRightClick -= HandleRightClick;
+            
+            Bus<ScoringSequenceStartedEvent>.OnEvent -= HandleScoringSequenceStarted;
+            Bus<ScoringSequenceOverEvent>.OnEvent -= HandleScoringSequenceOver; 
         }
         private void OnDestroy() => OnDisable(); 
         #endregion
@@ -83,17 +94,22 @@ namespace Managers
         #region Subscribed
         private void HandleLeftClick(Vector2 screenPos)
         {
-            if (!GameManager.Instance.IsControllerAllowed()) return; 
+            if (!GameManager.Instance.IsRoundPlayState()) return;
+            if (!_canInteract) return; 
             
             TryToggleTileByClick(screenPos);
         }
 
         private void HandleRightClick(Vector2 screenPos)
         {
-            if (!GameManager.Instance.IsControllerAllowed()) return;
+            if (!GameManager.Instance.IsRoundPlayState()) return;
+            if (!_canInteract) return;
             
             RedrawTile(screenPos);
         }
+        
+        private void HandleScoringSequenceStarted(ScoringSequenceStartedEvent evt) => _canInteract = false;
+        private void HandleScoringSequenceOver(ScoringSequenceOverEvent evt) => _canInteract = true; 
         #endregion
 
         private bool TryStartDrag()

@@ -105,6 +105,9 @@ namespace FSM.States
                 await BoardManager.Instance.ClearSlotsAsync();
             
                 Game.Hand.FillFromDeck(Game.Deck);
+                
+                Bus<ScoringSequenceOverEvent>
+                    .Raise(new ScoringSequenceOverEvent());
             
                 HandView.Instance.InstantiateHand(Game.Hand);
             }

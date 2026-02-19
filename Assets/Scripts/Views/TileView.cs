@@ -5,6 +5,7 @@ using Events;
 using Events.Core;
 using Events.Score;
 using Models;
+using NUnit.Framework;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
@@ -34,6 +35,9 @@ namespace Views
         [SerializeField] private float punchElasticity = 1f;
         [SerializeField] private Ease punchEase = Ease.OutBack;
 
+        [Header("State")] 
+        [SerializeField] private Color inactiveStateColor; 
+
         [field: SerializeField] public Tile Tile       { get; private set; }
         [field: SerializeField] public bool IsInHand   { get; private set; }
         
@@ -41,27 +45,32 @@ namespace Views
         
         private CanvasGroup _canvasGroup;
         private Transform _originalParent;
+        private Image _image;
         private Tween _scaleTween; 
+        private Tween _stateTween;
         
         #region Mono
-
         private void Awake()
         {
             RectTransform = GetComponent<RectTransform>();
+            
             _canvasGroup = GetComponent<CanvasGroup>();
+            _image = GetComponent<Image>();
         }
         
         private void OnEnable()
         {
             Bus<ScoringStepStartedEvent>.OnEvent += HandleOnTileScored;
+            Bus<ScoringSequenceStartedEvent>.OnEvent += HandleScoringSequenceStarted;
+            Bus<ScoringSequenceOverEvent>.OnEvent += HandleScoringSequenceOver; 
         }
-
+        
         private void OnDisable()
         {
             Bus<ScoringStepStartedEvent>.OnEvent -= HandleOnTileScored;
+            Bus<ScoringSequenceStartedEvent>.OnEvent -= HandleScoringSequenceStarted;
+            Bus<ScoringSequenceOverEvent>.OnEvent -= HandleScoringSequenceOver; 
         }
-        
-        private void OnDestroy() => OnDisable();
         #endregion
         
         #region Subscribed
@@ -71,6 +80,16 @@ namespace Views
             if (!Tile.IsInstance(evt.Entry.Emitter.ID)) return;
 
             AnimateOnTileScored();
+        }
+        
+        private void HandleScoringSequenceStarted(ScoringSequenceStartedEvent evt)
+        {
+            SetActiveState(false);
+        }
+        
+        private void HandleScoringSequenceOver(ScoringSequenceOverEvent evt)
+        {
+            SetActiveState(true);
         }
         #endregion
         
@@ -156,19 +175,6 @@ namespace Views
 
             return tcs.Task;
         }
-
-        /*
-        private void AnimateOnTileScored()
-        {
-            var seq = DOTween.Sequence();
-            
-            var startY = transform.position.y;
-            var endY = startY + yOffset;
-            
-            seq.Append(transform.DOMoveY(endY, duration).SetEase(ease));
-            seq.Append(transform.DOMoveY(startY, duration).SetEase(ease));
-        }
-        */
         
         private void AnimateOnTileScored()
         {
@@ -176,10 +182,10 @@ namespace Views
 
             var seq = DOTween.Sequence();
 
-            // Rotation aléatoire gauche/droite
-            float randomAngle = Random.Range(15f, 30f);
-            float direction = Random.value > 0.5f ? 1f : -1f;
-            float targetAngle = randomAngle * direction;
+            // Random left/right rotation
+            var randomAngle = Random.Range(15f, 30f);
+            var direction = Random.value > 0.5f ? 1f : -1f;
+            var targetAngle = randomAngle * direction;
 
             // Rotate
             seq.Join(
@@ -189,7 +195,7 @@ namespace Views
                 ).SetEase(ease)
             );
 
-            // Retour à la rotation initiale
+            // Back to the initial rotation
             seq.Append(
                 transform.DORotate(
                     Vector3.zero,
@@ -200,10 +206,10 @@ namespace Views
             // Punch scale
             seq.Join(
                 transform.DOPunchScale(
-                    Vector3.one * 0.275f,   // force du punch
+                    Vector3.one * 0.275f,  
                     duration,
-                    8,                    // vibrato
-                    0.8f                  // elasticity
+                    8,                    
+                    0.8f               
                 )
             );
         }
@@ -217,6 +223,31 @@ namespace Views
             rect.DOPunchScale(Vector3.one * punchScale, punchDuration, punchVibrato, punchElasticity)
                 .SetEase(punchEase)
                 .SetLink(gameObject); 
+        }
+
+        private void SetActiveState(bool isActive)
+        {
+            _stateTween?.Kill();
+            
+            // We don't visually fade the tiles that are on the board. 
+            if (!IsInHand) return;
+            
+            var targetAlpha = isActive ? 1f : 0.85f;
+            var targetColor = isActive ? Color.white : inactiveStateColor;
+
+            var seq = DOTween.Sequence();
+
+            // Fade
+            seq.Join(
+                _canvasGroup.DOFade(targetAlpha, 0.25f)
+            );
+
+            // Color tint
+            seq.Join(
+                _image.DOColor(targetColor, 0.25f)
+            );
+
+            _stateTween = seq;
         }
     }
 }
