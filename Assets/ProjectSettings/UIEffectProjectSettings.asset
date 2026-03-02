@@ -58,6 +58,8 @@ ShaderVariantCollection:
   - first: {fileID: 4800000, guid: 935b7be1c88464d2eb87204fdfab5a38, type: 3}
     second:
       variants:
+      - keywords: COLOR_FILTER
+        passType: 0
       - keywords: COLOR_FILTER UNDERLAY_ON
         passType: 0
       - keywords: SAMPLING_BLUR_MEDIUM
