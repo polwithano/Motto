@@ -62,6 +62,8 @@ ShaderVariantCollection:
         passType: 0
       - keywords: COLOR_FILTER UNDERLAY_ON
         passType: 0
+      - keywords: EDGE_PLAIN
+        passType: 0
       - keywords: SAMPLING_BLUR_MEDIUM
         passType: 0
       - keywords: SAMPLING_BLUR_MEDIUM UNDERLAY_ON
