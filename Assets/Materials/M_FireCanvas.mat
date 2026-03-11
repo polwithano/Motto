@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_FireCanvas
-  m_Shader: {fileID: 4800000, guid: e761ab3ce5fc144e68041a294f96423b, type: 3}
+  m_Shader: {fileID: 4800000, guid: 4803cc2681d1c42e2925880ef11a2e8e, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -36,7 +36,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NoiseTex:
-        m_Texture: {fileID: 2800000, guid: 83ddb76072e60496999529da48c04a0c, type: 3}
+        m_Texture: {fileID: 2800000, guid: a6472d7030a69474bb2703e4d66408fd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
@@ -45,15 +45,63 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _A0: 0
+    - _A1: 0.0953
+    - _A2: 0.04
+    - _A3: 0.06
+    - _A4: 0.04
+    - _A5: 0.05
+    - _A6: 0.05
+    - _A7: 0.03
+    - _A8: 0.02
+    - _A9: 0
+    - _CelSteps: 5
     - _EnableExternalAlpha: 0
     - _FireAlpha: 1
-    - _FireAperture: 1.04
+    - _FireAperture: 0
+    - _Height: 0.759
+    - _Intensity: 2
+    - _LayerStep: 0.28
+    - _NumLayers: 3
+    - _OutlineStrength: 4
+    - _OutlineWidth: 0.05
+    - _P0: 0
+    - _P1: 0.259
+    - _P2: 0.5
+    - _P3: 0.669
+    - _P4: 0.391
+    - _P5: 0.552
+    - _P6: 0.598
+    - _P7: 0.316
+    - _P8: 0.287
+    - _P9: 0.129
+    - _ScaleX: 0.5
+    - _ScaleY: 0.85
+    - _Speed: 50
+    - _TurbFreq: 1
     - _ZWrite: 0
     m_Colors:
+    - _Band0: {r: 0.8, g: 0.09999997, b: 0.02, a: 1}
+    - _Band1: {r: 0.9, g: 0.34999996, b: 0.02, a: 1}
+    - _Band2: {r: 1, g: 0.54999995, b: 0.03, a: 1}
+    - _Band3: {r: 1, g: 0.78, b: 0.049999982, a: 1}
     - _BottomColor: {r: 1, g: 0, b: 0.040395737, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color0In: {r: 0.95, g: 0.39999998, b: 0.03, a: 1}
+    - _Color0Out: {r: 0.75, g: 0.17999998, b: 0.02, a: 1}
+    - _Color1In: {r: 1, g: 0.65, b: 0.049999982, a: 1}
+    - _Color1Out: {r: 0.95, g: 0.39999998, b: 0.03, a: 1}
+    - _Color2In: {r: 1, g: 0.88, b: 0.19999996, a: 1}
+    - _Color2Out: {r: 1, g: 0.65, b: 0.049999982, a: 1}
+    - _Color3In: {r: 1, g: 0.96999997, b: 0.7, a: 1}
+    - _Color3Out: {r: 1, g: 0.88, b: 0.19999996, a: 1}
+    - _ColorCore: {r: 1, g: 0.92, b: 0.29999998, a: 1}
+    - _ColorMid: {r: 1, g: 0.6, b: 0.049999982, a: 1}
+    - _ColorOuter: {r: 0.95, g: 0.31999996, b: 0.02, a: 1}
     - _FireSpeed: {r: 0, g: 1, b: 0, a: 0}
+    - _MidColor: {r: 1, g: 0.54999995, b: 0.03, a: 1}
     - _MiddleColor: {r: 1, g: 0.5, b: 0, a: 1}
+    - _OutlineColor: {r: 0.54999995, g: 0.17999998, b: 0.02, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _TopColor: {r: 0.94509804, g: 0.6, b: 0.105882354, a: 1}
   m_BuildTextureStacks: []

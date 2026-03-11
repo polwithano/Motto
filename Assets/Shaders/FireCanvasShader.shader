@@ -11,6 +11,8 @@ Shader "Custom/FireCanvasShader"
         _FireAlpha ("Fire Alpha", Range(0,1)) = 1
         _FireSpeed ("Fire Speed", Vector) = (0,2,0,0)
         _FireAperture ("Fire Aperture", Range(0,3)) = 0.22
+        _CelSteps ("Cel Steps", Range(2,8)) = 4
+        _OutlineStrength ("Outline Strength", Range(0,10)) = 4
     }
 
     SubShader
@@ -56,6 +58,8 @@ Shader "Custom/FireCanvasShader"
             float _FireAlpha;
             float2 _FireSpeed;
             float _FireAperture;
+            float _CelSteps;
+            float _OutlineStrength;
 
             Varyings vert(Attributes IN)
             {
@@ -65,13 +69,21 @@ Shader "Custom/FireCanvasShader"
                 return OUT;
             }
 
-            float4 tri_color_mix(float4 c1, float4 c2, float4 c3, float pos)
+            float posterize(float v, float steps)
             {
+                return floor(v * steps) / steps;
+            }
+
+            float4 tri_color_mix_cel(float4 c1, float4 c2, float4 c3, float pos, float steps)
+            {
+                // Posterize la position -> sauts de couleur nets
                 pos = saturate(pos);
+                pos = posterize(pos, steps);
+
                 if (pos < 0.5)
-                    return lerp(c1, c2, pos * 2.0);
+                    return lerp(c1, c2, saturate(pos * 2.0));
                 else
-                    return lerp(c2, c3, (pos - 0.5) * 2.0);
+                    return lerp(c2, c3, saturate((pos - 0.5) * 2.0));
             }
 
             float4 frag(Varyings IN) : SV_Target
@@ -79,7 +91,6 @@ Shader "Custom/FireCanvasShader"
                 float2 uv = IN.uv;
                 float time = _Time.y;
 
-                // UV animées
                 float2 uv1 = uv + time * _FireSpeed;
                 float2 uv2 = uv + time * _FireSpeed * 1.5;
 
@@ -88,12 +99,20 @@ Shader "Custom/FireCanvasShader"
 
                 float combined = (n1 + n2) * 0.5;
 
+                // ✅ Posterize le noise -> formes en blocs
+                combined = posterize(combined, _CelSteps);
+
                 float noise = uv.y * (((uv.y + _FireAperture) * combined - _FireAperture) * 75.0);
                 noise += sin(uv.y * 10.0 + time * 2.0) * 0.1;
 
                 float gradient_pos = clamp(noise * 0.08, 0.3, 1.0);
 
-                float4 color = tri_color_mix(_BottomColor, _MiddleColor, _TopColor, gradient_pos);
+                // ✅ Couleurs en paliers nets
+                float4 color = tri_color_mix_cel(_BottomColor, _MiddleColor, _TopColor, gradient_pos, _CelSteps);
+
+                // ✅ Outline sur les bords de flamme
+                float edge = fwidth(noise) * _OutlineStrength;
+                color.rgb = lerp(color.rgb, float3(0.05, 0.02, 0.0), saturate(edge));
 
                 color.a = saturate(noise) * _FireAlpha;
 
