@@ -16,7 +16,7 @@ MonoBehaviour:
   <CharmName>k__BackingField: Black Cat
   <CharmDescription>k__BackingField: Add {m:+|label} for each group of adjacent similar
     letters.
-  <CharmIcon>k__BackingField: {fileID: 335506236189848980, guid: 02b9c170fe8084eca9463eee553dbde0, type: 3}
+  <CharmIcon>k__BackingField: {fileID: -8022214815903214063, guid: c6ed783cc76204d538a1fe89400405ac, type: 3}
   <PriorityOverride>k__BackingField: 0
   <EffectTrigger>k__BackingField: 2
   <ScoreEffects>k__BackingField:

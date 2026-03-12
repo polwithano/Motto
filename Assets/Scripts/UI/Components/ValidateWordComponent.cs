@@ -13,6 +13,7 @@ namespace UI.Components
     public class ValidateWordComponent : MultiEventListenerComponent
     {
         [SerializeField] private TextMeshProUGUI lettersCount;
+        [SerializeField] private TextMeshProUGUI playLabel; 
 
         private Button _button;
 
@@ -62,7 +63,9 @@ namespace UI.Components
         {
             _button.interactable = false;
             _button.onClick.RemoveAllListeners();
+            
             lettersCount.text = "";
+            playLabel.color = _button.colors.disabledColor;
         }
 
         private void EnableButton()
@@ -70,6 +73,8 @@ namespace UI.Components
             _button.interactable = true;
             _button.onClick.RemoveAllListeners();
             _button.onClick.AddListener(OnButtonValidated);
+            
+            playLabel.color = _button.colors.normalColor;
         }
 
         private void OnButtonValidated()

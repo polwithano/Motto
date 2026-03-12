@@ -18,7 +18,6 @@ namespace Views
         [field: SerializeField] public Charm Charm { get; private set; }
     
         [SerializeField] private Image charmIcon;
-        [SerializeField] private Image charmIconShadow;
         [SerializeField] private UIEffect charmEffect;
         [SerializeField] private IdleHover idleHover; 
         
@@ -72,7 +71,6 @@ namespace Views
         {
             Charm =  charm;
             charmIcon.sprite = Charm.CharmIcon;
-            charmIconShadow.sprite = Charm.CharmIcon; 
         }
 
         public void SetActiveFeedback(bool active)

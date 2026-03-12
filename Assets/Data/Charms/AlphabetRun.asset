@@ -16,7 +16,7 @@ MonoBehaviour:
   <CharmName>k__BackingField: Lighter
   <CharmDescription>k__BackingField: Add {m:+|label} per consecutive letters that
     are following the alphabet.
-  <CharmIcon>k__BackingField: {fileID: -485712421605340106, guid: 486127e5240a54ac0a050c3f04ffa81a, type: 3}
+  <CharmIcon>k__BackingField: {fileID: 8560741838784423814, guid: c6ed783cc76204d538a1fe89400405ac, type: 3}
   <PriorityOverride>k__BackingField: 0
   <EffectTrigger>k__BackingField: 2
   <ScoreEffects>k__BackingField:

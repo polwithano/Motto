@@ -78,7 +78,7 @@ Material:
     - _ScaleX: 0.5
     - _ScaleY: 0.85
     - _Speed: 50
-    - _TurbFreq: 1
+    - _TurbFreq: 2
     - _ZWrite: 0
     m_Colors:
     - _Band0: {r: 0.8, g: 0.09999997, b: 0.02, a: 1}

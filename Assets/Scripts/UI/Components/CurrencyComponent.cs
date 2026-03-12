@@ -1,11 +1,7 @@
-using System;
-using Events.Core;
 using Events.Game;
 using Models;
-using TMPro;
 using UI.Components.Core;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace UI.Components
 {
@@ -28,18 +24,8 @@ namespace UI.Components
             if (!ShouldHandle(evt))
                 return false;
 
-            label.text = GetCurrencySymbol(evt.Currency) + evt.Amount;
+            label.text = evt.Amount.ToString();
             return true;
-        }
-        
-        private string GetCurrencySymbol(CurrencyType currency)
-        {
-            return currency switch
-            {
-                CurrencyType.Soft => "$",
-                CurrencyType.Hard => "@",
-                _ => throw new ArgumentOutOfRangeException(nameof(currency), currency, null)
-            };
         }
     }
 }
