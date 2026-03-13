@@ -16,7 +16,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2001
+  m_CustomRenderQueue: 3010
   stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
@@ -45,9 +45,9 @@ Material:
     - _BackWaveFreq: 1
     - _BackWaveOffset: 0
     - _BackWaveSpeed: 1.4
-    - _BobAmplitude: 0
-    - _BobFrequency: 0
-    - _BobVerticalStrength: 0
+    - _BobAmplitude: 0.05
+    - _BobFrequency: 0.2
+    - _BobVerticalStrength: 0.1
     - _DropGravity: 0.705
     - _DropRimWidth: 0.3
     - _DropShadowStrength: 0.17
@@ -82,14 +82,14 @@ Material:
     - _TurbSpeed: 0.5
     - _WaterDepthRange: 0.274
     - _WaterOpacity: 1
-    - _WaveAmp: 0
+    - _WaveAmp: 0.02
     - _WaveAmp2: 0.0194
     - _WaveAmplitude: 0.029
-    - _WaveFreq: 0
+    - _WaveFreq: 4
     - _WaveFreq2: 6
     - _WaveFrequency: 1
-    - _WaveHeight: 0.419
-    - _WaveSpeed: 0
+    - _WaveHeight: 0.047
+    - _WaveSpeed: 0.2
     - _WaveSpeed2: 0.2
     - _WaveTurbAmp: 0.1
     - _WaveTurbFreq: 4
