@@ -180,7 +180,7 @@ namespace Managers
             }
             
             // Ending drag on the board or near the board area. 
-            var slot = BoardManager.Instance.GetPreviewedSlot();
+            var slot = BoardManager.Instance.PreviewedSlot; 
             if (slot != null)
             {
                 var target = slot.GetComponent<RectTransform>();

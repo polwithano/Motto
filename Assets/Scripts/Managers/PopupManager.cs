@@ -56,7 +56,7 @@ namespace Managers
 
             if (emitter is Tile tile)
             {
-                var view = BoardManager.Instance.GetTileViewFromTile(tile);
+                var view = BoardManager.Instance.GetTileViewFromModel(tile);
                 position = view.transform.position;
                 return true; 
             }
