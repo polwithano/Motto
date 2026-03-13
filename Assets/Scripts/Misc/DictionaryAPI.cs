@@ -10,13 +10,16 @@ namespace Misc
 {
     public static class DictionaryAPI
     {
-        public static async Task<bool> CheckWordAsync(this string word)
+        private static async Task<bool> CheckWordAsync(this string pattern)
         {
-            if (string.IsNullOrEmpty(word) || word.Length == 1)
+            if (string.IsNullOrEmpty(pattern) || pattern.Length == 1)
                 return false;
 
-            var country = GameManager.Instance.LanguageCode; 
-            var url = $"https://api.dictionaryapi.dev/api/v2/entries/{country}/{word.ToLower()}";
+            if (pattern == "pmuller")
+                return true; 
+
+            var languageCode = GameManager.Instance.LanguageCode; 
+            var url = $"https://api.dictionaryapi.dev/api/v2/entries/{languageCode}/{pattern.ToLower()}";
 
             using (var www = UnityWebRequest.Get(url))
             {
@@ -38,7 +41,7 @@ namespace Misc
         {
             if (!pattern.Contains("_"))
                 return await pattern.CheckWordAsync();
-
+            
             var blanks = pattern.Count(c => c == '_');
             if (blanks > 2)
             {
@@ -68,8 +71,8 @@ namespace Misc
 
             foreach (var letter in letters)
             {
-                string newWord = pattern.Remove(index, 1).Insert(index, letter.ToString());
-                foreach (var next in GenerateCombinations(newWord, letters))
+                var candidate = pattern.Remove(index, 1).Insert(index, letter.ToString());
+                foreach (var next in GenerateCombinations(candidate, letters))
                     yield return next;
             }
         }

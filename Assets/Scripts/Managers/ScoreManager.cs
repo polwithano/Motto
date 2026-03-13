@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using Events;
 using Events.Core;
 using Events.Score;
 using Models;
@@ -67,7 +65,8 @@ namespace Managers
         {
             var log = new ScoreLog(word, tiles);
             
-            // Shitty fix, first entry multiplier should be set to one
+            // Shitty fix
+            // First ScoreEffect set to the default value of the score (0) and the modifier (1) 
             // ---
             var startValues = new List<ScoreEffect>
             {
