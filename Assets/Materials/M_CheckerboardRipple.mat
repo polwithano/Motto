@@ -79,7 +79,7 @@ Material:
     - _Lighting: 0.34
     - _LineFrequency: 1.5
     - _LineWobble: 0
-    - _MaxSources: 4
+    - _MaxSources: 8
     - _MoireDistort: 1
     - _MoireFlowSpeed: 0.3
     - _MoireFrequency: 8

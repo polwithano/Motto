@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 182873163}
   - component: {fileID: 182873162}
   m_Layer: 5
-  m_Name: Shader
+  m_Name: CheckerboardShader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 2100000, guid: e331ae283b3e3447596fa9af008841bc, type: 2}
+  m_Material: {fileID: 2100000, guid: 756d42a0f82294775a9553f56aa20c21, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1622,6 +1622,81 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7490973809822263509, guid: 7b19be5941581474db04450ffa0cbb4c, type: 3}
   m_PrefabInstance: {fileID: 876860683}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1055408057
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1055408058}
+  - component: {fileID: 1055408060}
+  - component: {fileID: 1055408059}
+  m_Layer: 5
+  m_Name: WaveShader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1055408058
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055408057}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1108222017}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1055408059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055408057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 2100000, guid: 1a2d19ac70411485bb37e334e1c2f6f8, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: dce37f17da32e4b6796b53ff63dc1d01, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1055408060
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055408057}
+  m_CullTransparentMesh: 1
 --- !u!1 &1065359511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1664,8 +1739,8 @@ GameObject:
   - component: {fileID: 1108222017}
   - component: {fileID: 1108222021}
   - component: {fileID: 1108222020}
-  - component: {fileID: 1108222019}
-  - component: {fileID: 1108222018}
+  - component: {fileID: 1108222022}
+  - component: {fileID: 1108222023}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -1686,6 +1761,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 182873161}
+  - {fileID: 1055408058}
   m_Father: {fileID: 670923571}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1693,40 +1769,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1108222018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1108222016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5b9b14ea1fa4a81b0ac74c7446d5ac4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Animation.UIScoreLogEffect
-  targetMaterial: {fileID: 2100000, guid: e331ae283b3e3447596fa9af008841bc, type: 2}
-  tweenDuration: 0.5
-  tweenEase: 9
---- !u!114 &1108222019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1108222016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2357508f0f1ef49948a3709149c880ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Animation.UIRippleController
-  targetMaterial: {fileID: 2100000, guid: e331ae283b3e3447596fa9af008841bc, type: 2}
-  maxSources: 4
-  amplitude: 3
-  frequency: 80
-  speed: 0.33
-  damping: 250
-  width: 0.3
 --- !u!114 &1108222020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1765,6 +1807,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108222016}
   m_CullTransparentMesh: 1
+--- !u!114 &1108222022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108222016}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdb8b8ef6bf704a808fc9772f6bd289f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Animation.Backgrounds.UIWaveController
+  waveMaterial: {fileID: 2100000, guid: 1a2d19ac70411485bb37e334e1c2f6f8, type: 2}
+  checkerboardMaterial: {fileID: 2100000, guid: 756d42a0f82294775a9553f56aa20c21, type: 2}
+  springStrength: 4
+  dampingRatio: 1
+  turbulenceScale: 4
+  turbulenceDecay: 2.5
+  dropSmallThreshold: 0.2
+  dropRadiusSmall: 0.006
+  dropSmallSpeedMin: 0.28
+  dropSmallSpeedMax: 0.52
+  dropLargeThreshold: 2
+  dropRadiusLarge: 0.02
+  splashDropCount: 7
+  splashSpeedMin: 0.45
+  splashSpeedMax: 0.95
+  splashAngleSpread: 115
+  dropCooldown: 0.07
+  maxDrops: 12
+  rectAspect: 0
+--- !u!114 &1108222023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108222016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2357508f0f1ef49948a3709149c880ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Animation.Backgrounds.UIRippleController
+  target: {fileID: 2100000, guid: 756d42a0f82294775a9553f56aa20c21, type: 2}
+  userInputs: 1
+  amplitude: 3
+  frequency: 80
+  speed: 0.3
+  damping: 200
+  width: 0.33
 --- !u!1 &1290117195
 GameObject:
   m_ObjectHideFlags: 0
