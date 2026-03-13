@@ -35,6 +35,7 @@ namespace Managers
             foreach (var effect in evt.Entry.ScoreEffects)
             {
                 var popupPosition = Vector3.zero;
+                
                 if (TryGetEffectEmitterPosition(evt.Entry.Emitter, out popupPosition))
                 {
                     SpawnPopup(popupPosition, effect); 

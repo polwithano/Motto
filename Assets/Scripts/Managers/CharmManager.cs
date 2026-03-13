@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Events;
 using Events.Core;
 using Events.Game;
 using Models;
-using Models.Charms;
 using Models.Charms.Core;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -50,8 +47,6 @@ namespace Managers
         #region Events Handlers
         private void HandleOnBoardUpdated(BoardUpdatedEvent evt)
         {
-            var context = GameManager.Instance.Run.Round;
-
             foreach (var charm in ActiveCharms)
             {
                 var willTrigger = WillCharmTrigger(charm, evt.Word, evt.Tiles);
@@ -83,7 +78,7 @@ namespace Managers
 
         public void AddCharm(Charm charm)
         {
-            if (charm == null)
+            if (!charm)
                 return;
 
             if (ActiveCharms.Contains(charm))
