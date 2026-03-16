@@ -161,9 +161,9 @@ Shader "Custom/Background/FluidWaveURP"
                 if (frontSDF > 1) discard;
 
                 // ── Fill masks ────────────────────────────────────────────────
-                float frontFill = 1.0 - smoothstep(-0.002, 0.002, frontSDF);
+                float frontFill = 1.0 - smoothstep(-0.001, 0.001, frontSDF);
                 float backFill  = saturate(
-                    (1.0 - smoothstep(-0.002, 0.002, backSDF)) - frontFill);
+                    (1.0 - smoothstep(-0.001, 0.001, backSDF)) - frontFill);
 
                 // ── Fresnel — lateral edges ───────────────────────────────────
                 float edgeDist = min(uv.x, 1.0 - uv.x);

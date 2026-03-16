@@ -63,7 +63,7 @@ Material:
     - _FresnelPower: 8
     - _FresnelStrength: 0.35
     - _FresnelSurfaceWidth: 0.15
-    - _FrontBaseOffset: 0.0075
+    - _FrontBaseOffset: 0
     - _FrontWaveAmp: 0.025
     - _FrontWaveFreq: 1
     - _FrontWaveSpeed: 2
@@ -88,7 +88,7 @@ Material:
     - _WaveFreq: 4
     - _WaveFreq2: 6
     - _WaveFrequency: 1
-    - _WaveHeight: 0.274
+    - _WaveHeight: 0.121
     - _WaveSpeed: 0.2
     - _WaveSpeed2: 0.2
     - _WaveTurbAmp: 0.1
